@@ -1,0 +1,39 @@
+/*
+ * Copyright (c) 2019. All rights reserved.
+ */
+
+package com.zbase.utils;
+
+public final class StringUtils {
+
+    private StringUtils() {
+    }
+
+    public static String trim(String str) {
+        if (isEmpty(str)) return "";
+        return str.replaceAll("\r", "")
+                .replaceAll("\n", "")
+                .replaceAll(" ", "");
+    }
+
+    public static boolean isEmpty(String s){
+        return s == null || "".equals(s.trim()) || "null".equals(s.trim());
+    }
+
+    public static boolean isEmptyOrZero(String num){
+        return isEmpty(num)
+                || "0".equals(num)
+                || "0.0".equals(num)
+                || "0.00".equals(num)
+                || "0.000".equals(num);
+    }
+
+    public static String null2Empty(String s){
+        return isEmpty(s) ? "" : s;
+    }
+
+    public static String null2Zero(String s){
+        return isEmpty(s) ? "0" : s;
+    }
+
+}
