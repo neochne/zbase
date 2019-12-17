@@ -17,7 +17,7 @@ public final class VerifyUtils {
      */
     public static boolean isMobilePhoneNum(String cellPhoneNum) {
         if (StringUtils.isEmpty(cellPhoneNum)) return false;
-        String reg = "^((\\+?86)|(\\(\\+86\\)))?(13[0123456789][0-9]{8}|15[012356789][0-9]{8}|16[012356789][0-9]{8}|18[0123456789][0-9]{8}|17[0123456789][0-9]{8}|147[0-9]{8}|1349[0-9]{7}|199[0-9]{8}|198[0-9]{8}|191[0-9]{8})$";
+        String reg = "^((\\+?86)|(\\(\\+86\\)))?(13[0123456789][0-9]{8}|15[012356789][0-9]{8}|16[012356789][0-9]{8}|18[0123456789][0-9]{8}|19[02356789][0-9]{8}|17[0123456789][0-9]{8}|147[0-9]{8}|1349[0-9]{7})$";
         Pattern pattern = Pattern.compile(reg);
         Matcher matcher = pattern.matcher(cellPhoneNum);
         return matcher.matches();
