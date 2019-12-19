@@ -18,6 +18,28 @@ public final class CipherUtils {
 
     private CipherUtils(){}
 
+    public static String encryptWithMD5(String plaintext){
+        final byte[] asciiCodeBytes = plaintext.getBytes();
+        try {
+            final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
+            md5MsgDigest.reset();
+            md5MsgDigest.update(asciiCodeBytes);
+            byte[] messageDigest = md5MsgDigest.digest();
+            StringBuilder hexBuilder = new StringBuilder();
+            for (byte element : messageDigest) {
+                String hexString = Integer.toHexString(0xFF & element);
+                if (hexString.length() == 1) {
+                    hexBuilder.append('0');
+                }
+                hexBuilder.append(hexString);
+            }
+            plaintext = hexBuilder.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return plaintext;
+    }
+
     public static String str2SHA(String str){
         if (TextUtils.isEmpty(str)) return "";
         byte[] digesta = null;
@@ -78,28 +100,6 @@ public final class CipherUtils {
         } catch (Exception ex) {
             return null;
         }
-    }
-
-    public static String encrypt2MD5(String origin){
-        final byte[] defaultBytes = origin.getBytes();
-        try {
-            final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
-            md5MsgDigest.reset();
-            md5MsgDigest.update(defaultBytes);
-            final byte messageDigest[] = md5MsgDigest.digest();
-            final StringBuffer hexString = new StringBuffer();
-            for (final byte element : messageDigest) {
-                final String hex = Integer.toHexString(0xFF & element);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-            origin = hexString + "";
-        } catch (final NoSuchAlgorithmException nsae) {
-            nsae.printStackTrace();
-        }
-        return origin;
     }
 
 }

@@ -26,7 +26,7 @@ public final class DateTimeUtils {
     /**
      * @param dateStr eg: 2018-10-16 12:26:32
      * @param pattern eg: 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
-     *                    2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
+     *                    2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式，例：2011-01-11T00:00:00.000Z）
      */
     public static Date str2date(String dateStr,String pattern){
         if (StringUtils.isEmpty(dateStr) || StringUtils.isEmpty(pattern)){return new Date();}

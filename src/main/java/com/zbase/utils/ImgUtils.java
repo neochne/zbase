@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.BitmapCompat;
 
-import com.base.libutils.img.CachedImg;
+import com.zbase.img.CachedImg;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
