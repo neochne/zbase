@@ -5,7 +5,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:backgroundDimEnabled">false</item>
-        <item name="android:windowBackground">@drawable/bg_dialog</item>
+        <item name="android:windowBackground">@drawable/bg_loading_dialog</item>
         <item name="colorAccent">@android:color/white</item>
     </style>
 
