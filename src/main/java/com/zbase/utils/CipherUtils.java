@@ -15,32 +15,30 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public final class CipherUtils {
-
     private CipherUtils(){}
 
-    public static String encryptWithMD5(String plaintext){
-        final byte[] asciiCodeBytes = plaintext.getBytes();
+    public static String md5(String plaintext){
         try {
-            final MessageDigest md5MsgDigest = MessageDigest.getInstance("MD5");
-            md5MsgDigest.reset();
-            md5MsgDigest.update(asciiCodeBytes);
-            byte[] messageDigest = md5MsgDigest.digest();
-            StringBuilder hexBuilder = new StringBuilder();
-            for (byte element : messageDigest) {
-                String hexString = Integer.toHexString(0xFF & element);
-                if (hexString.length() == 1) {
-                    hexBuilder.append('0');
-                }
-                hexBuilder.append(hexString);
+            // Create MD5 Hash
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(plaintext.getBytes());
+            byte []messageDigest = digest.digest();
+            // Create Hex String
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String h = Integer.toHexString(0xFF & aMessageDigest);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
             }
-            plaintext = hexBuilder.toString();
+            return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        return plaintext;
+        return "";
     }
 
-    public static String str2SHA(String str){
+    public static String sha1(String str){
         if (TextUtils.isEmpty(str)) return "";
         byte[] digesta = null;
         try {
@@ -51,30 +49,25 @@ public final class CipherUtils {
             e.printStackTrace();
         }
         if (null == digesta) return "";
-        return byte2HEX(digesta);
-    }
-
-    public static String byte2HEX(byte[] b){
-        if (null == b) return "";
-        String hs = "";
-        String stmp = "";
-        for (int n = 0; n < b.length; n++) {
-            stmp = (Integer.toHexString(b[n] & 0XFF));
+        StringBuilder hs = new StringBuilder("");
+        String stmp;
+        for (byte b : digesta) {
+            stmp = (Integer.toHexString(b & 0XFF));
             if (stmp.length() == 1) {
-                hs = hs + "0" + stmp;
+                hs.append("0").append(stmp);
             } else {
-                hs = hs + stmp;
+                hs.append(stmp);
             }
         }
-        return hs;
+        return hs.toString();
     }
 
-    public static String encrypt2AES(String encData, String secretKey, String vector){
-        if (TextUtils.isEmpty(secretKey) || 16 != secretKey.length()) return "";
+    public static String encrypt2AES(String encData, String key, String vector){
+        if (TextUtils.isEmpty(key) || 16 != key.length()) return "";
         byte[] encrypted = null;
         try {
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-            byte[] raw = secretKey.getBytes();
+            byte[] raw = key.getBytes();
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             IvParameterSpec iv = new IvParameterSpec(vector.getBytes());// 使用CBC模式，需要一个向量iv，可增加加密算法的强度
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
@@ -101,5 +94,4 @@ public final class CipherUtils {
             return null;
         }
     }
-
 }
