@@ -36,4 +36,19 @@ public final class StringUtils {
         return isEmpty(s) ? "0" : s;
     }
 
+    public static String getValueAscStr(Map<String, String> dataMap) {
+        List<Map.Entry<String, String>> dataEntries = new ArrayList<>(dataMap.entrySet());
+        Collections.sort(dataEntries, new Comparator<Map.Entry<String, String>>() {
+            @Override
+            public int compare(Entry<String, String> o1, Entry<String, String> o2) {
+                return (o1.getValue().compareTo(o2.getValue()));
+            }
+        });
+        StringBuilder ascStringBuilder = new StringBuilder("");
+        for (Map.Entry<String, String> entry:dataEntries){
+            ascStringBuilder.append(entry.getValue());
+        }
+        return ascStringBuilder.toString();
+    }
+
 }
