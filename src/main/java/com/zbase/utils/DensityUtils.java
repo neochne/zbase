@@ -1,11 +1,13 @@
-/*
- * Copyright (c) 2019. All rights reserved.
- */
-
-package com.zbase.utils;
+package com.jyebest.medicalzf.track;
 
 import android.content.Context;
+import android.content.res.Resources;
 
+/**
+ * author:       sharp
+ * created at:   2018/10/16 6:25 PM
+ * company:      JingYouGroup
+ */
 public final class DensityUtils {
 
     private DensityUtils(){}
@@ -13,28 +15,36 @@ public final class DensityUtils {
     /**
      * dp > px
      */
-    public static int dip2px(Context context, float dpValue) {
-        return (int) (dpValue * context.getResources().getDisplayMetrics().density);
+    public static float dip2px(Context context, float dpValue) {
+        return dpValue * getDensity(context);
     }
     /**
      * px > dp
      */
-    public static int px2dip(Context context, float pxValue) {
-        return (int) (pxValue / context.getResources().getDisplayMetrics().density);
-    }
-
-    /**
-     * px > sp
-     */
-    public static int px2sp(Context context, float pxValue) {
-        return (int) (pxValue / context.getResources().getDisplayMetrics().scaledDensity);
+    public static float px2dip(Context context, float pxValue) {
+        return pxValue / getDensity(context);
     }
 
     /**
      * sp > px
      */
-    public static int sp2px(Context context, float spValue) {
-        return (int) (spValue * context.getResources().getDisplayMetrics().scaledDensity);
+    public static float sp2px(Context context, float spValue) {
+        return spValue * getScaledDensity(context);
+    }
+
+    /**
+     * px > sp
+     */
+    public static float px2sp(Context context, float pxValue) {
+        return pxValue / getScaledDensity(context);
+    }
+
+    private static float getDensity(Context context){
+        return (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().density;
+    }
+
+    private static float getScaledDensity(Context context){
+        return (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().scaledDensity;
     }
 
 }
