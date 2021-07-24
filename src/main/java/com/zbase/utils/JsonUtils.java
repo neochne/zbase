@@ -87,5 +87,23 @@ public final class JsonUtils {
         }
         return array == null ? new JSONArray() : array;
     }
+    
+    public static JSONArray constructArray(String arrayStr) {
+        try {
+            return new JSONArray(arrayStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static JSONObject constructObject(String arrayStr) {
+        try {
+            return new JSONObject(arrayStr);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }
