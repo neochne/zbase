@@ -48,6 +48,15 @@ public final class JsonUtils {
         }
         return 0;
     }
+    
+    public static boolean getBoolValue(JSONObject object, String key) {
+        try {
+            return object.getBoolean(key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public static JSONObject getJSONObject(JSONObject object, String key) {
         try {
