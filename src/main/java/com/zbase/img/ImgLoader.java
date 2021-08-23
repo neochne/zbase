@@ -5,7 +5,6 @@
 package com.zbase.img;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -15,6 +14,8 @@ import com.zbase.http.HttpGlobalConfigure;
 import com.zbase.http.OkHttpClientFactory;
 
 import java.io.InputStream;
+
+import androidx.fragment.app.Fragment;
 
 public final class ImgLoader {
 

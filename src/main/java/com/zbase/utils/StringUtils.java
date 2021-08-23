@@ -4,6 +4,12 @@
 
 package com.zbase.utils;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 public final class StringUtils {
 
     private StringUtils() {
@@ -40,8 +46,8 @@ public final class StringUtils {
         List<Map.Entry<String, String>> dataEntries = new ArrayList<>(dataMap.entrySet());
         Collections.sort(dataEntries, new Comparator<Map.Entry<String, String>>() {
             @Override
-            public int compare(Entry<String, String> o1, Entry<String, String> o2) {
-                return (o1.getValue().compareTo(o2.getValue()));
+            public int compare(Map.Entry<String, String> stringStringEntry, Map.Entry<String, String> t1) {
+                return (stringStringEntry.getValue().compareTo(t1.getValue()));
             }
         });
         StringBuilder ascStringBuilder = new StringBuilder("");

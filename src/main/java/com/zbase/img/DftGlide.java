@@ -1,7 +1,6 @@
 package com.zbase.img;
 
 import android.graphics.drawable.Drawable;
-import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -73,7 +72,7 @@ public class DftGlide implements ImgLoadable {
         if (loadListener != null){
             rb = rb.listener(new RequestListener<Drawable>() {
                 @Override
-                public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                public boolean onLoadFailed(GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                     loadListener.onFail(e);
                     return false;
                 }

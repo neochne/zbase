@@ -8,8 +8,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.BitmapCompat;
 
 import com.zbase.img.CachedImg;
 
@@ -25,6 +23,9 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.BitmapCompat;
 
 public final class ImgUtils {
 
