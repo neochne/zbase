@@ -14,52 +14,70 @@ import java.util.concurrent.TimeUnit;
 public final class DateTimeUtils {
 
     private DateTimeUtils(){}
-
-    /**
-     * @param pattern eg: yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
-     */
-    public static String date2str(Date date,String pattern){
-        if (date == null || StringUtils.isEmpty(pattern)) {return "";}
-        return new SimpleDateFormat(pattern,Locale.CHINA).format(date);
+   
+    public static String formatDate(Date date, String pattern) {
+        return new SimpleDateFormat(pattern, Locale.CHINA).format(date);
     }
 
     /**
-     * @param dateStr eg: 2018-10-16 12:26:32
-     * @param pattern eg: 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
-     *                    2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式，例：2011-01-11T00:00:00.000Z）
+     * @param pattern 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
+     *                2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
      */
-    public static Date str2date(String dateStr,String pattern){
-        if (StringUtils.isEmpty(dateStr) || StringUtils.isEmpty(pattern)){return new Date();}
+    public static Date formatDate(String date, String pattern) {
         try {
-            return new SimpleDateFormat(pattern,Locale.CHINA).parse(dateStr);
+            return new SimpleDateFormat(pattern,Locale.CHINA).parse(date);
         } catch (ParseException e) {
-            e.printStackTrace();
-            return new Date();
+            return null;
         }
     }
 
-    /**
-     * 第二个日期是否大于第一个日期
-     */
-    public static boolean is2GreatThan1(Date firstDate,Date secondDate){
-        if (firstDate == null || secondDate == null){return false;}
-        return (secondDate.getTime() - firstDate.getTime()) > 0;
+    public static String formatDate2Day(String date) {
+        try {
+            return formatDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).parse(date), "yyyy-MM-dd");
+        } catch (ParseException e) {
+            return "";
+        }
     }
 
-    /**
-     * 日期间隔时间，单位：天
-     */
-    public static String intervalDays(Date smallDate,Date bigDate){
-        if (smallDate == null || bigDate == null){return "";}
-        return intervalDays(bigDate.getTime(), smallDate.getTime());
+    public static boolean is1gt2(String date1, String date2) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        try {
+            return is1gt2(Objects.requireNonNull(sdf.parse(date1)), Objects.requireNonNull(sdf.parse(date2)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
-    /**
-     * 日期间隔时间，单位：天
-     */
-    public static String intervalDays(long smallMS,long bigMS){
-        int days = (int) ((bigMS - smallMS) / (1000*3600*24));
-        return String.valueOf(days);
+    public static boolean is1gte2(String date1, String date2) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+        try {
+            return is1gte2(Objects.requireNonNull(sdf.parse(date1)), Objects.requireNonNull(sdf.parse(date2)));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static boolean is1gt2(Date date1, Date date2) {
+        return (date1.getTime() - date2.getTime()) > 0;
+    }
+
+    public static boolean is1gte2(Date date1, Date date2) {
+        return (date1.getTime() - date2.getTime()) >= 0;
+    }
+
+    public static String intervalDays(Date big,Date small){
+        return intervalDays(big.getTime(), small.getTime());
+    }
+
+    public static String intervalDays(String big, String small) {
+        return intervalDays(Objects.requireNonNull(formatDate(big, "yyyy-MM-dd")).getTime(),
+                Objects.requireNonNull(formatDate(small, "yyyy-MM-dd")).getTime());
+    }
+
+    public static String intervalDays(long big,long small){
+        return String.valueOf((int) ((big - small) / (1000*3600*24)));
     }
 
     /**
@@ -110,30 +128,32 @@ public final class DateTimeUtils {
     public static long ms2Seconds(long ms){
         return TimeUnit.MILLISECONDS.toSeconds(ms);
     }
-
-    /**
-     * 计算年龄
-     */
-    public static String calcAge(Date birthDate,Date curDate) {
-        if (birthDate == null || curDate == null) {return "";}
+    
+    public static String calcAgeByBirth(Date birthDate) {
+        /// birth
         Calendar birthCalendar = Calendar.getInstance();
-        Calendar curCalendar = Calendar.getInstance();
         birthCalendar.setTime(birthDate);
-        curCalendar.setTime(curDate);
         int birthYear = birthCalendar.get(Calendar.YEAR);
+        int birthMonth = birthCalendar.get(Calendar.MONTH);
+        /// birth
+        /// current
+        Calendar curCalendar = Calendar.getInstance();
+        curCalendar.setTime(new Date());
         int curYear = curCalendar.get(Calendar.YEAR);
-        int age = curYear - birthYear;
         int curMonth = curCalendar.get(Calendar.MONTH);
-        int dobMonth = birthCalendar.get(Calendar.MONTH);
-        if (dobMonth > curMonth) { // this year can't be counted!
+        /// current
+        /// calc
+        int age = curYear - birthYear;
+        if (birthMonth > curMonth) {
             age--;
-        } else if (dobMonth == curMonth) { // same month? check for day
+        } else if (birthMonth == curMonth) {
+            int birthDay = birthCalendar.get(Calendar.DAY_OF_MONTH);
             int curDay = curCalendar.get(Calendar.DAY_OF_MONTH);
-            int dobDay = birthCalendar.get(Calendar.DAY_OF_MONTH);
-            if (dobDay > curDay) { // this year can't be counted!
+            if (birthDay > curDay) {
                 age--;
             }
         }
+        /// calc
         return String.valueOf(age);
     }
 
