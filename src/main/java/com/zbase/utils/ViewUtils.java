@@ -29,17 +29,15 @@ public final class ViewUtils {
         }
     }
 
-    public static boolean isChildScrollToBottom(AbsListView absListView){
-        int count = absListView.getAdapter().getCount();
-        int firstPos = absListView.getFirstVisiblePosition();
-        int lastPos = absListView.getLastVisiblePosition();
-        if (lastPos > 0 && count > 0 && lastPos == count - 1) {
-            return true;
-        }
-        if (firstPos == 0 && absListView.getChildAt(0).getTop() >= absListView.getPaddingTop()) {
-            return false;
-        }
-        return false;
+    public static boolean isChildScrollToBottom(AbsListView absListView,int scrollState){
+        int lastVisiblePosition = absListView.getLastVisiblePosition();
+        int sumCount = absListView.getAdapter().getCount();
+        int bottom = absListView.getChildAt(absListView.getChildCount() - 1).getBottom();
+        int top = absListView.getChildAt(0).getTop();
+        int height = absListView.getHeight();
+        return top != 0 
+                && scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE 
+                && (lastVisiblePosition == sumCount - 1 && bottom <= height);
     }
 
     public static boolean isChildScrollToBottom(RecyclerView recyclerView){
