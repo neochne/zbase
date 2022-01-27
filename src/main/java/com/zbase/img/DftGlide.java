@@ -11,7 +11,7 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
-import com.zbase.utils.StringUtils;
+import com.zbase.util.StringUtils;
 
 import java.io.File;
 

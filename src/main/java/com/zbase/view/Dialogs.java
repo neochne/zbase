@@ -14,7 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.zbase.R;
-import com.zbase.utils.DeviceUtils;
+import com.zbase.util.DeviceUtils;
 
 import java.util.Arrays;
 import java.util.List;
