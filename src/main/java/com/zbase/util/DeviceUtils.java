@@ -7,20 +7,13 @@ package com.zbase.util;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.provider.Settings;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-
-import java.io.File;
-
-import androidx.core.content.FileProvider;
 
 public final class DeviceUtils {
 
@@ -37,7 +30,7 @@ public final class DeviceUtils {
     /**
      * @return eg: 6.0
      */
-    public static String getSysVersion() {
+    public static String getSystemVersion() {
         return Build.VERSION.RELEASE;
     }
 
@@ -108,36 +101,6 @@ public final class DeviceUtils {
                         (Build.MANUFACTURER.length() % 10) +
                         (Build.MODEL.length() % 10) +
                         (Build.PRODUCT.length() % 10) << 16);
-    }
-
-    public static File getCachedPath(Context context) {
-        if (isSdCardAvailable()) {
-            return Environment.getExternalStorageDirectory();
-        } else {
-            return context.getFilesDir();
-        }
-    }
-
-    public static boolean isSdCardAvailable() {
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-            File sd = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
-            return sd.canWrite();
-        } else {
-            return false;
-        }
-    }
-
-    public static void installApk(Context context, String apkFilePath, String authorities) {
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        Uri contentUri = FileProvider.getUriForFile(
-                context
-                , authorities
-                , new File(apkFilePath));
-
-        intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
-        context.startActivity(intent);
     }
 
 }

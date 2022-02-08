@@ -6,12 +6,17 @@ package com.zbase.http;
 
 public interface Callback {
 
-    void onStart();
+    default void onSuccess(Response response) {}
 
-    void onSuccess(Rep response);
+    /**
+     * @param progress download or upload progress,if the value is 100,it done
+     * @param fileName upload file's name
+     * @param totalLength file total size in byte
+     */
+    default void onProgress(int progress,String fileName,long totalLength) {}
 
-    void onError(Rep response, Exception e);
+    default void onFail(Response response) {}
 
-    void onFinish();
+    default void onException(Exception exception) {}
 
 }

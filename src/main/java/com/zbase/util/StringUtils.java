@@ -50,8 +50,8 @@ public final class StringUtils {
         List<Map.Entry<String, String>> dataEntries = new ArrayList<>(dataMap.entrySet());
         Collections.sort(dataEntries, new Comparator<Map.Entry<String, String>>() {
             @Override
-            public int compare(Map.Entry<String, String> stringStringEntry, Map.Entry<String, String> t1) {
-                return (stringStringEntry.getValue().compareTo(t1.getValue()));
+            public int compare(Map.Entry<String, String> stringEntry, Map.Entry<String, String> t1) {
+                return (stringEntry.getValue().compareTo(t1.getValue()));
             }
         });
         StringBuilder ascStringBuilder = new StringBuilder("");

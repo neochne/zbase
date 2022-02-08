@@ -4,7 +4,14 @@
 
 package com.zbase.util;
 
-import android.text.TextUtils;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Environment;
+
+import androidx.core.content.FileProvider;
+import androidx.fragment.app.FragmentActivity;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -24,108 +31,95 @@ public final class FileUtils {
     }
 
     public static boolean isFile(File file) {
-        if (null == file) return false;
         return file.isFile();
     }
 
     public static boolean isDir(File file) {
-        if (null == file) return false;
         return file.isDirectory();
     }
 
     public static boolean isFileOrDirExists(File file) {
-        if (null == file) return false;
         return file.exists();
     }
 
     public static boolean createDir(File file) {
-        if (isFileOrDirExists(file)) return true;
-        return file.mkdirs();
+        return isFileOrDirExists(file) || file.mkdirs();
     }
 
     public static boolean createFile(File file) {
-        File dirFile = new File(file.getParent());
-        if (!isFileOrDirExists(dirFile)) {
-            if (!dirFile.mkdirs()) {
+        String parent = file.getParent();
+        if (StringUtils.isEmpty(parent)) {
+            return false;
+        }
+        File dir = new File(parent);
+        if (!isFileOrDirExists(dir)) {
+            if (!dir.mkdirs()) {
                 return false;
             }
         }
         if (isFileOrDirExists(file)) {
             return true;
         }
-        boolean r = false;
         try {
-            r = file.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return r;
-    }
-
-    public static boolean saveTxt2Device(String json, String dirPath, String fileName) {
-        if (TextUtils.isEmpty(json)
-                || TextUtils.isEmpty(dirPath)
-                || TextUtils.isEmpty(fileName)) return false;
-        if (!createDir(new File(dirPath))) return false;
-        File txt = new File(dirPath + fileName);
-        byte[] bytes = json.getBytes();
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(txt);
-            fos.write(bytes);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return false;
+            return file.createNewFile();
         } catch (IOException e) {
             e.printStackTrace();
             return false;
-        } finally {
-            if (null != fos) {
-                try {
-                    fos.flush();
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
         }
-        return true;
     }
 
-    public static String readTxtFromDevice(File txtFile) {
+    public static boolean saveTextFile(String text,File textFile) {
+        if (!createFile(textFile)) {return false;}
+        byte[] bytes = text.getBytes();
+        try (OutputStream bos = new BufferedOutputStream(new FileOutputStream(textFile))) {
+            bos.write(bytes);
+            bos.flush();
+            bos.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static String readTextFromFile(File txtFile) {
         if (!isFileOrDirExists(txtFile)) return "";
-        InputStream is = null;
-        try {
-            is = new FileInputStream(txtFile);
-            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(txtFile)))) {
             StringBuilder sb = new StringBuilder();
-            String str;
-            while ((str = br.readLine()) != null) {
-                sb.append(str);
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
             }
+            br.close();
             return sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
-        } finally {
-            if (is != null) {
-                try {
-                    is.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            return "";
         }
-        return "";
     }
 
-    public static boolean delete(File file) {
-        if (!isFileOrDirExists(file)) return false;
-        return file.delete();
+    public static String readTextFromAssetsFile(Context context,String assetsFilePath) {
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(assetsFilePath)))) {
+            StringBuilder sb = new StringBuilder();
+            String line = "";
+            while ((line = br.readLine()) != null) {
+                sb.append(line);
+            }
+            br.close();
+            return sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static boolean deleteFile(File file) {
+        return (!isFileOrDirExists(file) || file.delete());
     }
 
     public static void deleteAll(File file) {
         if (isFileOrDirExists(file)) {
-            File files[] = file.listFiles();
+            File[] files = file.listFiles();
             if (files != null)
                 for (File f : files) {
                     if (f.isDirectory()) { // 判断是否为文件夹
@@ -148,7 +142,6 @@ public final class FileUtils {
                 }
             file.delete();
         }
-
     }
 
     public static long getFileSizeInKB(File file) {
@@ -196,6 +189,42 @@ public final class FileUtils {
             bos.flush();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public static File getCachedPath(Context context) {
+        if (isSdCardAvailable()) {
+            return Environment.getExternalStorageDirectory();
+        } else {
+            return context.getFilesDir();
+        }
+    }
+
+    public static boolean isSdCardAvailable() {
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            File sd = new File(Environment.getExternalStorageDirectory().getAbsolutePath());
+            return sd.canWrite();
+        } else {
+            return false;
+        }
+    }
+
+    public static void installApk(FragmentActivity activity, File apk) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // >= 7.0
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            Uri contentUri = FileProvider.getUriForFile(
+                    activity
+                    , activity.getPackageName() + ".fileprovider"
+                    , apk);
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+            activity.startActivity(intent);
+        } else { // < 7.0
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+            activity.startActivity(intent);
         }
     }
 

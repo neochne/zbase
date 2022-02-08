@@ -6,13 +6,13 @@ package com.zbase.http;
 
 import org.json.JSONObject;
 
-public class YesResponse {
+public class Response {
 
     private final int httpCode;
 
     private final JSONObject bodyJsonObject;
 
-    public YesResponse(int httpCode, JSONObject bodyJsonObject) {
+    public Response(int httpCode, JSONObject bodyJsonObject) {
         this.httpCode = httpCode;
         this.bodyJsonObject = bodyJsonObject;
     }

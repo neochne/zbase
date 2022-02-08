@@ -2,16 +2,18 @@ package com.zbase.http;
 
 public final class YesHttp {
 
+    private static YesHttpClient yesHttpClient;
+
     public static void initClient(YesHttpClient httpClient) {
-        YesRequest.instance().setYesHttpClient(httpClient);
+        yesHttpClient = httpClient;
     }
 
     public static void addCommonHeader(String name,String value) {
-        YesRequest.instance().getYesHttpClient().addCommonHeader(name,value);
+        yesHttpClient.addCommonHeader(name,value);
     }
 
-    public static YesRequest request(String url) {
-        return YesRequest.instance().url(url);
+    public static YesHttpClient request(String url) {
+        return yesHttpClient.url(url);
     }
 
 }

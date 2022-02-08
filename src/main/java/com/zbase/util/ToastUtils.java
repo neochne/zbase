@@ -18,12 +18,7 @@ public final class ToastUtils {
     }
 
     public static void showInWorkThread(final Context context, final String msg){
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
-            }
-        });
+        new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, msg, Toast.LENGTH_LONG).show());
     }
 
 }
