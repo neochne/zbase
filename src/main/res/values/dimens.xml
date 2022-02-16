@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dialog   -->
+    <dimen name="dialog_title_text_size">17sp</dimen>
+
+    <!-- Loading Dialog   -->
+    <dimen name="loading_dialog_text_size">15sp</dimen>
+    <dimen name="loading_dialog_padding">20dp</dimen>
+    <dimen name="loading_dialog_text_margin">5dp</dimen>
+
+    <!-- Prompt Dialog   -->
+    <dimen name="prompt_dialog_title_top_margin">30dp</dimen>
+    <dimen name="prompt_dialog_left_right_margin">20dp</dimen>
+    <dimen name="prompt_dialog_message_text_size">16sp</dimen>
+    <dimen name="prompt_dialog_message_line_height">20dp</dimen>
+    <dimen name="prompt_dialog_message_padding_top">15dp</dimen>
+    <dimen name="prompt_dialog_message_padding">18dp</dimen>
+    <dimen name="prompt_dialog_operate_text_padding">13dp</dimen>
+
+    <!-- Select Dialog   -->
+    <dimen name="select_dialog_title_margin">12dp</dimen>
+    <dimen name="select_dialog_cancel_icon_right_margin">10dp</dimen>
+    <dimen name="select_dialog_item_text_size">15sp</dimen>
+    <dimen name="select_dialog_item_text_padding">10dp</dimen>
+</resources>

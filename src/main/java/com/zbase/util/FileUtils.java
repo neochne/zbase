@@ -68,8 +68,10 @@ public final class FileUtils {
         }
     }
 
-    public static boolean saveTextFile(String text,File textFile) {
-        if (!createFile(textFile)) {return false;}
+    public static boolean saveTextFile(String text, File textFile) {
+        if (!createFile(textFile)) {
+            return false;
+        }
         byte[] bytes = text.getBytes();
         try (OutputStream bos = new BufferedOutputStream(new FileOutputStream(textFile))) {
             bos.write(bytes);
@@ -98,7 +100,7 @@ public final class FileUtils {
         }
     }
 
-    public static String readTextFromAssetsFile(Context context,String assetsFilePath) {
+    public static String readTextFromAssetsFile(Context context, String assetsFilePath) {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(context.getAssets().open(assetsFilePath)))) {
             StringBuilder sb = new StringBuilder();
             String line = "";
@@ -214,11 +216,7 @@ public final class FileUtils {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            Uri contentUri = FileProvider.getUriForFile(
-                    activity
-                    , activity.getPackageName() + ".fileprovider"
-                    , apk);
-            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+            intent.setDataAndType(FileProvider.getUriForFile(activity,"com.zbase.fileprovider", apk), "application/vnd.android.package-archive");
             activity.startActivity(intent);
         } else { // < 7.0
             Intent intent = new Intent(Intent.ACTION_VIEW);

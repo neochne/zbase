@@ -1,7 +1,6 @@
 package com.zbase.util;
 
 import android.content.Context;
-import android.content.res.Resources;
 
 /**
  * author:       sharp
@@ -40,11 +39,11 @@ public final class DensityUtils {
     }
 
     private static float getDensity(Context context){
-        return (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().density;
+        return context.getResources().getDisplayMetrics().density;
     }
 
     private static float getScaledDensity(Context context){
-        return (context == null ? Resources.getSystem() : context.getResources()).getDisplayMetrics().scaledDensity;
+        return context.getResources().getDisplayMetrics().scaledDensity;
     }
 
 }

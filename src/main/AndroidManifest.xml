@@ -1,1 +1,21 @@
-<manifest package="com.zbase" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.zbase" >
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
+
+    <application>
+        <provider
+            android:name=".provider.BaseLocalFileProvider"
+            android:authorities="com.zbase.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/base_provider_file" />
+        </provider>
+    </application>
+
+</manifest>

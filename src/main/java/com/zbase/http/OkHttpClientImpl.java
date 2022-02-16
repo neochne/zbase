@@ -280,7 +280,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
         MultipartBody.Builder multipartBuilder = new MultipartBody.Builder();
         if (bodyNamesAndValues != null && bodyNamesAndValues.length > 0) {
             for (int i = 0; i < bodyNamesAndValues.length; i += 2) {
-                multipartBuilder.addFormDataPart(String.valueOf(bodyNamesAndValues[i]), (String) bodyNamesAndValues[i + 1]);
+                multipartBuilder.addFormDataPart(String.valueOf(bodyNamesAndValues[i]), String.valueOf(bodyNamesAndValues[i + 1]));
             }
         }
         return builder.post(multipartBuilder.build()).build();

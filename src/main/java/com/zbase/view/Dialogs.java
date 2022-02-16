@@ -1,25 +1,33 @@
 package com.zbase.view;
 
-import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.view.LayoutInflater;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.InsetDrawable;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.view.ViewCompat;
+
 import com.zbase.R;
-import com.zbase.util.DeviceUtils;
+import com.zbase.util.ResourceUtils;
+import com.zbase.util.TextViewUtils;
 
 import java.util.Arrays;
 import java.util.List;
-
-import androidx.appcompat.app.AlertDialog;
 
 public final class Dialogs {
 
@@ -28,132 +36,191 @@ public final class Dialogs {
     private Dialogs() {
     }
 
-    /*
-     * 加载对话框（start）
+    /**
+     * 加载对话框
      */
-    public static void showProgressDialog(Context context) {
-        showProgressDialog(context, "加载中...");
+    public static void showLoadingDialog(Context context) {
+        showLoadingDialog(context, "加载中...");
     }
 
-    public static void showProgressDialog(Context context, String msg) {
-        View dialogView = View.inflate(context, R.layout.dialog_progress, null);
-        ((TextView) dialogView.findViewById(R.id.tv_msg)).setText(msg);
+    /**
+     * 加载对话框
+     */
+    public static void showLoadingDialog(Context context, String msg) {
+        /*
+         * container
+         */
+        LinearLayout containerLinearLayout = new LinearLayout(context);
+        containerLinearLayout.setOrientation(LinearLayout.VERTICAL);
+        int padding = ResourceUtils.getPixel(context, R.dimen.loading_dialog_padding);
+        containerLinearLayout.setPadding(padding, padding - 10, padding, padding - 10);
+
+        /*
+         * ProgressBar
+         */
+        ProgressBar circleProgressBar = new ProgressBar(context);
+        circleProgressBar.getIndeterminateDrawable().setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN));
+        circleProgressBar.setScaleX(.8f);
+        circleProgressBar.setScaleY(.8f);
+        containerLinearLayout.addView(circleProgressBar);
+
+        /*
+         * Text
+         */
+        LinearLayout.LayoutParams progressTextViewLayoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        progressTextViewLayoutParams.topMargin = ResourceUtils.getPixel(context, R.dimen.loading_dialog_text_margin);
+        TextView progressTextView = new TextView(context);
+        progressTextView.setLayoutParams(progressTextViewLayoutParams);
+        TextViewUtils.setTextSizeInPixel(context, progressTextView, R.dimen.loading_dialog_text_size);
+        progressTextView.setText(msg);
+        progressTextView.setTextColor(Color.WHITE);
+        containerLinearLayout.addView(progressTextView);
+
         sProgressDialog = new AlertDialog.Builder(context, R.style.ProgressDialogTheme)
-                .setView(dialogView)
+                .setView(containerLinearLayout)
                 .create();
         sProgressDialog.setCanceledOnTouchOutside(false);
         sProgressDialog.show();
     }
 
-    public static void cancelProgressDialog() {
+    public static void cancelLoadingDialog() {
         if (sProgressDialog != null) {
             sProgressDialog.cancel();
             sProgressDialog = null;
         }
     }
-    /*
-     * 加载对话框（end）
-     */
 
-    /*
-     * 提示对话框（start）
+    /**
+     * 提示对话框
      */
-    public static void showPromptDialog(Activity activity,
-                                        String msg,
-                                        final View.OnClickListener positiveListener) {
-        showPromptDialog(activity, msg, positiveListener, null);
+    public static void showPromptDialog(Context context,
+                                        String message,
+                                        View.OnClickListener positiveListener) {
+        showPromptDialog(context,"提示",message,"取消","确定",null,positiveListener);
     }
 
-    public static void showPromptDialog(Activity activity,
-                                        String msg,
-                                        final View.OnClickListener positiveListener,
-                                        final DialogInterface.OnCancelListener onCancelListener) {
-        showPromptDialog(activity, "提示", msg, "取消", "确定", null, positiveListener, onCancelListener);
-    }
-
-    public static void showPromptDialog(Activity activity,
+    /**
+     * 提示对话框
+     */
+    public static void showPromptDialog(Context context,
                                         String title,
-                                        String msg,
+                                        String message,
                                         String negative,
                                         String positive,
-                                        final View.OnClickListener negativeListener,
-                                        final View.OnClickListener positiveListener) {
-        showPromptDialog(activity, title, msg, negative, positive, negativeListener, positiveListener, null);
+                                        View.OnClickListener negativeListener,
+                                        View.OnClickListener positiveListener) {
+        /*
+         * Dialog
+         */
+        PromptDialogView promptDialogView = new PromptDialogView(context, title, message, negative, positive);
+        Dialog promptDialog = showDialog(context,promptDialogView);
+        promptDialogView.setNegativeClickListener(v -> {
+            promptDialog.cancel();
+            if (negativeListener == null) {return;}
+            negativeListener.onClick(v);
+        });
+        promptDialogView.setPositiveClickListener(v -> {
+            promptDialog.cancel();
+            positiveListener.onClick(v);
+        });
     }
 
-    public static void showPromptDialog(Activity activity,
+    /**
+     * 提示对话框（only one positive button）
+     */
+    public static void showPromptDialog(Context context,
                                         String title,
-                                        String msg,
-                                        String negative,
+                                        String message,
                                         String positive,
-                                        final View.OnClickListener negativeListener,
-                                        final View.OnClickListener positiveListener,
-                                        final DialogInterface.OnCancelListener onCancelListener) {
-        final AlertDialog promptDialog = new AlertDialog.Builder(activity).create();
-        View view = View.inflate(activity, R.layout.dialog_prompt, null);
-        promptDialog.setView(view);
-        promptDialog.show();
-        ((TextView) view.findViewById(R.id.tv_title)).setText(title);
-        ((TextView) view.findViewById(R.id.tv_msg)).setText(msg);
-        TextView negativeTextView = view.findViewById(R.id.tv_negative);
-        TextView positiveTextView = view.findViewById(R.id.tv_positive);
-        negativeTextView.setText(negative);
-        positiveTextView.setText(positive);
-        negativeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptDialog.cancel();
-                if (negativeListener != null) {
-                    negativeListener.onClick(v);
-                }
-            }
+                                        View.OnClickListener positiveListener) {
+        PromptDialogView promptDialogView = new PromptDialogView(context, title, message, positive);
+        Dialog promptDialog = showDialog(context,promptDialogView);
+        promptDialogView.setPositiveClickListener(v -> {
+            promptDialog.cancel();
+            positiveListener.onClick(v);
         });
-        positiveTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptDialog.cancel();
-                positiveListener.onClick(v);
-            }
-        });
-        promptDialog.setOnCancelListener(onCancelListener);
     }
-
-    /*
-     * 提示对话框（end）
-     */
-
-
-    /*
-     * 单项选择对话框（start）
-     */
 
     public interface OnTextSelectListener {
         void onTextSelect(String text, int pos);
     }
 
-    public static void showSingleSelectDialog(Activity activity,
+    /**
+     * 单项选择对话框
+     */
+    public static void showSingleSelectDialog(Context context,
                                               String title,
                                               String[] items,
                                               OnTextSelectListener listener) {
-        showSingleSelectDialog(activity, title, Arrays.asList(items), listener);
+        showSingleSelectDialog(context, title, Arrays.asList(items), listener);
     }
 
-    public static void showSingleSelectDialog(Activity activity,
+    /**
+     * 单项选择对话框
+     */
+    public static void showSingleSelectDialog(Context context,
                                               String title,
                                               final List<String> items,
                                               final OnTextSelectListener listener) {
-        final AlertDialog alertDialog = new AlertDialog.Builder(activity).create();
-        View view = alertDialog.getLayoutInflater().inflate(R.layout.dialog_select, null);
-        TextView tvTitle = view.findViewById(R.id.tv_title);
-        tvTitle.setText(title);
-        view.findViewById(R.id.rl_title).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.cancel();
-            }
-        });
-        ListView lv = view.findViewById(R.id.lv);
-        lv.setAdapter(new BaseAdapter() {
+        /*
+         * Container
+         */
+        ConstraintLayout containerConstraintLayout = new ConstraintLayout(context);
+        containerConstraintLayout.setBackgroundColor(Color.WHITE);
+
+        /*
+         * Title
+         */
+        ConstraintLayout.LayoutParams titleLayoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        titleLayoutParams.topToTop = ConstraintLayout.LayoutParams.PARENT_ID;
+        titleLayoutParams.startToStart = ConstraintLayout.LayoutParams.PARENT_ID;
+        titleLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        titleLayoutParams.topMargin = ResourceUtils.getPixel(context,R.dimen.select_dialog_title_margin);
+        TextView titleTextView = new TextView(context);
+        titleTextView.setId(ViewCompat.generateViewId());
+        titleTextView.setTextColor(Color.BLACK);
+        TextViewUtils.setTextSizeInPixel(context, titleTextView, R.dimen.dialog_title_text_size);
+        titleTextView.setText(title);
+        titleTextView.setTypeface(Typeface.DEFAULT_BOLD);
+        titleTextView.setLayoutParams(titleLayoutParams);
+        containerConstraintLayout.addView(titleTextView);
+
+        /*
+         * Cancel icon
+         */
+        ConstraintLayout.LayoutParams cancelLayoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.WRAP_CONTENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        cancelLayoutParams.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+        cancelLayoutParams.topToTop = titleTextView.getId();
+        cancelLayoutParams.bottomToBottom = titleTextView.getId();
+        cancelLayoutParams.rightMargin = ResourceUtils.getPixel(context,R.dimen.select_dialog_cancel_icon_right_margin);
+        ImageView cancelImageView = new ImageView(context);
+        cancelImageView.setLayoutParams(cancelLayoutParams);
+        cancelImageView.setImageResource(R.drawable.ic_baseline_clear_24);
+        containerConstraintLayout.addView(cancelImageView);
+
+        /*
+         * Horizontal divider
+         */
+        ConstraintLayout.LayoutParams horizontalDividerLayoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, 1);
+        horizontalDividerLayoutParams.topToBottom = titleTextView.getId();
+        horizontalDividerLayoutParams.topMargin = ResourceUtils.getPixel(context,R.dimen.select_dialog_title_margin);
+        View horizontalDivider = new View(context);
+        horizontalDivider.setId(ViewCompat.generateViewId());
+        horizontalDivider.setLayoutParams(horizontalDividerLayoutParams);
+        horizontalDivider.setBackgroundColor(ResourceUtils.getColor(context, R.color.divider));
+        containerConstraintLayout.addView(horizontalDivider);
+
+        /*
+         * List
+         */
+        ConstraintLayout.LayoutParams listLayoutParams = new ConstraintLayout.LayoutParams(ConstraintLayout.LayoutParams.MATCH_PARENT, ConstraintLayout.LayoutParams.WRAP_CONTENT);
+        listLayoutParams.topToBottom = horizontalDivider.getId();
+        ListView selectListView = new ListView(context);
+        selectListView.setDivider(new ColorDrawable(ResourceUtils.getColor(context,R.color.divider)));
+        selectListView.setDividerHeight(1);
+        selectListView.setLayoutParams(listLayoutParams);
+        int itemPadding = ResourceUtils.getPixel(context,R.dimen.select_dialog_item_text_padding);
+        selectListView.setAdapter(new BaseAdapter() {
 
             @Override
             public int getCount() {
@@ -172,30 +239,44 @@ public final class Dialogs {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                TextView tv = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.item_tv, null);
-                tv.setText(getItem(position));
-                return tv;
+                TextView itemTextView = new TextView(context);
+                itemTextView.setPadding(0,itemPadding,0,itemPadding);
+                itemTextView.setText(getItem(position));
+                itemTextView.setGravity(Gravity.CENTER);
+                return itemTextView;
             }
 
         });
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                alertDialog.cancel();
-                listener.onTextSelect(items.get(position), position);
-            }
+        containerConstraintLayout.addView(selectListView);
+
+        /*
+         * Dialog
+         */
+        Dialog selectDialog = showDialog(context,containerConstraintLayout);
+
+        /*
+         * Listener
+         */
+        cancelImageView.setOnClickListener((v)->selectDialog.cancel());
+
+        selectListView.setOnItemClickListener((parent, view, position, id) -> {
+            selectDialog.cancel();
+            listener.onTextSelect(items.get(position), position);
         });
-        alertDialog.setView(view);
-        alertDialog.show();
-        Window w = alertDialog.getWindow();
-        if (w != null && items.size() > 8) {
-            WindowManager.LayoutParams lp = w.getAttributes();
-            lp.height = (int) (DeviceUtils.getDeviceHeight(activity) * 0.5);
-            w.setAttributes(lp);
-        }
     }
-    /*
-     * 单项选择对话框（end）
+
+    /**
+     * 对话框
      */
+    public static AlertDialog showDialog(Context context,View dialogView) {
+        final AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(dialogView)
+                .create();
+        InsetDrawable inset = new InsetDrawable(ResourceUtils.getDrawableById(context, R.drawable.bg_prompt_dialog), ResourceUtils.getPixel(context, R.dimen.prompt_dialog_left_right_margin));
+        dialog.getWindow().setBackgroundDrawable(inset);
+        dialog.setCancelable(false);
+        dialog.show();
+        return dialog;
+    }
 
 }

@@ -92,4 +92,8 @@ public final class VerifyUtils {
         return matches;
     }
 
+    public static boolean isMacAddress(String address) {
+        return address.matches("^([A-Fa-f0-9]{2}[-,:]){5}[A-Fa-f0-9]{2}$");
+    }
+
 }

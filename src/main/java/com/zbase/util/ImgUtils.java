@@ -4,14 +4,11 @@
 
 package com.zbase.util;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.webkit.MimeTypeMap;
 
-import androidx.core.content.ContextCompat;
 import androidx.core.graphics.BitmapCompat;
 
 import java.io.BufferedOutputStream;
@@ -23,14 +20,6 @@ import java.net.URL;
 public final class ImgUtils {
 
     private ImgUtils() {
-    }
-
-    public static Drawable getDrawableById(Context context, int id) {
-        return ContextCompat.getDrawable(context, id);
-    }
-
-    public static Bitmap getBitmapById(Context context, int id) {
-        return BitmapFactory.decodeResource(context.getResources(), id);
     }
 
     public static Bitmap getBitmapByPath(String path, BitmapFactory.Options options) {
