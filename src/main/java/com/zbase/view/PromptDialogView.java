@@ -32,6 +32,8 @@ public final class PromptDialogView extends ConstraintLayout {
                             String negative,
                             String positive) {
         super(context);
+
+        // Common
         View horizontalDivider = initCommonView(context,title,message);
 
         /*
