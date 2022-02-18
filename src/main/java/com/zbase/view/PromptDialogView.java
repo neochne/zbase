@@ -67,7 +67,7 @@ public final class PromptDialogView extends ConstraintLayout {
         mNegativeTextView.setLayoutParams(negativeLayoutParams);
         mNegativeTextView.setTypeface(Typeface.DEFAULT_BOLD);
         mNegativeTextView.setTextColor(Color.BLACK);
-        mNegativeTextView.setBackground(ResourceUtils.getDrawableById(context, R.drawable.bg_pressed));
+        mNegativeTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
         addView(mNegativeTextView);
 
 
@@ -87,7 +87,7 @@ public final class PromptDialogView extends ConstraintLayout {
         mPositiveTextView.setLayoutParams(positiveLayoutParams);
         mPositiveTextView.setTextColor(ResourceUtils.getColor(context, R.color.prompt_dialog_positive));
         mPositiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        mPositiveTextView.setBackground(ResourceUtils.getDrawableById(context, R.drawable.bg_pressed));
+        mPositiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
         addView(mPositiveTextView);
     }
 
@@ -114,7 +114,7 @@ public final class PromptDialogView extends ConstraintLayout {
         mPositiveTextView.setLayoutParams(positiveLayoutParams);
         mPositiveTextView.setTextColor(ResourceUtils.getColor(context, R.color.prompt_dialog_positive));
         mPositiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        mPositiveTextView.setBackground(ResourceUtils.getDrawableById(context, R.drawable.bg_pressed));
+        mPositiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
         addView(mPositiveTextView);
     }
 

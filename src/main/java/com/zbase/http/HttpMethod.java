@@ -6,6 +6,8 @@ public enum HttpMethod {
 
     POST("POST"),
 
+    PATCH("PATCH"),
+
     PUT("PUT"),
 
     DELETE("DELETE");

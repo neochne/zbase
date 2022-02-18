@@ -131,7 +131,7 @@ public final class Dialogs {
         final AlertDialog dialog = new AlertDialog.Builder(context)
                 .setView(dialogView)
                 .create();
-        InsetDrawable inset = new InsetDrawable(ResourceUtils.getDrawableById(context, R.drawable.bg_prompt_dialog), ResourceUtils.getPixel(context, R.dimen.prompt_dialog_left_right_margin));
+        InsetDrawable inset = new InsetDrawable(ResourceUtils.getDrawable(context, R.drawable.bg_prompt_dialog), ResourceUtils.getPixel(context, R.dimen.prompt_dialog_left_right_margin));
         dialog.getWindow().setBackgroundDrawable(inset);
         dialog.setCancelable(false);
         dialog.show();

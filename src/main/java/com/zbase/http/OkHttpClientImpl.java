@@ -29,8 +29,10 @@ public final class OkHttpClientImpl extends YesHttpClient {
 
     private final OkHttpClient okHttpClient;
 
+    private static final int EXCEPTION_CODE = -1;
+
     public OkHttpClientImpl(int connectTimeout, int readTimeout) throws Exception {
-        okHttpClient = OkHttpClientFactory.getSslOkHttpClient(connectTimeout,readTimeout,chain -> {
+        okHttpClient = OkHttpClientFactory.getSslOkHttpClient(connectTimeout, readTimeout, chain -> {
             Request.Builder builder = chain.request().newBuilder();
             for (Map.Entry<String, String> entry : commonHeaderMap.entrySet()) {
                 String key = entry.getKey();
@@ -45,111 +47,12 @@ public final class OkHttpClientImpl extends YesHttpClient {
 
     @Override
     public Response get() {
-        int httpCode = 201;
-        try {
-            okhttp3.Response response = okHttpClient.newCall(makeJsonRequest(HttpMethod.GET)).execute();
-            httpCode = response.code();
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful() && responseBody != null) {
-                return new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string()));
-            } else {
-                throw new IOException("response is not successful，httpCode = " + httpCode);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Response(httpCode, new JSONObject());
-        }
+        return execute(makeJsonRequest(HttpMethod.GET));
     }
 
     @Override
     public void getAsync(Callback callback) {
-        okHttpClient.newCall(makeJsonRequest(HttpMethod.GET)).enqueue(new okhttp3.Callback() {
-
-            /**
-             * onResponse and onFailure method called on work thread,not in main thread
-             */
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
-                int httpCode = response.code();
-                ResponseBody responseBody = response.body();
-                if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string())));
-                } else {
-                    callback.onFail(new Response(httpCode, new JSONObject()));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.onException(e);
-            }
-
-        });
-    }
-
-    @Override
-    public Response post() {
-        int httpCode = 201;
-        try {
-            okhttp3.Response response = okHttpClient.newCall(makeJsonRequest(HttpMethod.POST)).execute();
-            httpCode = response.code();
-            ResponseBody responseBody = response.body();
-            if (response.isSuccessful() && responseBody != null) {
-                return new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string()));
-            } else {
-                throw new IOException("response is not successful，httpCode = " + httpCode);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return new Response(httpCode, new JSONObject());
-        }
-    }
-
-    @Override
-    public void postAsync(Callback callback) {
-        okHttpClient.newCall(makeJsonRequest(HttpMethod.POST)).enqueue(new okhttp3.Callback() {
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
-                int httpCode = response.code();
-                ResponseBody responseBody = response.body();
-                if (response.isSuccessful() && responseBody != null) {
-                    // okhttp3.ResponseBody.string() method can only call once
-                    callback.onSuccess(new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string())));
-                } else {
-                    callback.onFail(new Response(httpCode, new JSONObject()));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.onException(e);
-            }
-
-        });
-    }
-
-    @Override
-    public void postFormAsync(Callback callback) {
-        okHttpClient.newCall(makeFormRequest()).enqueue(new okhttp3.Callback() {
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
-                int httpCode = response.code();
-                ResponseBody responseBody = response.body();
-                if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string())));
-                } else {
-                    callback.onFail(new Response(httpCode, new JSONObject()));
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.onException(e);
-            }
-
-        });
+        enqueue(makeJsonRequest(HttpMethod.GET), callback);
     }
 
     @Override
@@ -182,9 +85,112 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public void uploadFileAsync(Callback callback) {
-        okHttpClient.newCall(makeMultipartFormRequest(callback)).enqueue(new okhttp3.Callback() {
+    public Response post() {
+        return execute(makeJsonRequest(HttpMethod.POST));
+    }
 
+    @Override
+    public Response postForm() {
+        return execute(makeFormRequest(HttpMethod.POST));
+    }
+
+    @Override
+    public void postAsync(Callback callback) {
+        enqueue(makeJsonRequest(HttpMethod.POST), callback);
+    }
+
+    @Override
+    public void postFormAsync(Callback callback) {
+        enqueue(makeFormRequest(HttpMethod.POST), callback);
+    }
+
+    @Override
+    public void uploadFileAsync(Callback callback) {
+        enqueue(makeFileFormRequest(callback), callback);
+    }
+
+    @Override
+    public Response put() {
+        return execute(makeJsonRequest(HttpMethod.PUT));
+    }
+
+    @Override
+    public Response putForm() {
+        return execute(makeFormRequest(HttpMethod.PUT));
+    }
+
+    @Override
+    public void putAsync(Callback callback) {
+        enqueue(makeJsonRequest(HttpMethod.PUT), callback);
+    }
+
+    @Override
+    public void putFormAsync(Callback callback) {
+        enqueue(makeFormRequest(HttpMethod.PUT), callback);
+    }
+
+    @Override
+    public Response patch() {
+        return execute(makeJsonRequest(HttpMethod.PATCH));
+    }
+
+    @Override
+    public Response patchForm() {
+        return execute(makeFormRequest(HttpMethod.PATCH));
+    }
+
+    @Override
+    public void patchAsync(Callback callback) {
+        enqueue(makeJsonRequest(HttpMethod.PATCH), callback);
+    }
+
+    @Override
+    public void patchFormAsync(Callback callback) {
+        enqueue(makeFormRequest(HttpMethod.PATCH), callback);
+    }
+
+    @Override
+    public Response delete() {
+        return execute(makeJsonRequest(HttpMethod.DELETE));
+    }
+
+    @Override
+    public Response deleteByForm() {
+        return execute(makeFormRequest(HttpMethod.DELETE));
+    }
+
+    @Override
+    public void deleteAsync(Callback callback) {
+        enqueue(makeJsonRequest(HttpMethod.DELETE), callback);
+    }
+
+    @Override
+    public void deleteAsyncByForm(Callback callback) {
+        enqueue(makeFormRequest(HttpMethod.DELETE), callback);
+    }
+
+    private Response execute(Request request) {
+        try {
+            okhttp3.Response response = okHttpClient.newCall(request).execute();
+            int httpCode = response.code();
+            ResponseBody responseBody = response.body();
+            if (response.isSuccessful() && responseBody != null) {
+                return new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string()));
+            } else {
+                throw new IOException("response is not successful，httpCode = " + httpCode);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new Response(EXCEPTION_CODE, new JSONObject());
+        }
+    }
+
+    private void enqueue(Request request, Callback callback) {
+        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+
+            /**
+             * onResponse and onFailure method called on work thread,not in main thread
+             */
             @Override
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
                 int httpCode = response.code();
@@ -204,7 +210,11 @@ public final class OkHttpClientImpl extends YesHttpClient {
         });
     }
 
-    private void addHeaders(Request.Builder builder,String[] headerNamesAndValues) {
+    /*
+     * make request
+     */
+
+    private void addHeaders(Request.Builder builder, String[] headerNamesAndValues) {
         if (headerNamesAndValues != null && headerNamesAndValues.length > 0) {
             for (int i = 0; i < headerNamesAndValues.length; i += 2) {
                 builder.addHeader(headerNamesAndValues[i], headerNamesAndValues[i + 1]);
@@ -219,7 +229,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
         /*
          * add header
          */
-        addHeaders(builder,headerNamesAndValues);
+        addHeaders(builder, headerNamesAndValues);
 
         /*
          * name value body
@@ -261,18 +271,27 @@ public final class OkHttpClientImpl extends YesHttpClient {
             case POST:
                 builder.post(RequestBody.create(jsonStringBody, MediaType.get(HttpContentType.JSON.getContentType())));
                 break;
+            case PUT:
+                builder.put(RequestBody.create(jsonStringBody, MediaType.get(HttpContentType.JSON.getContentType())));
+                break;
+            case PATCH:
+                builder.patch(RequestBody.create(jsonStringBody, MediaType.get(HttpContentType.JSON.getContentType())));
+                break;
+            case DELETE:
+                builder.delete(RequestBody.create(jsonStringBody, MediaType.get(HttpContentType.JSON.getContentType())));
+                break;
         }
         return builder.build();
     }
 
-    private Request makeFormRequest() {
+    private Request makeFormRequest(HttpMethod method) {
         Request.Builder builder = new Request.Builder();
         builder.url(getUrl());
 
         /*
          * add header
          */
-        addHeaders(builder,headerNamesAndValues);
+        addHeaders(builder, headerNamesAndValues);
 
         /*
          * add form data
@@ -283,17 +302,27 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 multipartBuilder.addFormDataPart(String.valueOf(bodyNamesAndValues[i]), String.valueOf(bodyNamesAndValues[i + 1]));
             }
         }
-        return builder.post(multipartBuilder.build()).build();
+        switch (method) {
+            case POST:
+            default:
+                return builder.post(multipartBuilder.build()).build();
+            case PUT:
+                return builder.put(multipartBuilder.build()).build();
+            case PATCH:
+                return builder.patch(multipartBuilder.build()).build();
+            case DELETE:
+                return builder.delete(multipartBuilder.build()).build();
+        }
     }
 
-    private Request makeMultipartFormRequest(Callback callback) {
+    private Request makeFileFormRequest(Callback callback) {
         Request.Builder requestBuilder = new Request.Builder();
         requestBuilder.url(getUrl());
 
         /*
          * add header
          */
-        addHeaders(requestBuilder,headerNamesAndValues);
+        addHeaders(requestBuilder, headerNamesAndValues);
 
         /*
          * add form data
@@ -316,7 +345,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 }
                 String fileName = uploadedFile.getName();
                 RequestBody oriRequestBody = RequestBody.create(uploadedFile, MediaType.get(HttpContentType.FORM_MULTI_PART.getContentType()));
-                multipartBuilder.addFormDataPart(fileKey, fileName, new FileProgressRequestBody(oriRequestBody,fileName,callback));
+                multipartBuilder.addFormDataPart(fileKey, fileName, new FileProgressRequestBody(oriRequestBody, fileName, callback));
             }
         }
         return requestBuilder.post(multipartBuilder.build()).build();

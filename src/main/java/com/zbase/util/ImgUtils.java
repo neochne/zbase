@@ -66,4 +66,8 @@ public final class ImgUtils {
         return BitmapCompat.getAllocationByteCount(bitmap) / 1024;
     }
 
+    public static void loadLocalMediaFile() {
+
+    }
+
 }

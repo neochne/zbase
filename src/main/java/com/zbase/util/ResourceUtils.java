@@ -30,11 +30,11 @@ public final class ResourceUtils {
         return ContextCompat.getColor(context,id);
     }
 
-    public static Drawable getDrawableById(Context context, int id) {
+    public static Drawable getDrawable(Context context, int id) {
         return ContextCompat.getDrawable(context, id);
     }
 
-    public static Bitmap getBitmapById(Context context, int id) {
+    public static Bitmap getBitmap(Context context, int id) {
         return BitmapFactory.decodeResource(context.getResources(), id);
     }
 

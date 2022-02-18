@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class YesHttpClient{
+public abstract class YesHttpClient {
 
     /*
      * fields
@@ -20,6 +20,8 @@ public abstract class YesHttpClient{
     String[] headerNamesAndValues;
 
     String[] queryNamesAndValues;
+
+    String[] pathValues;
 
     Object[] bodyNamesAndValues;
 
@@ -33,7 +35,7 @@ public abstract class YesHttpClient{
 
     File[] files;
 
-    Map<String,String> commonHeaderMap = new HashMap<>();
+    Map<String, String> commonHeaderMap = new HashMap<>();
 
     /*
      * setter
@@ -44,24 +46,33 @@ public abstract class YesHttpClient{
     }
 
     String getUrl() {
-        if (queryNamesAndValues == null || queryNamesAndValues.length < 1) {
-            return url;
-        }
         StringBuilder urlBuilder = new StringBuilder(url);
-        for (int i = 0; i < queryNamesAndValues.length; i++) {
-            if (i == 0) {
-                urlBuilder.append("?");
-                urlBuilder.append(queryNamesAndValues[i]);
-                urlBuilder.append("=");
-                continue;
+
+        // path parameters
+        if (pathValues != null && pathValues.length > 0) {
+            for (String pathValue : pathValues) {
+                urlBuilder.append("/")
+                        .append(pathValue);
             }
-            if (i % 2 == 1) {
-                urlBuilder.append(queryNamesAndValues[i]);
-                continue;
+        }
+
+        // query parameters
+        if (queryNamesAndValues != null && queryNamesAndValues.length > 0) {
+            for (int i = 0, len = queryNamesAndValues.length; i < len; i++) {
+                if (i == 0) {
+                    urlBuilder.append("?")
+                            .append(queryNamesAndValues[i])
+                            .append("=");
+                    continue;
+                }
+                if (i % 2 == 1) {
+                    urlBuilder.append(queryNamesAndValues[i]);
+                    continue;
+                }
+                urlBuilder.append("&")
+                        .append(queryNamesAndValues[i])
+                        .append("=");
             }
-            urlBuilder.append("&");
-            urlBuilder.append(queryNamesAndValues[i]);
-            urlBuilder.append("=");
         }
         return urlBuilder.toString();
     }
@@ -73,6 +84,11 @@ public abstract class YesHttpClient{
 
     public YesHttpClient addQueryNamesAndValues(String... queryNameAndValues) {
         this.queryNamesAndValues = queryNameAndValues;
+        return this;
+    }
+
+    public YesHttpClient addPathValues(String... pathValues) {
+        this.pathValues = pathValues;
         return this;
     }
 
@@ -107,7 +123,7 @@ public abstract class YesHttpClient{
     }
 
     void addCommonHeader(String name, String value) {
-        commonHeaderMap.put(name,value);
+        commonHeaderMap.put(name, value);
     }
 
     /*
@@ -117,14 +133,40 @@ public abstract class YesHttpClient{
 
     public abstract void getAsync(Callback callback);
 
+    public abstract void downloadFileAsync(Callback callback);
+
     public abstract Response post();
+
+    public abstract Response postForm();
 
     public abstract void postAsync(Callback callback);
 
     public abstract void postFormAsync(Callback callback);
 
-    public abstract void downloadFileAsync(Callback callback);
-
     public abstract void uploadFileAsync(Callback callback);
+
+    public abstract Response put();
+
+    public abstract Response putForm();
+
+    public abstract void putAsync(Callback callback);
+
+    public abstract void putFormAsync(Callback callback);
+
+    public abstract Response patch();
+
+    public abstract Response patchForm();
+
+    public abstract void patchAsync(Callback callback);
+
+    public abstract void patchFormAsync(Callback callback);
+
+    public abstract Response delete();
+
+    public abstract Response deleteByForm();
+
+    public abstract void deleteAsync(Callback callback);
+
+    public abstract void deleteAsyncByForm(Callback callback);
 
 }
