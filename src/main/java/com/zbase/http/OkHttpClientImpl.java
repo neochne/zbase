@@ -90,18 +90,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public Response postForm() {
-        return execute(makeFormRequest(HttpMethod.POST));
-    }
-
-    @Override
     public void postAsync(Callback callback) {
         enqueue(makeJsonRequest(HttpMethod.POST), callback);
-    }
-
-    @Override
-    public void postFormAsync(Callback callback) {
-        enqueue(makeFormRequest(HttpMethod.POST), callback);
     }
 
     @Override
@@ -115,18 +105,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public Response putForm() {
-        return execute(makeFormRequest(HttpMethod.PUT));
-    }
-
-    @Override
     public void putAsync(Callback callback) {
         enqueue(makeJsonRequest(HttpMethod.PUT), callback);
-    }
-
-    @Override
-    public void putFormAsync(Callback callback) {
-        enqueue(makeFormRequest(HttpMethod.PUT), callback);
     }
 
     @Override
@@ -135,18 +115,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public Response patchForm() {
-        return execute(makeFormRequest(HttpMethod.PATCH));
-    }
-
-    @Override
     public void patchAsync(Callback callback) {
         enqueue(makeJsonRequest(HttpMethod.PATCH), callback);
-    }
-
-    @Override
-    public void patchFormAsync(Callback callback) {
-        enqueue(makeFormRequest(HttpMethod.PATCH), callback);
     }
 
     @Override
@@ -155,18 +125,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public Response deleteByForm() {
-        return execute(makeFormRequest(HttpMethod.DELETE));
-    }
-
-    @Override
     public void deleteAsync(Callback callback) {
         enqueue(makeJsonRequest(HttpMethod.DELETE), callback);
-    }
-
-    @Override
-    public void deleteAsyncByForm(Callback callback) {
-        enqueue(makeFormRequest(HttpMethod.DELETE), callback);
     }
 
     private Response execute(Request request) {
@@ -175,7 +135,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
             int httpCode = response.code();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful() && responseBody != null) {
-                return new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string()));
+                return new Response(httpCode, JsonUtils.newJSONObject(responseBody.string()));
             } else {
                 throw new IOException("response is not successful，httpCode = " + httpCode);
             }
@@ -196,7 +156,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, JsonUtils.constructJSONObject(responseBody.string())));
+                    callback.onSuccess(new Response(httpCode, JsonUtils.newJSONObject(responseBody.string())));
                 } else {
                     callback.onFail(new Response(httpCode, new JSONObject()));
                 }
@@ -282,37 +242,6 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 break;
         }
         return builder.build();
-    }
-
-    private Request makeFormRequest(HttpMethod method) {
-        Request.Builder builder = new Request.Builder();
-        builder.url(getUrl());
-
-        /*
-         * add header
-         */
-        addHeaders(builder, headerNamesAndValues);
-
-        /*
-         * add form data
-         */
-        MultipartBody.Builder multipartBuilder = new MultipartBody.Builder();
-        if (bodyNamesAndValues != null && bodyNamesAndValues.length > 0) {
-            for (int i = 0; i < bodyNamesAndValues.length; i += 2) {
-                multipartBuilder.addFormDataPart(String.valueOf(bodyNamesAndValues[i]), String.valueOf(bodyNamesAndValues[i + 1]));
-            }
-        }
-        switch (method) {
-            case POST:
-            default:
-                return builder.post(multipartBuilder.build()).build();
-            case PUT:
-                return builder.put(multipartBuilder.build()).build();
-            case PATCH:
-                return builder.patch(multipartBuilder.build()).build();
-            case DELETE:
-                return builder.delete(multipartBuilder.build()).build();
-        }
     }
 
     private Request makeFileFormRequest(Callback callback) {

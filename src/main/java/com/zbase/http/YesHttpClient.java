@@ -137,36 +137,20 @@ public abstract class YesHttpClient {
 
     public abstract Response post();
 
-    public abstract Response postForm();
-
     public abstract void postAsync(Callback callback);
-
-    public abstract void postFormAsync(Callback callback);
 
     public abstract void uploadFileAsync(Callback callback);
 
     public abstract Response put();
 
-    public abstract Response putForm();
-
     public abstract void putAsync(Callback callback);
-
-    public abstract void putFormAsync(Callback callback);
 
     public abstract Response patch();
 
-    public abstract Response patchForm();
-
     public abstract void patchAsync(Callback callback);
-
-    public abstract void patchFormAsync(Callback callback);
 
     public abstract Response delete();
 
-    public abstract Response deleteByForm();
-
     public abstract void deleteAsync(Callback callback);
-
-    public abstract void deleteAsyncByForm(Callback callback);
 
 }
