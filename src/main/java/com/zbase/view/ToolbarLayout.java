@@ -44,7 +44,7 @@ public final class ToolbarLayout extends ConstraintLayout {
         super(context);
         mTitleTextView = generateTitleTextView(context,title,titleColor,titleSizeSp,titleBold,toolbarColor);
         addView(mTitleTextView);
-        ImageView backImageView = new ImageView(context);
+        ImageView backImageView = new ImageView(context,null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
         backImageView.setImageResource(backIconId);
         backImageView.setOnClickListener(backClickListener);
         addTitleLeftView(backImageView,0);

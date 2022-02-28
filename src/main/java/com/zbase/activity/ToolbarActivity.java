@@ -70,9 +70,9 @@ public class ToolbarActivity extends AppCompatActivity {
                 Color.BLACK, 15,
                 true,
                 Color.WHITE,
-                R.drawable.ic_baseline_chevron_left_24,
+                R.drawable.ic_toolbar_left_ripple,
                 (v) -> {
-                    finish();
+                    // finish();
                 });
     }
 
