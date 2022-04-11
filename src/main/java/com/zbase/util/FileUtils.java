@@ -216,7 +216,7 @@ public final class FileUtils {
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(FileProvider.getUriForFile(activity,"com.zbase.fileprovider", apk), "application/vnd.android.package-archive");
+            intent.setDataAndType(FileProvider.getUriForFile(activity,"com.zbase.local.fileprovider", apk), "application/vnd.android.package-archive");
             activity.startActivity(intent);
         } else { // < 7.0
             Intent intent = new Intent(Intent.ACTION_VIEW);

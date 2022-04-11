@@ -8,8 +8,8 @@
 
     <application>
         <provider
-            android:name=".provider.BaseLocalFileProvider"
-            android:authorities="com.zbase.fileprovider"
+            android:name="com.zbase.provider.BaseLocalFileProvider"
+            android:authorities="com.zbase.local.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

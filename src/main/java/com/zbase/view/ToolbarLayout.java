@@ -1,5 +1,6 @@
 package com.zbase.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.view.Gravity;
@@ -8,127 +9,102 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.view.ViewCompat;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
 
-public final class ToolbarLayout extends ConstraintLayout {
+public final class ToolbarLayout extends ConstraintLayoutX {
 
-    private TextView mTitleTextView;
+    private final int TITLE_TEXT_VIEW_ID = 0xa0a0a0a0;
 
-    private ToolbarLayout(@NonNull Context context) {
+    public ToolbarLayout(@NonNull Context context) {
         super(context);
     }
 
-    public ToolbarLayout(@NonNull Context context,
-                         String title,
-                         int titleColor,
-                         int titleSizeSp,
-                         boolean titleBold,
-                         int toolbarColor) {
-        super(context);
-        mTitleTextView = generateTitleTextView(context,title,titleColor,titleSizeSp,titleBold,toolbarColor);
-        addView(mTitleTextView);
-    }
-
-    public ToolbarLayout(@NonNull Context context,
-                         String title,
-                         int titleColor,
-                         int titleSizeSp,
-                         boolean titleBold,
-                         int toolbarColor,
-                         int backIconId,
-                         View.OnClickListener backClickListener) {
-        super(context);
-        mTitleTextView = generateTitleTextView(context,title,titleColor,titleSizeSp,titleBold,toolbarColor);
-        addView(mTitleTextView);
-        ImageView backImageView = new ImageView(context,null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
-        backImageView.setImageResource(backIconId);
-        backImageView.setOnClickListener(backClickListener);
-        addTitleLeftView(backImageView,0);
-    }
-
-    private TextView generateTitleTextView(Context context,
-                                           String title,
-                                           int titleColor,
-                                           int titleSizeSp,
-                                           boolean titleBold,
-                                           int toolbarColor) {
-        LayoutParams titleLayoutParams = new LayoutParams(0, ResourceUtils.getPixel(context, R.dimen.toolbar_height));
-        titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
-        titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
+    public ToolbarLayout setTitle(String titleText,
+                                  int titleTextColor,
+                                  int titleBackgroundColor,
+                                  int titleSizeSp,
+                                  Typeface titleTypeface) {
+        Context context = getContext();
         TextView titleTextView = new TextView(context);
-        titleTextView.setId(ViewCompat.generateViewId());
-        titleTextView.setText(title);
-        titleTextView.setTextColor(titleColor);
+        LayoutParams titleLayoutParams = add1View(titleTextView,TITLE_TEXT_VIEW_ID);
+        titleLayoutParams.width = 0;
+        titleLayoutParams.height = ResourceUtils.getPixel(context, R.dimen.toolbar_height);
+        titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
+        titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
+        titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
+        titleTextView.setText(titleText);
+        titleTextView.setTextColor(titleTextColor);
         titleTextView.setTextSize(titleSizeSp);
-        titleTextView.setBackgroundColor(toolbarColor);
+        titleTextView.setBackgroundColor(titleBackgroundColor);
         titleTextView.setGravity(Gravity.CENTER);
-        if (titleBold) {
-            titleTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        }
-        titleTextView.setLayoutParams(titleLayoutParams);
-        return titleTextView;
-    }
-
-    public void addTitleLeftView(View leftView,int leftMargin) {
-        LayoutParams leftLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        leftLayoutParams.startToStart = LayoutParams.PARENT_ID;
-        leftLayoutParams.topToTop = mTitleTextView.getId();
-        leftLayoutParams.bottomToBottom = mTitleTextView.getId();
-        leftLayoutParams.leftMargin = leftMargin;
-        leftView.setLayoutParams(leftLayoutParams);
-        addView(leftView);
-    }
-
-    public void addTitleLeftView(View leftView,int start2endViewId,int leftMargin) {
-        LayoutParams leftLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        leftLayoutParams.startToEnd = start2endViewId;
-        leftLayoutParams.topToTop = mTitleTextView.getId();
-        leftLayoutParams.bottomToBottom = mTitleTextView.getId();
-        leftLayoutParams.leftMargin = leftMargin;
-        leftView.setLayoutParams(leftLayoutParams);
-        addView(leftView);
-    }
-
-    public void addTitleRightView(View rightView,int rightMargin) {
-        LayoutParams rightLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        rightLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        rightLayoutParams.topToTop = mTitleTextView.getId();
-        rightLayoutParams.bottomToBottom = mTitleTextView.getId();
-        rightLayoutParams.rightMargin = rightMargin;
-        rightView.setLayoutParams(rightLayoutParams);
-        addView(rightView);
-    }
-
-    public void addTitleRightView(View rightView,int end2startViewId,int rightMargin) {
-        LayoutParams rightLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
-        rightLayoutParams.endToStart = end2startViewId;
-        rightLayoutParams.topToTop = mTitleTextView.getId();
-        rightLayoutParams.bottomToBottom = mTitleTextView.getId();
-        rightLayoutParams.rightMargin = rightMargin;
-        rightView.setLayoutParams(rightLayoutParams);
-        addView(rightView);
-    }
-
-    public ToolbarLayout setContentView(View contentView) {
-        LayoutParams contentLayoutParams = (LayoutParams) contentView.getLayoutParams();
-        contentLayoutParams.topToBottom = mTitleTextView.getId();
-        contentLayoutParams.startToStart = LayoutParams.PARENT_ID;
-        contentLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        addView(contentView);
+        titleTextView.setTypeface(titleTypeface);
         return this;
     }
 
-    public void appendView(View view) {
-        LayoutParams contentLayoutParams = (LayoutParams) view.getLayoutParams();
-        if (contentLayoutParams.topToBottom == LayoutParams.UNSET) {
-            contentLayoutParams.topToBottom = mTitleTextView.getId();
-        }
-        addView(view);
+    public ToolbarLayout setBackIcon(int backIconId, int leftMargin,View.OnClickListener backClickListener) {
+        @SuppressLint("ResourceType") TextView titleTextView = findViewById(0xa0a0a0a0);
+        ImageView backImageView = new ImageView(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
+        LayoutParams backLayoutParams = add1View(backImageView);
+        backLayoutParams.startToStart = LayoutParams.PARENT_ID;
+        backLayoutParams.topToTop = titleTextView.getId();
+        backLayoutParams.bottomToBottom = titleTextView.getId();
+        backLayoutParams.leftMargin = leftMargin;
+        backImageView.setImageResource(backIconId);
+        backImageView.setOnClickListener(backClickListener);
+        return this;
+    }
+
+    public ToolbarLayout setRightIcon(int rightIconId, int rightMargin,View.OnClickListener rightClickListener) {
+        ImageView rightImageView = new ImageView(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
+        LayoutParams rightLayoutParams = add1View(rightImageView);
+        rightLayoutParams.endToEnd = LayoutParams.PARENT_ID;
+        rightLayoutParams.topToTop = TITLE_TEXT_VIEW_ID;
+        rightLayoutParams.bottomToBottom = TITLE_TEXT_VIEW_ID;
+        rightLayoutParams.rightMargin = rightMargin;
+        rightImageView.setImageResource(rightIconId);
+        rightImageView.setOnClickListener(rightClickListener);
+        return this;
+    }
+
+    public ToolbarLayout setRightText(String rightText,
+                                      int rightTextColor,
+                                      int rightTextSizeSp,
+                                      int rightMargin,
+                                      View.OnClickListener rightClickListener) {
+        TextView rightTextView = new TextView(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
+        LayoutParams rightLayoutParams = add1View(rightTextView);
+        rightLayoutParams.endToEnd = LayoutParams.PARENT_ID;
+        rightLayoutParams.topToTop = TITLE_TEXT_VIEW_ID;
+        rightLayoutParams.bottomToBottom = TITLE_TEXT_VIEW_ID;
+        rightLayoutParams.rightMargin = rightMargin;
+        rightTextView.setText(rightText);
+        rightTextView.setTextColor(rightTextColor);
+        rightTextView.setTextSize(rightTextSizeSp);
+        rightTextView.setOnClickListener(rightClickListener);
+        return this;
+    }
+
+    public ToolbarLayout setContentView(View contentView) {
+        LayoutParams contentLayoutParams = add1View(contentView);
+        contentLayoutParams.width = 0;
+        contentLayoutParams.height = 0;
+        contentLayoutParams.startToStart = LayoutParams.PARENT_ID;
+        contentLayoutParams.endToEnd = LayoutParams.PARENT_ID;
+        contentLayoutParams.topToBottom = TITLE_TEXT_VIEW_ID;
+        contentLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
+        return this;
+    }
+
+    public ConstraintLayoutParamsX appendViewBelowToolbar(View view) {
+        ConstraintLayoutParamsX viewLayoutParams = add1View(view);
+        viewLayoutParams.topToBottom = TITLE_TEXT_VIEW_ID;
+        return viewLayoutParams;
+    }
+
+    public ConstraintLayoutParamsX appendView(View view) {
+        return add1View(view);
     }
 
 }
