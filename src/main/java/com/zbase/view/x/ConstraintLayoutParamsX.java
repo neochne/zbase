@@ -1,16 +1,27 @@
-package com.zbase.view;
+package com.zbase.view.x;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public final class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams {
+public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams {
 
     public ConstraintLayoutParamsX(int width, int height) {
         super(width, height);
     }
 
-    /*
-     * start
-     */
+    public ConstraintLayoutParamsX margins(int w) {
+        return this;
+    }
+
+    public ConstraintLayoutParamsX width(int w) {
+        this.width = w;
+        return this;
+    }
+
+    public ConstraintLayoutParamsX height(int h) {
+        this.height = h;
+        return this;
+    }
+
     public ConstraintLayoutParamsX start2start(int id) {
         this.startToStart = id;
         return this;
@@ -21,9 +32,6 @@ public final class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams
         return this;
     }
 
-    /*
-     * top
-     */
     public ConstraintLayoutParamsX top2top(int id) {
         this.topToTop = id;
         return this;
@@ -34,9 +42,6 @@ public final class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams
         return this;
     }
 
-    /*
-     * end
-     */
     public ConstraintLayoutParamsX end2end(int id) {
         this.endToEnd = id;
         return this;
@@ -47,9 +52,6 @@ public final class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams
         return this;
     }
 
-    /*
-     * bottom
-     */
     public ConstraintLayoutParamsX bottom2bottom(int id) {
         this.bottomToBottom = id;
         return this;

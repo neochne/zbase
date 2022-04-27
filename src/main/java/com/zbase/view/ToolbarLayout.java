@@ -2,6 +2,7 @@ package com.zbase.view;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
@@ -12,6 +13,8 @@ import androidx.annotation.NonNull;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
+import com.zbase.view.x.ConstraintLayoutParamsX;
+import com.zbase.view.x.ConstraintLayoutX;
 
 public final class ToolbarLayout extends ConstraintLayoutX {
 
@@ -19,6 +22,8 @@ public final class ToolbarLayout extends ConstraintLayoutX {
 
     public ToolbarLayout(@NonNull Context context) {
         super(context);
+        setBackgroundColor(Color.WHITE);
+        setLayoutParams(new ConstraintLayoutParamsX(ConstraintLayoutParamsX.MATCH_PARENT,ConstraintLayoutParamsX.WRAP_CONTENT));
     }
 
     public ToolbarLayout setTitle(String titleText,
@@ -86,25 +91,17 @@ public final class ToolbarLayout extends ConstraintLayoutX {
         return this;
     }
 
-    public ToolbarLayout setContentView(View contentView) {
-        LayoutParams contentLayoutParams = add1View(contentView);
+    public void setContentView(View contentView) {
+        ConstraintLayoutParamsX contentLayoutParams = addViewBelowToolbar(contentView);
         contentLayoutParams.width = 0;
-        contentLayoutParams.height = 0;
         contentLayoutParams.startToStart = LayoutParams.PARENT_ID;
         contentLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        contentLayoutParams.topToBottom = TITLE_TEXT_VIEW_ID;
-        contentLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        return this;
     }
 
-    public ConstraintLayoutParamsX appendViewBelowToolbar(View view) {
+    public ConstraintLayoutParamsX addViewBelowToolbar(View view) {
         ConstraintLayoutParamsX viewLayoutParams = add1View(view);
         viewLayoutParams.topToBottom = TITLE_TEXT_VIEW_ID;
         return viewLayoutParams;
-    }
-
-    public ConstraintLayoutParamsX appendView(View view) {
-        return add1View(view);
     }
 
 }

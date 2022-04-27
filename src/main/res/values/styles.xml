@@ -9,4 +9,10 @@
         <item name="colorAccent">@android:color/white</item>
     </style>
 
+    <style name="Et">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/tv_default_color</item>
+        <item name="android:editTextColor">@color/tv_default_color</item>
+    </style>
+
 </resources>

@@ -38,4 +38,8 @@ public final class ResourceUtils {
         return BitmapFactory.decodeResource(context.getResources(), id);
     }
 
+    public static String getString(Context context,int id) {
+        return context.getResources().getString(id);
+    }
+
 }

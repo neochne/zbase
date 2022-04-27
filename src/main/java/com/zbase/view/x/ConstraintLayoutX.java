@@ -1,4 +1,4 @@
-package com.zbase.view;
+package com.zbase.view.x;
 
 import android.content.Context;
 import android.view.View;
@@ -17,7 +17,7 @@ public class ConstraintLayoutX extends ConstraintLayout {
     }
 
     public ConstraintLayoutParamsX add1View(View view, int id) {
-        ConstraintLayoutParamsX layoutParams = new ConstraintLayoutParamsX(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        ConstraintLayoutParamsX layoutParams = new ConstraintLayoutParamsX(ConstraintLayoutParamsX.WRAP_CONTENT, ConstraintLayoutParamsX.WRAP_CONTENT);
         view.setId(id);
         view.setLayoutParams(layoutParams);
         addView(view);

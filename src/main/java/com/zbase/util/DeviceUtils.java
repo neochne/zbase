@@ -77,6 +77,8 @@ public final class DeviceUtils {
     }
 
     /**
+     * 未包含导航栏高度
+     *
      * @return unit is px
      */
     public static int getDeviceHeight(Context context) {
