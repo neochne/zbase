@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
-import com.zbase.view.x.ConstraintLayoutParamsX;
+import com.zbase.view.x.params.ConstraintLayoutParamsX;
 import com.zbase.view.x.ConstraintLayoutX;
 
 public final class ToolbarLayout extends ConstraintLayoutX {

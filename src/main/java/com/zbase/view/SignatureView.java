@@ -1,6 +1,7 @@
 package com.zbase.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -28,6 +29,8 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
     private float mPreviousX = 0;
 
     private float mPreviousY = 0;
+
+    private boolean mIsEmpty = true;
 
     public SignatureView(Context context) {
         super(context);
@@ -110,16 +113,28 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
     }
 
     private void signUp(MotionEvent event) {
+        mIsEmpty = false;
+    }
 
+    public boolean isEmpty() {
+        return mIsEmpty;
     }
 
     public void clear() {
+        mIsEmpty = true;
         mPath.reset();
         for (int i = 0; i < 3; i++) {
             mCanvas = mSurfaceHolder.lockCanvas();
             mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
+    }
+
+    public Bitmap generateBitmap() {
+        Bitmap signBitmap = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
+        Canvas bitmapCanvas = new Canvas(signBitmap);
+        draw(bitmapCanvas);
+        return signBitmap;
     }
 
     @Override

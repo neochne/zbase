@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Activity UI Padding-->
+    <dimen name="activity_padding">10dp</dimen>
+
     <!-- Toolbar Height   -->
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="toolbar_back_right_margin">10dp</dimen>
 
-    <!-- Dialog   -->
+    <!-- Dialog -->
     <dimen name="dialog_title_text_size">17sp</dimen>
 
-    <!-- Loading Dialog   -->
+    <!-- Loading Dialog -->
     <dimen name="loading_dialog_text_size">15sp</dimen>
     <dimen name="loading_dialog_padding">20dp</dimen>
     <dimen name="loading_dialog_text_margin">5dp</dimen>
 
-    <!-- Prompt Dialog   -->
+    <!-- Prompt Dialog -->
     <dimen name="prompt_dialog_title_top_margin">25dp</dimen>
     <dimen name="prompt_dialog_left_right_margin">20dp</dimen>
     <dimen name="prompt_dialog_message_text_size">16sp</dimen>
@@ -21,9 +24,17 @@
     <dimen name="prompt_dialog_message_padding">18dp</dimen>
     <dimen name="prompt_dialog_operate_text_padding">13dp</dimen>
 
-    <!-- Select Dialog   -->
+    <!-- Select Dialog -->
     <dimen name="select_dialog_title_margin">12dp</dimen>
     <dimen name="select_dialog_cancel_icon_right_margin">10dp</dimen>
     <dimen name="select_dialog_item_text_size">15sp</dimen>
     <dimen name="select_dialog_item_text_padding">10dp</dimen>
+
+    <!-- PictureSelectActivity -->
+    <dimen name="bucket_left_padding">9dp</dimen>
+    <dimen name="bucket_top_padding">3dp</dimen>
+    <dimen name="bucket_right_padding">1dp</dimen>
+    <dimen name="bucket_bottom_padding">3dp</dimen>
+    <dimen name="select_pic_w_h">80dp</dimen>
+    <dimen name="pic_rv_top_margin">5dp</dimen>
 </resources>

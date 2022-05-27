@@ -17,6 +17,11 @@ public final class TextViewX extends AppCompatTextView {
         return this;
     }
 
+    public TextViewX textColor(int color) {
+        setTextColor(color);
+        return this;
+    }
+
     public TextViewX hint(String hint) {
         setHint(hint);
         return this;

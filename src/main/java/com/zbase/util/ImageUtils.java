@@ -56,9 +56,6 @@ public final class ImageUtils {
                     : ("jpg".equalsIgnoreCase(ext) || "jpeg".equalsIgnoreCase(ext)) ? Bitmap.CompressFormat.JPEG
                     : "webp".equalsIgnoreCase(ext) ? Bitmap.CompressFormat.WEBP
                     : Bitmap.CompressFormat.PNG;
-            if (!FileUtils.createFile(imageFile)) {
-                return false;
-            }
             final BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(imageFile));
             boolean r = bitmap.compress(format, quality, bos);
             bos.flush();
@@ -161,7 +158,6 @@ public final class ImageUtils {
             ToastUtils.show(context, "未知异常");
             queryCallback.onComplete(new LinkedHashMap<>());
         }
-
     }
 
 }

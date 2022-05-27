@@ -68,7 +68,7 @@ public final class SingleSelectDialogView extends ConstraintLayout {
         cancelLayoutParams.rightMargin = ResourceUtils.getPixel(context,R.dimen.select_dialog_cancel_icon_right_margin);
         mCancelImageView = new ImageView(context);
         mCancelImageView.setLayoutParams(cancelLayoutParams);
-        mCancelImageView.setImageResource(R.drawable.ic_baseline_clear_24);
+        mCancelImageView.setImageResource(R.drawable.ic_clear_gray);
         addView(mCancelImageView);
 
         /*

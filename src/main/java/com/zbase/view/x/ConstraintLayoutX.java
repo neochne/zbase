@@ -6,10 +6,16 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.zbase.view.x.params.ConstraintLayoutParamsX;
+
 public class ConstraintLayoutX extends ConstraintLayout {
 
     public ConstraintLayoutX(@NonNull Context context) {
         super(context);
+    }
+
+    public void setFullScreen() {
+        setLayoutParams(new ConstraintLayoutParamsX(ConstraintLayoutParamsX.MATCH_PARENT,ConstraintLayoutParamsX.MATCH_PARENT));
     }
 
     public ConstraintLayoutParamsX add1View(View view) {

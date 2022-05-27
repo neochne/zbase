@@ -7,24 +7,27 @@ package com.zbase.util;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import java.util.Objects;
+
 public final class ViewUtils {
 
     private ViewUtils(){}
 
-    public static void isEnableViews(ViewGroup vg,boolean enable){
-        if (enable) return;
+    public static void disableViews(ViewGroup vg){
         for (int i = 0; i < vg.getChildCount(); i++){
             View child = vg.getChildAt(i);
-            child.setEnabled(enable);
+            child.setEnabled(false);
             if (child instanceof ViewGroup){
-                isEnableViews((ViewGroup)child, enable);
+                disableViews((ViewGroup)child);
             }
         }
     }
@@ -42,7 +45,7 @@ public final class ViewUtils {
 
     public static boolean isChildScrollToBottom(RecyclerView recyclerView){
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-        int count = recyclerView.getAdapter().getItemCount();
+        int count = Objects.requireNonNull(recyclerView.getAdapter()).getItemCount();
         if (layoutManager instanceof LinearLayoutManager && count > 0) {
             LinearLayoutManager linearLayoutManager = (LinearLayoutManager) layoutManager;
             return linearLayoutManager.findLastCompletelyVisibleItemPosition() == count - 1;
@@ -73,6 +76,18 @@ public final class ViewUtils {
             return diff == 0;
         }
         return false;
+    }
+
+    public static void setProgressBarColor(ProgressBar progressBar,int color) {
+        DrawableCompat.setTint(progressBar.getIndeterminateDrawable(), color);
+    }
+
+    /**
+     * 先调此方法，然后通过 view.getMeasuredWidth() 和 view.getMeasuredHeight 方法
+     * 可以在任何时候获取到一个 view 的长宽
+     */
+    public static void measureView(View view) {
+        view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
 }

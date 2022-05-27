@@ -6,4 +6,5 @@
 
     <!-- raw color value-->
     <color name="gray_808080">#808080</color>
+    <color name="black_353535">#353535</color>
 </resources>

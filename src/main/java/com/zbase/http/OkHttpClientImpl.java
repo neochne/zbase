@@ -66,7 +66,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 if (response.isSuccessful() && responseBody != null) {
                     callback.onSuccess(new Response(httpCode, new JSONObject()));
                     long fileTotalLength = responseBody.contentLength();
-                    FileUtils.writeFileWithProgress(
+                    FileUtils.saveFileWithProgress(
                             file,
                             responseBody.byteStream(),
                             fileTotalLength,
