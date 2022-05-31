@@ -1,107 +1,117 @@
 package com.zbase.view;
 
-import android.annotation.SuppressLint;
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
-import com.zbase.view.x.params.ConstraintLayoutParamsX;
+import com.zbase.view.x.ConstraintLayoutParamsX;
 import com.zbase.view.x.ConstraintLayoutX;
+import com.zbase.view.x.ImageViewX;
+import com.zbase.view.x.TextViewX;
 
 public final class ToolbarLayout extends ConstraintLayoutX {
 
-    private final int TITLE_TEXT_VIEW_ID = 0xa0a0a0a0;
+    private final int TOOLBAR_ID;
 
     public ToolbarLayout(@NonNull Context context) {
         super(context);
         setBackgroundColor(Color.WHITE);
-        setLayoutParams(new ConstraintLayoutParamsX(ConstraintLayoutParamsX.MATCH_PARENT,ConstraintLayoutParamsX.WRAP_CONTENT));
+        setLayoutParams(new ConstraintLayoutParamsX(MATCH_PARENT, WRAP_CONTENT));
+        TOOLBAR_ID = generateViewId();
     }
 
-    public ToolbarLayout setTitle(String titleText,
-                                  int titleTextColor,
-                                  int titleBackgroundColor,
-                                  int titleSizeSp,
-                                  Typeface titleTypeface) {
+    public int getToolbarId() {
+        return TOOLBAR_ID;
+    }
+
+    public ToolbarLayout setTitle(String title, int color, int bgColor, int sp, Typeface typeface) {
         Context context = getContext();
-        TextView titleTextView = new TextView(context);
-        LayoutParams titleLayoutParams = add1View(titleTextView,TITLE_TEXT_VIEW_ID);
-        titleLayoutParams.width = 0;
-        titleLayoutParams.height = ResourceUtils.getPixel(context, R.dimen.toolbar_height);
-        titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
-        titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
-        titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        titleTextView.setText(titleText);
-        titleTextView.setTextColor(titleTextColor);
-        titleTextView.setTextSize(titleSizeSp);
-        titleTextView.setBackgroundColor(titleBackgroundColor);
-        titleTextView.setGravity(Gravity.CENTER);
-        titleTextView.setTypeface(titleTypeface);
-        return this;
+        return addChildView(new TextViewX(context)
+                        .id(TOOLBAR_ID)
+                        .text(title)
+                        .textColor(color)
+                        .textSize(sp)
+                        .backgroundColor(bgColor)
+                        .gravity(Gravity.CENTER)
+                        .typeFace(typeface),
+                new ConstraintLayoutParamsX()
+                        .width(0)
+                        .height(ResourceUtils.getPixel(context, R.dimen.toolbar_height))
+                        .start2start(ConstraintLayoutParamsX.PARENT_ID)
+                        .top2top(ConstraintLayoutParamsX.PARENT_ID)
+                        .end2end(ConstraintLayoutParamsX.PARENT_ID));
     }
 
-    public ToolbarLayout setBackIcon(int backIconId, int leftMargin,View.OnClickListener backClickListener) {
-        @SuppressLint("ResourceType") TextView titleTextView = findViewById(0xa0a0a0a0);
-        ImageView backImageView = new ImageView(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
-        LayoutParams backLayoutParams = add1View(backImageView);
-        backLayoutParams.startToStart = LayoutParams.PARENT_ID;
-        backLayoutParams.topToTop = titleTextView.getId();
-        backLayoutParams.bottomToBottom = titleTextView.getId();
-        backLayoutParams.leftMargin = leftMargin;
-        backImageView.setImageResource(backIconId);
-        backImageView.setOnClickListener(backClickListener);
-        return this;
+    public ToolbarLayout setBackIcon(int res, int leftMargin, View.OnClickListener listener) {
+        return addChildView(new ImageViewX(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar)
+                        .src(res)
+                        .clickListener(listener),
+                new ConstraintLayoutParamsX()
+                        .start2start(ConstraintLayoutParamsX.PARENT_ID)
+                        .top2top(TOOLBAR_ID)
+                        .bottom2bottom(TOOLBAR_ID)
+                        .leftMargin(leftMargin));
     }
 
-    public ToolbarLayout setRightIcon(int rightIconId, int rightMargin,View.OnClickListener rightClickListener) {
-        ImageView rightImageView = new ImageView(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
-        LayoutParams rightLayoutParams = add1View(rightImageView);
-        rightLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        rightLayoutParams.topToTop = TITLE_TEXT_VIEW_ID;
-        rightLayoutParams.bottomToBottom = TITLE_TEXT_VIEW_ID;
-        rightLayoutParams.rightMargin = rightMargin;
-        rightImageView.setImageResource(rightIconId);
-        rightImageView.setOnClickListener(rightClickListener);
-        return this;
+    public ToolbarLayout setRightIcon(int res, int rightMargin, View.OnClickListener listener) {
+        return addChildView(new ImageViewX(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar)
+                        .src(res)
+                        .clickListener(listener),
+                new ConstraintLayoutParamsX()
+                        .end2end(ConstraintLayoutParamsX.PARENT_ID)
+                        .top2top(TOOLBAR_ID)
+                        .bottom2bottom(TOOLBAR_ID)
+                        .rightMargin(rightMargin));
     }
 
-    public ToolbarLayout setRightText(String rightText,
-                                      int rightTextColor,
-                                      int rightTextSizeSp,
+    public ToolbarLayout setRightText(String text,
+                                      int color,
+                                      int sp,
                                       int rightMargin,
-                                      View.OnClickListener rightClickListener) {
-        TextView rightTextView = new TextView(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar);
-        LayoutParams rightLayoutParams = add1View(rightTextView);
-        rightLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        rightLayoutParams.topToTop = TITLE_TEXT_VIEW_ID;
-        rightLayoutParams.bottomToBottom = TITLE_TEXT_VIEW_ID;
-        rightLayoutParams.rightMargin = rightMargin;
-        rightTextView.setText(rightText);
-        rightTextView.setTextColor(rightTextColor);
-        rightTextView.setTextSize(rightTextSizeSp);
-        rightTextView.setOnClickListener(rightClickListener);
+                                      View.OnClickListener listener) {
+
+        return addChildView(new TextViewX(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar)
+                        .text(text)
+                        .textColor(color)
+                        .textSize(sp)
+                        .clickListener(listener),
+                new ConstraintLayoutParamsX()
+                        .end2end(ConstraintLayoutParamsX.PARENT_ID)
+                        .top2top(TOOLBAR_ID)
+                        .bottom2bottom(TOOLBAR_ID)
+                        .rightMargin(rightMargin));
+    }
+
+    public void setContentView(View view, ConstraintLayoutParamsX lp) {
+        addChildViewBelowToolbar(view, lp.width(0)
+                .start2start(LayoutParams.PARENT_ID)
+                .end2end(LayoutParams.PARENT_ID));
+    }
+
+    public ToolbarLayout addChildViewBelowToolbar(View view, ConstraintLayoutParamsX lp) {
+        return addChildView(view, lp.top2bottom(TOOLBAR_ID));
+    }
+
+    @Override
+    public ToolbarLayout addChildView(View view) {
+        super.addChildView(view);
         return this;
     }
 
-    public void setContentView(View contentView) {
-        ConstraintLayoutParamsX contentLayoutParams = addViewBelowToolbar(contentView);
-        contentLayoutParams.width = 0;
-        contentLayoutParams.startToStart = LayoutParams.PARENT_ID;
-        contentLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-    }
-
-    public ConstraintLayoutParamsX addViewBelowToolbar(View view) {
-        ConstraintLayoutParamsX viewLayoutParams = add1View(view);
-        viewLayoutParams.topToBottom = TITLE_TEXT_VIEW_ID;
-        return viewLayoutParams;
+    @Override
+    public ToolbarLayout addChildView(View view, ViewGroup.LayoutParams lp) {
+        super.addChildView(view,lp);
+        return this;
     }
 
 }

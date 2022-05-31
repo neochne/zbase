@@ -3,107 +3,99 @@ package com.zbase.view.x;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.zbase.view.ToolbarLayout;
+public final class RecyclerViewX extends RecyclerView implements IViewX<RecyclerViewX> {
 
-public class ButtonX extends AppCompatButton implements IViewX<ButtonX>{
-
-    public ButtonX(@NonNull Context context) {
+    public RecyclerViewX(@NonNull Context context) {
         super(context);
     }
 
-    public ButtonX text(String text) {
-        setText(text);
+    public RecyclerViewX layoutManager(LayoutManager manager) {
+        setLayoutManager(manager);
         return this;
     }
 
-    public ButtonX text(int res) {
-        setText(res);
+    public RecyclerViewX itemDecoration(ItemDecoration decor) {
+        addItemDecoration(decor);
         return this;
     }
 
-    public ButtonX textSize(float sp) {
-        setTextSize(sp);
-        return this;
-    }
-
-    public ButtonX textColor(int color) {
-        setTextColor(color);
+    public RecyclerViewX adapter(Adapter adapter) {
+        setAdapter(adapter);
         return this;
     }
 
     @Override
-    public ButtonX id(int id) {
+    public RecyclerViewX id(int id) {
         setId(id);
         return this;
     }
 
     @Override
-    public ButtonX tag(Object tag) {
+    public RecyclerViewX tag(Object tag) {
         setTag(tag);
         return this;
     }
 
     @Override
-    public ButtonX tag(int key, Object tag) {
+    public RecyclerViewX tag(int key, Object tag) {
         setTag(key,tag);
         return this;
     }
 
     @Override
-    public ButtonX disable() {
+    public RecyclerViewX disable() {
         setEnabled(false);
         return this;
     }
 
     @Override
-    public ButtonX background(Drawable drawable) {
+    public RecyclerViewX background(Drawable drawable) {
         setBackground(drawable);
         return this;
     }
 
     @Override
-    public ButtonX backgroundColor(int color) {
+    public RecyclerViewX backgroundColor(int color) {
         setBackgroundColor(color);
         return this;
     }
 
     @Override
-    public ButtonX backgroundResource(int res) {
+    public RecyclerViewX backgroundResource(int res) {
         setBackgroundResource(res);
         return this;
     }
 
     @Override
-    public ButtonX minimumHeight(int height) {
+    public RecyclerViewX minimumHeight(int height) {
         setMinimumHeight(height);
         return this;
     }
 
     @Override
-    public ButtonX minimumWidth(int width) {
+    public RecyclerViewX minimumWidth(int width) {
         setMinimumWidth(width);
         return this;
     }
 
     @Override
-    public ButtonX padding(int l, int t, int r, int b) {
+    public RecyclerViewX padding(int l, int t, int r, int b) {
         setPadding(l,t,r,b);
         return this;
     }
 
     @Override
-    public ButtonX clickListener(OnClickListener clickListener) {
+    public RecyclerViewX clickListener(OnClickListener clickListener) {
         this.setOnClickListener(clickListener);
         return this;
     }
 
     @Override
-    public ButtonX longClickListener(View.OnLongClickListener longClickListener) {
+    public RecyclerViewX longClickListener(View.OnLongClickListener longClickListener) {
         this.setOnLongClickListener(longClickListener);
         return this;
     }

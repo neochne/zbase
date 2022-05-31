@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
 import com.zbase.util.ViewUtils;
-import com.zbase.view.x.params.FrameLayoutParamsX;
+import com.zbase.view.x.FrameLayoutParamsX;
 
 public class ZBaseActivity extends AppCompatActivity {
 

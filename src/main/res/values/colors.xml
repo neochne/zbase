@@ -4,7 +4,14 @@
     <color name="divider">#EEEEEE</color>
     <color name="tv_default_color">@color/gray_808080</color>
 
+    <!-- PictureSelectActivity -->
+    <color name="pic_preview_bar_color">@color/black_80353535</color>
+    <color name="pic_preview_confirm_btn_color">@color/green_B2EB</color>
+    <color name="pic_preview_check_box_color">@color/green_B2EB</color>
+
     <!-- raw color value-->
     <color name="gray_808080">#808080</color>
     <color name="black_353535">#353535</color>
+    <color name="black_80353535">#80353535</color>
+    <color name="green_B2EB">#B2EB</color>
 </resources>

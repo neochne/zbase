@@ -1,14 +1,19 @@
-package com.zbase.view.x.params;
+package com.zbase.view.x;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams {
 
+    public ConstraintLayoutParamsX() {
+        super(WRAP_CONTENT, WRAP_CONTENT);
+    }
+
     public ConstraintLayoutParamsX(int width, int height) {
         super(width, height);
     }
 
-    public ConstraintLayoutParamsX margins(int w) {
+    public ConstraintLayoutParamsX margins(int margin) {
+        setMargins(margin,margin,margin,margin);
         return this;
     }
 

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
@@ -78,15 +79,16 @@ public final class ImageUtils {
         void onComplete(Map<Long, List<LocalMedia>> mediaMap);
     }
 
-    public static void loadLocalImage(Context context,OnQueryMediaCallback queryCallback) {
-        loadLocalMedia(context,"media_type=?",new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)},queryCallback);
+    public static void loadLocalImage(Context context, OnQueryMediaCallback queryCallback) {
+        loadLocalMedia(context, "media_type=?", new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE)}, queryCallback);
     }
 
-    public static void loadLocalVideo(Context context,OnQueryMediaCallback queryCallback) {
-        loadLocalMedia(context,"media_type=?",new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)},queryCallback);
+    public static void loadLocalVideo(Context context, OnQueryMediaCallback queryCallback) {
+        loadLocalMedia(context, "media_type=?", new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)}, queryCallback);
     }
+
     public static void loadLocalMedia(Context context, OnQueryMediaCallback queryCallback) {
-        loadLocalMedia(context,"media_type=? OR media_type=?",new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE),String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)},queryCallback);
+        loadLocalMedia(context, "media_type=? OR media_type=?", new String[]{String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE), String.valueOf(MediaStore.Files.FileColumns.MEDIA_TYPE_VIDEO)}, queryCallback);
     }
 
     public static void loadLocalMedia(Context context, String condition, String[] conditionArgs, OnQueryMediaCallback queryCallback) {
@@ -158,6 +160,18 @@ public final class ImageUtils {
             ToastUtils.show(context, "未知异常");
             queryCallback.onComplete(new LinkedHashMap<>());
         }
+    }
+
+    public static GradientDrawable createShapeDrawable(int solidColor,
+                                                       int strokeColor,
+                                                       int strokeWidth,
+                                                       float[] radii) {
+        GradientDrawable shapeDrawable = new GradientDrawable();
+        shapeDrawable.setShape(GradientDrawable.RECTANGLE);
+        shapeDrawable.setColor(solidColor);
+        shapeDrawable.setCornerRadii(radii);
+        shapeDrawable.setStroke(strokeWidth, strokeColor);
+        return shapeDrawable;
     }
 
 }

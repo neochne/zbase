@@ -1,11 +1,11 @@
-package com.zbase.view.x.params;
+package com.zbase.view.x;
 
 import android.widget.FrameLayout;
 
 public class FrameLayoutParamsX extends FrameLayout.LayoutParams {
 
     public FrameLayoutParamsX() {
-        super(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);
+        super(WRAP_CONTENT,WRAP_CONTENT);
     }
 
     public FrameLayoutParamsX(int width, int height) {
