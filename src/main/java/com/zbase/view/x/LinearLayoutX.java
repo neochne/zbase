@@ -17,6 +17,11 @@ public final class LinearLayoutX extends LinearLayout implements IViewGroupX<Lin
         return this;
     }
 
+    public LinearLayoutX orientation(int orientation) {
+        setOrientation(orientation);
+        return this;
+    }
+
     @Override
     public LinearLayoutX id(int id) {
         setId(id);
@@ -74,6 +79,18 @@ public final class LinearLayoutX extends LinearLayout implements IViewGroupX<Lin
     @Override
     public LinearLayoutX padding(int l, int t, int r, int b) {
         setPadding(l,t,r,b);
+        return this;
+    }
+
+    @Override
+    public LinearLayoutX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public LinearLayoutX focus() {
+        requestFocus();
         return this;
     }
 

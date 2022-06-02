@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 
-import com.zbase.view.ToolbarLayout;
-
 public class ButtonX extends AppCompatButton implements IViewX<ButtonX>{
 
     public ButtonX(@NonNull Context context) {
@@ -93,6 +91,18 @@ public class ButtonX extends AppCompatButton implements IViewX<ButtonX>{
     @Override
     public ButtonX padding(int l, int t, int r, int b) {
         setPadding(l,t,r,b);
+        return this;
+    }
+
+    @Override
+    public ButtonX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public ButtonX focus() {
+        requestFocus();
         return this;
     }
 

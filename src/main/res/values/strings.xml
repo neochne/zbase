@@ -1,2 +1,3 @@
 <resources>
+    <string name="error_get_local_media">获取本地媒体失败，请检查权限及 SD 卡是否正常</string>
 </resources>

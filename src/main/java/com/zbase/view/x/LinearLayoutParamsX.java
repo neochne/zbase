@@ -1,7 +1,5 @@
 package com.zbase.view.x;
 
-import android.content.Context;
-import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 public final class LinearLayoutParamsX extends LinearLayout.LayoutParams {
@@ -10,8 +8,13 @@ public final class LinearLayoutParamsX extends LinearLayout.LayoutParams {
         super(WRAP_CONTENT,WRAP_CONTENT);
     }
 
-    public LinearLayoutParamsX(Context c, AttributeSet attrs) {
-        super(c, attrs);
+    public LinearLayoutParamsX(int width,int height) {
+        super(width,height);
+    }
+
+    public LinearLayoutParamsX weight(float weight) {
+        this.weight = weight;
+        return this;
     }
 
 }

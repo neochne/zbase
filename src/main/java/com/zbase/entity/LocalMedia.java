@@ -9,7 +9,9 @@ public final class LocalMedia implements Parcelable {
 
     private String name;
 
-    private String folder;
+    private long bucketId;
+
+    private String bucketName;
 
     private long size;
 
@@ -64,12 +66,20 @@ public final class LocalMedia implements Parcelable {
         this.name = name;
     }
 
-    public String getFolder() {
-        return folder;
+    public long getBucketId() {
+        return bucketId;
     }
 
-    public void setFolder(String folder) {
-        this.folder = folder;
+    public void setBucketId(long bucketId) {
+        this.bucketId = bucketId;
+    }
+
+    public String getBucketName() {
+        return bucketName;
+    }
+
+    public void setBucketName(String bucketName) {
+        this.bucketName = bucketName;
     }
 
     public long getSize() {

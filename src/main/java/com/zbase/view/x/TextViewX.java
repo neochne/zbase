@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -170,6 +171,18 @@ public class TextViewX extends AppCompatTextView implements ITextViewX<TextViewX
     @Override
     public TextViewX padding(int l, int t, int r, int b) {
         setPadding(l, t, r, b);
+        return this;
+    }
+
+    @Override
+    public TextViewX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public TextViewX focus() {
+        requestFocus();
         return this;
     }
 

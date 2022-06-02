@@ -1,21 +1,19 @@
 package com.zbase.activity;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.graphics.Color;
-import android.net.Uri;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.zbase.R;
@@ -23,25 +21,35 @@ import com.zbase.entity.LocalMedia;
 import com.zbase.util.ImageUtils;
 import com.zbase.util.ResourceUtils;
 import com.zbase.util.SystemBarUtils;
+import com.zbase.util.ToastUtils;
 import com.zbase.view.RoundedButton;
+import com.zbase.view.adapter.PicturePagerAdapter;
+import com.zbase.view.adapter.PictureSelectAdapter;
 import com.zbase.view.decor.GridSpacingItemDecoration;
 import com.zbase.view.x.CheckBoxX;
 import com.zbase.view.x.ConstraintLayoutParamsX;
 import com.zbase.view.x.ConstraintLayoutX;
 import com.zbase.view.x.FrameLayoutParamsX;
-import com.zbase.view.x.FrameLayoutX;
 import com.zbase.view.x.ImageViewX;
+import com.zbase.view.x.LinearLayoutParamsX;
 import com.zbase.view.x.LinearLayoutX;
+import com.zbase.view.x.ListViewX;
 import com.zbase.view.x.RecyclerViewX;
 import com.zbase.view.x.RelativeLayoutParamsX;
 import com.zbase.view.x.RelativeLayoutX;
 import com.zbase.view.x.TextViewX;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class PictureSelectActivity extends ZBaseActivity {
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SystemBarUtils.setStatusBarColor(getWindow(), Color.BLACK);
+        SystemBarUtils.setNavBarColor(getWindow(), Color.BLACK);
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -52,8 +60,6 @@ public final class PictureSelectActivity extends ZBaseActivity {
          */
         findViewById(android.R.id.content).setBackgroundColor(Color.BLACK);
         int containerPadding = ResourceUtils.getPixel(this, R.dimen.activity_padding);
-        SystemBarUtils.setStatusBarColor(getWindow(), Color.BLACK);
-        SystemBarUtils.hideNavBar(getWindow());
 
         /*
          * Id
@@ -61,18 +67,37 @@ public final class PictureSelectActivity extends ZBaseActivity {
         int bucketLayoutId = View.generateViewId();
         int pictureRvId = View.generateViewId();
         int previewTvId = View.generateViewId();
+        int bucketLvId = View.generateViewId();
 
         /*
          * List
          */
-        List<LocalMedia> selectBucketLocalMediaList = new ArrayList<>();
-        List<LocalMedia> allBucketNameList = new ArrayList<>();
-        PictureAdapter pictureAdapter = new PictureAdapter(selectBucketLocalMediaList);
-        ImageUtils.loadLocalImage(this, mediaMap -> {
-            List<List<LocalMedia>> allLocalMediaList = new ArrayList<>(mediaMap.values());
-            for (List<LocalMedia> localMediaList : allLocalMediaList) {
-                selectBucketLocalMediaList.addAll(localMediaList);
+        List<List<LocalMedia>> allMediaList = new ArrayList<>();
+        List<LocalMedia> bucketMediaList = new ArrayList<>();
+        PictureSelectAdapter pictureAdapter = new PictureSelectAdapter(this, bucketMediaList);
+        pictureAdapter.setItemClickListener((adapterView, view, i, l) -> {
+            showPreviewView(bucketMediaList);
+        });
+        pictureAdapter.setItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+
+        });
+        ImageUtils.loadLocalImage(this, mediaList -> {
+            if (mediaList == null || mediaList.size() < 1) {
+                ToastUtils.show(PictureSelectActivity.this, ResourceUtils.getString(PictureSelectActivity.this, R.string.error_get_local_media));
+                return;
+            }
+            allMediaList.addAll(mediaList);
+            bucketMediaList.addAll(mediaList.get(0));
             pictureAdapter.notifyDataSetChanged();
         });
 
@@ -80,14 +105,16 @@ public final class PictureSelectActivity extends ZBaseActivity {
         int containerPaddingMultiple = (int) (containerPadding * 1.5);
 
         // Create Content View
-        setContentView(new ConstraintLayoutX(this)
+        ConstraintLayoutX containerLayout = new ConstraintLayoutX(this);
+        setContentView(containerLayout
                 .addChildView(new LinearLayoutX(this)
                                 .id(bucketLayoutId)
                                 .padding(ResourceUtils.getPixel(this, R.dimen.bucket_left_padding), ResourceUtils.getPixel(this, R.dimen.bucket_top_padding), ResourceUtils.getPixel(this, R.dimen.bucket_right_padding), ResourceUtils.getPixel(this, R.dimen.bucket_bottom_padding))
                                 .gravity(Gravity.CENTER)
                                 .background(ResourceUtils.getDrawable(this, R.drawable.bg_picture_select_bucket))
                                 .addChildView(new TextViewX(this).text("相机胶卷").textColor(Color.WHITE))
-                                .addChildView(new ImageViewX(this).src(R.drawable.ic_down_white).scaleType(ImageView.ScaleType.FIT_XY)),
+                                .addChildView(new ImageViewX(this).src(R.drawable.ic_down_white).scaleType(ImageView.ScaleType.FIT_XY))
+                                .clickListener(v -> showBucketListView(containerLayout, bucketLayoutId, bucketLvId, containerPadding, allMediaList)),
                         new ConstraintLayoutParamsX()
                                 .top2top(ConstraintLayoutParamsX.PARENT_ID)
                                 .bottom2top(pictureRvId)
@@ -105,7 +132,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                 .id(pictureRvId)
                                 .layoutManager(new GridLayoutManager(this, 4))
                                 .itemDecoration(new GridSpacingItemDecoration(4, 20, true))
-                                .backgroundColor(ResourceUtils.getColor(this, R.color.black_353535))
+                                .backgroundColor(ResourceUtils.getColor(this, R.color.pic_preview_rv))
                                 .adapter(pictureAdapter),
                         new ConstraintLayoutParamsX().width(0)
                                 .height(0)
@@ -132,58 +159,66 @@ public final class PictureSelectActivity extends ZBaseActivity {
         );
     }
 
-    public static class PictureAdapter extends RecyclerView.Adapter<PictureVH> {
-
-        private final List<LocalMedia> mPictureList;
-
-        public PictureAdapter(List<LocalMedia> pictureList) {
-            this.mPictureList = pictureList;
+    public void showBucketListView(ConstraintLayoutX containerLayout, int bucketLayoutId, int bucketLvLayoutId, int containerPadding, List<List<LocalMedia>> allMediaList) {
+        LinearLayoutX lastBucketLvLayout = containerLayout.findViewById(bucketLvLayoutId);
+        LinearLayoutX bucketLvLayout = lastBucketLvLayout == null ? new LinearLayoutX(this) : lastBucketLvLayout;
+        if (lastBucketLvLayout != null) {
+            bucketLvLayout.setVisibility(View.VISIBLE);
+            return;
         }
+        int padding = ResourceUtils.getPixel(containerLayout.getContext(), R.dimen.bucket_list_item_padding);
+        containerLayout.addChildView(bucketLvLayout
+                        .id(bucketLvLayoutId)
+                        .backgroundColor(ResourceUtils.getColor(this, R.color.pic_preview_bucket_list))
+                        .clickListener(v -> bucketLvLayout.setVisibility(View.GONE))
+                        .addChildView(new ListViewX(this)
+                                .backgroundColor(Color.BLACK)
+                                .divider(new ColorDrawable(Color.DKGRAY))
+                                .dividerHeight(1)
+                                .adapter(new BaseAdapter() {
+                                    @Override
+                                    public int getCount() {
+                                        return allMediaList.size();
+                                    }
 
-        @NonNull
-        @Override
-        public PictureVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            Context context = parent.getContext();
-            int wh = ResourceUtils.getPixel(context, R.dimen.select_pic_w_h);
-            return new PictureVH(new FrameLayoutX(context, wh, wh)
-                    .addChildView(new ImageViewX(context).id(66).scaleType(ImageView.ScaleType.CENTER_CROP))
-                    .addChildView(new CheckBoxX(context).id(67),new FrameLayoutParamsX().gravity(Gravity.TOP | Gravity.END)));
-        }
+                                    @Override
+                                    public List<LocalMedia> getItem(int i) {
+                                        return allMediaList.get(i);
+                                    }
 
-        @Override
-        public void onBindViewHolder(@NonNull PictureVH holder, int position) {
-            String picPath = mPictureList.get(position).getPath();
-            holder.mPicIv.setImageURI(Uri.fromFile(new File(picPath)));
-        }
+                                    @Override
+                                    public long getItemId(int i) {
+                                        return i;
+                                    }
 
-        @Override
-        public int getItemCount() {
-            return mPictureList.size();
-        }
-
+                                    @Override
+                                    public View getView(int i, View view, ViewGroup viewGroup) {
+                                        List<LocalMedia> mediaList = getItem(i);
+                                        String bucketName = i == 0 ? "相机胶卷" : mediaList.get(0).getBucketName();
+                                        TextViewX bucketTv = new TextViewX(PictureSelectActivity.this).textColor(Color.WHITE).textSize(16).text(bucketName);
+                                        TextViewX countTv = new TextViewX(PictureSelectActivity.this).textColor(Color.GRAY).text(String.format("（%s）", mediaList.size()));
+                                        ImageViewX checkIv = new ImageViewX(PictureSelectActivity.this);
+                                        return new LinearLayoutX(PictureSelectActivity.this)
+                                                .gravity(Gravity.CENTER_VERTICAL)
+                                                .padding(padding, padding, padding, padding)
+                                                .addChildView(bucketTv)
+                                                .addChildView(countTv, new LinearLayoutParamsX().weight(1))
+                                                .addChildView(checkIv);
+                                    }
+                                }), new LinearLayoutParamsX(LinearLayoutParamsX.MATCH_PARENT, LinearLayoutParamsX.WRAP_CONTENT)),
+                new ConstraintLayoutParamsX()
+                        .width(0)
+                        .height(0)
+                        .start2start(ConstraintLayoutParamsX.PARENT_ID)
+                        .end2end(ConstraintLayoutParamsX.PARENT_ID)
+                        .top2bottom(bucketLayoutId)
+                        .bottom2bottom(ConstraintLayoutParamsX.PARENT_ID));
     }
 
-    public static class PictureVH extends RecyclerView.ViewHolder {
-
-        public final ImageViewX mPicIv;
-
-        public final CheckBox mCheckBox;
-
-        public PictureVH(@NonNull View itemView) {
-            super(itemView);
-            int picIvId = 66;
-            mPicIv = itemView.findViewById(picIvId);
-            int checkBoxId = 67;
-            mCheckBox = itemView.findViewById(checkBoxId);
-            itemView.setOnClickListener(v -> showPreviewView((PictureSelectActivity) itemView.getContext()));
-        }
-
-    }
-
-    public static void showPreviewView(PictureSelectActivity activity) {
+    public void showPreviewView(List<LocalMedia> selectedMediaList) {
         int rootLayoutId = 86;
-        ConstraintLayoutX lastRootLayout = activity.findViewById(rootLayoutId);
-        ConstraintLayoutX rootConstraintLayout = lastRootLayout == null ? new ConstraintLayoutX(activity).id(rootLayoutId) : lastRootLayout;
+        ConstraintLayoutX lastRootLayout = findViewById(rootLayoutId);
+        ConstraintLayoutX rootConstraintLayout = lastRootLayout == null ? new ConstraintLayoutX(this).id(rootLayoutId) : lastRootLayout;
         if (lastRootLayout != null) {
             rootConstraintLayout.setVisibility(View.VISIBLE);
             return;
@@ -192,23 +227,23 @@ public final class PictureSelectActivity extends ZBaseActivity {
         /*
          * Bar
          */
-        int barColor = ResourceUtils.getColor(activity, R.color.pic_preview_bar_color);
-        int barPadding = ResourceUtils.getPixel(activity, R.dimen.pic_preview_bar_padding);
+        int barColor = ResourceUtils.getColor(this, R.color.pic_preview_bucket_list);
+        int barPadding = ResourceUtils.getPixel(this, R.dimen.pic_preview_bar_padding);
 
         /*
          * Top Bar
          */
-        RelativeLayoutX topRl = new RelativeLayoutX(activity)
+        RelativeLayoutX topRl = new RelativeLayoutX(this)
                 .backgroundColor(barColor)
                 .padding(barPadding, barPadding, barPadding, barPadding)
-                .addChildView(new ImageViewX(activity)
+                .addChildView(new ImageViewX(this)
                                 .src(R.drawable.ic_back_white)
                                 .clickListener(v -> rootConstraintLayout.setVisibility(View.GONE)),
                         new RelativeLayoutParamsX()
                                 .rule(RelativeLayout.ALIGN_PARENT_LEFT)
                                 .rule(RelativeLayout.CENTER_VERTICAL))
-                .addChildView(new CheckBoxX(activity)
-                                .color(ResourceUtils.getColor(activity, R.color.pic_preview_check_box_color)),
+                .addChildView(new CheckBoxX(this)
+                                .color(ResourceUtils.getColor(this, R.color.pic_preview_check_box_color)),
                         new RelativeLayoutParamsX()
                                 .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                 .rule(RelativeLayout.CENTER_VERTICAL));
@@ -216,28 +251,29 @@ public final class PictureSelectActivity extends ZBaseActivity {
         /*
          * Bottom Bar
          */
-        RelativeLayoutX bottomRl = new RelativeLayoutX(activity)
+        RelativeLayoutX bottomRl = new RelativeLayoutX(this)
                 .backgroundColor(barColor)
                 .padding(barPadding, barPadding, barPadding, barPadding)
-                .addChildView(new RoundedButton(activity)
-                                .solidColor(ResourceUtils.getColor(activity, R.color.pic_preview_confirm_btn_color))
+                .addChildView(new RoundedButton(this)
+                                .solidColor(ResourceUtils.getColor(this, R.color.pic_preview_confirm_btn_color))
                                 .text("确定")
                                 .textColor(Color.WHITE),
                         new RelativeLayoutParamsX()
                                 .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                 .rule(RelativeLayout.CENTER_VERTICAL)
-                                .height(ResourceUtils.getPixel(activity, R.dimen.btn_height)));
+                                .height(ResourceUtils.getPixel(this, R.dimen.btn_height)));
 
         /*
          * Picture Pager
          */
-        ViewPager2 picPager = new ViewPager2(activity);
+        ViewPager2 picPager = new ViewPager2(this);
         picPager.setBackgroundColor(Color.BLACK);
+        picPager.setAdapter(new PicturePagerAdapter(selectedMediaList));
 
         /*
          * Add
          */
-        activity.addContentView(rootConstraintLayout
+        addContentView(rootConstraintLayout
                         .addChildView(picPager, new ConstraintLayoutParamsX()
                                 .width(0)
                                 .height(0)

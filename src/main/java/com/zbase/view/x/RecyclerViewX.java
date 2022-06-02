@@ -3,6 +3,7 @@ package com.zbase.view.x;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -85,6 +86,18 @@ public final class RecyclerViewX extends RecyclerView implements IViewX<Recycler
     @Override
     public RecyclerViewX padding(int l, int t, int r, int b) {
         setPadding(l,t,r,b);
+        return this;
+    }
+
+    @Override
+    public RecyclerViewX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public RecyclerViewX focus() {
+        requestFocus();
         return this;
     }
 

@@ -80,6 +80,18 @@ public class FrameLayoutX extends FrameLayout implements IViewGroupX<FrameLayout
     }
 
     @Override
+    public FrameLayoutX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public FrameLayoutX focus() {
+        requestFocus();
+        return this;
+    }
+
+    @Override
     public FrameLayoutX clickListener(OnClickListener clickListener) {
         this.setOnClickListener(clickListener);
         return this;

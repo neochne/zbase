@@ -3,6 +3,7 @@ package com.zbase.view.x;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CompoundButton;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
@@ -12,7 +13,7 @@ import com.zbase.util.ViewUtils;
 public final class CheckBoxX extends AppCompatCheckBox implements IViewX<CheckBoxX>{
 
     public CheckBoxX(Context context) {
-        super(context);
+        super(context, null, android.R.attr.checkboxStyle);
     }
 
     public CheckBoxX checkListener(CompoundButton.OnCheckedChangeListener listener) {
@@ -87,6 +88,18 @@ public final class CheckBoxX extends AppCompatCheckBox implements IViewX<CheckBo
     @Override
     public CheckBoxX padding(int l, int t, int r, int b) {
         setPadding(l,t,r,b);
+        return this;
+    }
+
+    @Override
+    public CheckBoxX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public CheckBoxX focus() {
+        requestFocus();
         return this;
     }
 

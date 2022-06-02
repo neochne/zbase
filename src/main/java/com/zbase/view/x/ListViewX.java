@@ -2,6 +2,7 @@ package com.zbase.view.x;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -99,6 +100,18 @@ public final class ListViewX extends ListView implements IViewX<ListViewX> {
     @Override
     public ListViewX padding(int l, int t, int r, int b) {
         setPadding(l, t, r, b);
+        return this;
+    }
+
+    @Override
+    public ListViewX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public ListViewX focus() {
+        requestFocus();
         return this;
     }
 

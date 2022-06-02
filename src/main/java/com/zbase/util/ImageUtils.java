@@ -24,7 +24,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -76,7 +75,7 @@ public final class ImageUtils {
     }
 
     public interface OnQueryMediaCallback {
-        void onComplete(Map<Long, List<LocalMedia>> mediaMap);
+        void onComplete(List<List<LocalMedia>> mediaList);
     }
 
     public static void loadLocalImage(Context context, OnQueryMediaCallback queryCallback) {
@@ -94,7 +93,7 @@ public final class ImageUtils {
     public static void loadLocalMedia(Context context, String condition, String[] conditionArgs, OnQueryMediaCallback queryCallback) {
         if (!FileUtils.isSdCardAvailable()) {
             ToastUtils.show(context, "未检测到储存卡，相关功能将无法使用");
-            queryCallback.onComplete(new LinkedHashMap<>());
+            queryCallback.onComplete(new ArrayList<>());
             return;
         }
         /*
@@ -127,6 +126,7 @@ public final class ImageUtils {
                 return;
             }
             Map<Long, List<LocalMedia>> mediaMap = new HashMap<>();
+            List<LocalMedia> allMediaList = new ArrayList<>();
             mediaCursor.moveToFirst();
             do {
                 /*
@@ -144,7 +144,8 @@ public final class ImageUtils {
                 LocalMedia media = new LocalMedia();
                 media.setPath(path);
                 media.setName(name);
-                media.setFolder(bucketDisplayName);
+                media.setBucketId(bucketId);
+                media.setBucketName(bucketDisplayName);
                 media.setSize(size);
                 if (mediaMap.containsKey(bucketId)) {
                     Objects.requireNonNull(mediaMap.get(bucketId)).add(media);
@@ -153,12 +154,16 @@ public final class ImageUtils {
                         add(media);
                     }});
                 }
+                allMediaList.add(media);
             } while (mediaCursor.moveToNext());
-            queryCallback.onComplete(mediaMap);
+            List<List<LocalMedia>> mediaList = new ArrayList<>(mediaMap.values());
+            // the 0 index list is all medias
+            mediaList.add(0,allMediaList);
+            queryCallback.onComplete(mediaList);
         } catch (Exception e) {
             e.printStackTrace();
             ToastUtils.show(context, "未知异常");
-            queryCallback.onComplete(new LinkedHashMap<>());
+            queryCallback.onComplete(new ArrayList<>());
         }
     }
 

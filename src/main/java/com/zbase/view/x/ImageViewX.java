@@ -1,14 +1,19 @@
 package com.zbase.view.x;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+
+import java.io.File;
 
 public final class ImageViewX extends AppCompatImageView implements IViewX<ImageViewX>{
 
@@ -22,6 +27,21 @@ public final class ImageViewX extends AppCompatImageView implements IViewX<Image
 
     public ImageViewX src(int resId) {
         setImageResource(resId);
+        return this;
+    }
+
+    public ImageViewX uri(String path) {
+        setImageURI(Uri.fromFile(new File(path)));
+        return this;
+    }
+
+    public ImageViewX bitmap(Bitmap bitmap) {
+        setImageBitmap(bitmap);
+        return this;
+    }
+
+    public ImageViewX drawable(Drawable drawable) {
+        setImageDrawable(drawable);
         return this;
     }
 
@@ -87,6 +107,18 @@ public final class ImageViewX extends AppCompatImageView implements IViewX<Image
     @Override
     public ImageViewX padding(int l, int t, int r, int b) {
         setPadding(l,t,r,b);
+        return this;
+    }
+
+    @Override
+    public ImageViewX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public ImageViewX focus() {
+        requestFocus();
         return this;
     }
 

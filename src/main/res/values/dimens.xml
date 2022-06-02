@@ -38,6 +38,7 @@
     <dimen name="select_pic_w_h">80dp</dimen>
     <dimen name="pic_rv_top_margin">5dp</dimen>
     <dimen name="pic_preview_bar_padding">8dp</dimen>
+    <dimen name="bucket_list_item_padding">10dp</dimen>
 
     <!-- Common -->
     <dimen name="btn_radius">5dp</dimen>

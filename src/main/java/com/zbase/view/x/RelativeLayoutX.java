@@ -73,6 +73,18 @@ public final class RelativeLayoutX extends RelativeLayout implements IViewGroupX
     }
 
     @Override
+    public RelativeLayoutX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public RelativeLayoutX focus() {
+        requestFocus();
+        return this;
+    }
+
+    @Override
     public RelativeLayoutX clickListener(OnClickListener clickListener) {
         this.setOnClickListener(clickListener);
         return this;

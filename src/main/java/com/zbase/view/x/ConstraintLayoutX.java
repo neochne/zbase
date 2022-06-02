@@ -86,6 +86,18 @@ public class ConstraintLayoutX extends ConstraintLayout implements IViewGroupX<C
     }
 
     @Override
+    public ConstraintLayoutX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public ConstraintLayoutX focus() {
+        requestFocus();
+        return this;
+    }
+
+    @Override
     public ConstraintLayoutX clickListener(OnClickListener clickListener) {
         this.setOnClickListener(clickListener);
         return this;

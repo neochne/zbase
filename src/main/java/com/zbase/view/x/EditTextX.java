@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 
 import androidx.annotation.NonNull;
@@ -206,6 +207,18 @@ public class EditTextX extends AppCompatEditText implements IEditTextX<EditTextX
     @Override
     public EditTextX padding(int l, int t, int r, int b) {
         setPadding(l, t, r, b);
+        return this;
+    }
+
+    @Override
+    public EditTextX lp(ViewGroup.LayoutParams lp) {
+        setLayoutParams(lp);
+        return this;
+    }
+
+    @Override
+    public EditTextX focus() {
+        requestFocus();
         return this;
     }
 
