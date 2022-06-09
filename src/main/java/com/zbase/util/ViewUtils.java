@@ -18,6 +18,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.viewpager2.widget.ViewPager2;
 
 import com.zbase.interfaces.ScrollListener;
 
@@ -111,6 +112,14 @@ public final class ViewUtils {
 
     public static void setCheckBoxColor(CheckBox checkBox, int color) {
         checkBox.setButtonTintList(ColorStateList.valueOf(color));
+    }
+
+    public static void addVp2SelectListener(ViewPager2 vp2, ViewPager2.OnPageChangeCallback listener) {
+        vp2.registerOnPageChangeCallback(listener);
+    }
+
+    public static void removeVp2SelectListener(ViewPager2 vp2, ViewPager2.OnPageChangeCallback listener) {
+        vp2.unregisterOnPageChangeCallback(listener);
     }
 
 }

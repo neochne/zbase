@@ -20,7 +20,7 @@ import com.zbase.view.x.ImageViewX;
 
 import java.util.List;
 
-public final class PictureSelectAdapter extends ZBaseRvAdapter<PictureSelectAdapter.PictureSelectHolder> {
+public final class PictureSelectAdapter extends ZBaseRvAdapter<PictureSelectAdapter.PictureSelectHolder, PictureSelectAdapter> {
 
     private final Context CONTEXT;
 
@@ -51,8 +51,8 @@ public final class PictureSelectAdapter extends ZBaseRvAdapter<PictureSelectAdap
     @Override
     public void onBindViewHolder(@NonNull PictureSelectAdapter.PictureSelectHolder holder, int position) {
         holder.mPicIv.uri(PICTURE_LIST.get(position).getPath());
-        setOnItemClickListener(holder.itemView,position);
-        setOnItemSelectedListener(holder.mCheckBox,position);
+        setOnItemClickListener(holder.itemView, position);
+        setOnItemSelectedListener(holder.mCheckBox, position);
     }
 
     @Override

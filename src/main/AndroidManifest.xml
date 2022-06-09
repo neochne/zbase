@@ -9,7 +9,7 @@
         <activity android:name=".activity.PictureSelectActivity" android:screenOrientation="portrait"/>
         <provider
             android:name="com.zbase.provider.BaseLocalFileProvider"
-            android:authorities="com.zbase.local.fileprovider"
+            android:authorities="${applicationId}.local.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data

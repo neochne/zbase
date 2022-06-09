@@ -223,6 +223,29 @@ public class EditTextX extends AppCompatEditText implements IEditTextX<EditTextX
     }
 
     @Override
+    public EditTextX visible() {
+        setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    @Override
+    public EditTextX invisible() {
+        setVisibility(View.INVISIBLE);
+        return this;
+    }
+
+    @Override
+    public EditTextX gone() {
+        setVisibility(View.GONE);
+        return this;
+    }
+
+    @Override
+    public boolean isVisible() {
+        return getVisibility() == View.VISIBLE;
+    }
+
+    @Override
     public EditTextX clickListener(OnClickListener clickListener) {
         setKeyListener(null);
         setOnTouchListener((view, motionEvent) -> {

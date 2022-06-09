@@ -2,7 +2,7 @@ package com.zbase.view.x;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams {
+public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams implements IViewGroupLayoutParamsX<ConstraintLayoutParamsX> {
 
     public ConstraintLayoutParamsX() {
         super(WRAP_CONTENT, WRAP_CONTENT);
@@ -10,21 +10,6 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams {
 
     public ConstraintLayoutParamsX(int width, int height) {
         super(width, height);
-    }
-
-    public ConstraintLayoutParamsX margins(int margin) {
-        setMargins(margin,margin,margin,margin);
-        return this;
-    }
-
-    public ConstraintLayoutParamsX width(int w) {
-        this.width = w;
-        return this;
-    }
-
-    public ConstraintLayoutParamsX height(int h) {
-        this.height = h;
-        return this;
     }
 
     public ConstraintLayoutParamsX start2start(int id) {
@@ -84,26 +69,6 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams {
 
     public ConstraintLayoutParamsX weightVertical(int weight) {
         verticalWeight = weight;
-        return this;
-    }
-
-    public ConstraintLayoutParamsX leftMargin(int v) {
-        leftMargin = v;
-        return this;
-    }
-
-    public ConstraintLayoutParamsX topMargin(int v) {
-        topMargin = v;
-        return this;
-    }
-
-    public ConstraintLayoutParamsX rightMargin(int v) {
-        rightMargin = v;
-        return this;
-    }
-
-    public ConstraintLayoutParamsX bottomMargin(int v) {
-        bottomMargin = v;
         return this;
     }
 

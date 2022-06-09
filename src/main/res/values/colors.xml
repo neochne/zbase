@@ -6,12 +6,14 @@
 
     <!-- PictureSelectActivity -->
     <color name="pic_preview_rv">@color/gray_353535</color>
-    <color name="pic_preview_bucket_list">@color/black_A0000000</color>
+    <color name="pic_preview_bucket_list_bg">@color/black_A0000000</color>
+    <color name="pic_preview_bar_bg">@color/black_EF000000</color>
     <color name="pic_preview_confirm_btn_color">@color/green_549588</color>
     <color name="pic_preview_check_box_color">@color/green_549588</color>
 
     <!-- raw color value-->
     <color name="black_A0000000">#A0000000</color>
+    <color name="black_EF000000">#EF000000</color>
     <color name="gray_808080">#808080</color>
     <color name="gray_353535">#353535</color>
     <color name="green_549588">#549588</color>

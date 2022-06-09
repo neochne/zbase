@@ -3,10 +3,18 @@ package com.zbase.view.x;
 import android.view.View;
 import android.view.ViewGroup;
 
-public interface IViewGroupX<T extends View> extends IViewX<T>{
+public interface IViewGroupX<T extends ViewGroup> extends IViewX<T>{
 
-    T addChildView(View view);
+    default T addChildView(View view) {
+        T t = (T) this;
+        t.addView(view);
+        return t;
+    }
 
-    T addChildView(View view, ViewGroup.LayoutParams lp);
+    default T addChildView(View view, ViewGroup.LayoutParams lp) {
+        T t = (T) this;
+        t.addView(view,lp);
+        return t;
+    }
 
 }

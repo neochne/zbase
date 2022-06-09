@@ -2,7 +2,7 @@ package com.zbase.view.x;
 
 import android.widget.LinearLayout;
 
-public final class LinearLayoutParamsX extends LinearLayout.LayoutParams {
+public final class LinearLayoutParamsX extends LinearLayout.LayoutParams implements IViewGroupLayoutParamsX<LinearLayoutParamsX>{
 
     public LinearLayoutParamsX() {
         super(WRAP_CONTENT,WRAP_CONTENT);

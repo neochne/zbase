@@ -6,32 +6,111 @@ import android.view.ViewGroup;
 
 public interface IViewX<T extends View> {
 
-    T id(int id);
+    default T id(int id) {
+        T t = (T) this;
+        t.setId(id);
+        return t;
+    }
 
-    T tag(Object tag);
+    default T tag(Object tag) {
+        T t = (T) this;
+        t.setTag(tag);
+        return t;
+    }
 
-    T tag(int key,Object tag);
+    default T tag(int key,Object tag) {
+        T t = (T) this;
+        t.setTag(key,tag);
+        return t;
+    }
 
-    T disable();
+    default T disable() {
+        T t = (T) this;
+        t.setEnabled(false);
+        return t;
+    }
 
-    T background(Drawable drawable);
+    default T background(Drawable drawable) {
+        T t = (T) this;
+        t.setBackground(drawable);
+        return t;
+    }
 
-    T backgroundColor(int color);
+    default T backgroundColor(int color) {
+        T t = (T) this;
+        t.setBackgroundColor(color);
+        return t;
+    }
 
-    T backgroundResource(int res);
+    default T backgroundResource(int res) {
+        T t = (T) this;
+        t.setBackgroundResource(res);
+        return t;
+    }
 
-    T minimumHeight(int height);
+    default T minimumHeight(int height) {
+        T t = (T) this;
+        t.setMinimumHeight(height);
+        return t;
+    }
 
-    T minimumWidth(int width);
+    default T minimumWidth(int width) {
+        T t = (T) this;
+        t.setMinimumWidth(width);
+        return t;
+    }
 
-    T padding(int l, int t, int r, int b);
+    default T padding(int l, int t, int r, int b) {
+        T tv = (T) this;
+        tv.setPadding(l,t,r,b);
+        return tv;
+    }
 
-    T lp(ViewGroup.LayoutParams lp);
+    default T lp(ViewGroup.LayoutParams lp) {
+        T t = (T) this;
+        t.setLayoutParams(lp);
+        return t;
+    }
 
-    T focus();
+    default T focus() {
+        T t = (T) this;
+        t.requestFocus();
+        return t;
+    }
 
-    T clickListener(View.OnClickListener clickListener);
+    default T visible() {
+        T t = (T) this;
+        t.setVisibility(View.VISIBLE);
+        return t;
+    }
 
-    T longClickListener(View.OnLongClickListener longClickListener);
+    default T invisible() {
+        T t = (T) this;
+        t.setVisibility(View.INVISIBLE);
+        return t;
+    }
+
+    default T gone() {
+        T t = (T) this;
+        t.setVisibility(View.GONE);
+        return t;
+    }
+
+    default boolean isVisible() {
+        return ((T)this).getVisibility() == View.VISIBLE;
+    }
+
+
+    default T clickListener(View.OnClickListener clickListener) {
+        T t = (T) this;
+        t.setOnClickListener(clickListener);
+        return t;
+    }
+
+    default T longClickListener(View.OnLongClickListener longClickListener) {
+        T t = (T) this;
+        t.setOnLongClickListener(longClickListener);
+        return t;
+    }
 
 }

@@ -2,38 +2,99 @@ package com.zbase.view.x;
 
 import android.graphics.Typeface;
 import android.text.TextUtils;
-import android.view.View;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.TextView;
 
-public interface ITextViewX<T extends View> extends IViewX<T>{
+public interface ITextViewX<T extends TextView> extends IViewX<T> {
 
-    T text(String text);
+    default T text(String text) {
+        T t = (T) this;
+        t.setText(text);
+        return t;
+    }
 
-    T text(int res);
+    default T text(int res) {
+        T t = (T) this;
+        t.setText(res);
+        return t;
+    }
 
-    T textSize(float sp);
+    default T textSize(float sp) {
+        T t = (T) this;
+        t.setTextSize(sp);
+        return t;
+    }
 
-    T hint(String hint);
+    default T hint(String hint) {
+        T t = (T) this;
+        t.setHint(hint);
+        return t;
+    }
 
-    T hint(int res);
+    default T hint(int res) {
+        T t = (T) this;
+        t.setHint(res);
+        return t;
+    }
 
-    T textColor(int color);
+    default T textColor(int color) {
+        T t = (T) this;
+        t.setTextColor(color);
+        return t;
+    }
 
-    T hintTextColor(int color);
+    default T hintTextColor(int color) {
+        T t = (T) this;
+        t.setHintTextColor(color);
+        return t;
+    }
 
-    T singleLine();
+    default T singleLine() {
+        T t = (T) this;
+        t.setSingleLine();
+        return t;
+    }
 
-    T maxLines(int line);
+    default T maxLines(int lines) {
+        T t = (T) this;
+        t.setMaxLines(lines);
+        return t;
+    }
 
-    T gravity(int gravity);
+    default T gravity(int gravity) {
+        T t = (T) this;
+        t.setGravity(gravity);
+        return t;
+    }
 
-    T minHeight(int height);
+    default T minHeight(int height) {
+        T t = (T) this;
+        t.setMinHeight(height);
+        return t;
+    }
 
-    T minWidth(int width);
+    default T minWidth(int width) {
+        T t = (T) this;
+        t.setMinWidth(width);
+        return t;
+    }
 
-    T ellipsize(TextUtils.TruncateAt where);
+    default T ellipsize(TextUtils.TruncateAt where) {
+        T t = (T) this;
+        t.setEllipsize(where);
+        return t;
+    }
 
-    T typeFace(Typeface typeface);
+    default T typeFace(Typeface typeface) {
+        T t = (T) this;
+        t.setTypeface(typeface);
+        return t;
+    }
 
-    T enableContentScroll();
+    default T enableContentScroll() {
+        T t = (T) this;
+        t.setMovementMethod(new ScrollingMovementMethod());
+        return t;
+    }
 
 }

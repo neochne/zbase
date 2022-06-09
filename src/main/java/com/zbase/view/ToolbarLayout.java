@@ -60,7 +60,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .start2start(ConstraintLayoutParamsX.PARENT_ID)
                         .top2top(TOOLBAR_ID)
                         .bottom2bottom(TOOLBAR_ID)
-                        .leftMargin(leftMargin));
+                        .margins(leftMargin,0,0,0));
     }
 
     public ToolbarLayout setRightIcon(int res, int rightMargin, View.OnClickListener listener) {
@@ -71,7 +71,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .end2end(ConstraintLayoutParamsX.PARENT_ID)
                         .top2top(TOOLBAR_ID)
                         .bottom2bottom(TOOLBAR_ID)
-                        .rightMargin(rightMargin));
+                        .margins(0,0,rightMargin,0));
     }
 
     public ToolbarLayout setRightText(String text,
@@ -89,7 +89,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .end2end(ConstraintLayoutParamsX.PARENT_ID)
                         .top2top(TOOLBAR_ID)
                         .bottom2bottom(TOOLBAR_ID)
-                        .rightMargin(rightMargin));
+                        .margins(0,0,rightMargin,0));
     }
 
     public void setContentView(View view, ConstraintLayoutParamsX lp) {

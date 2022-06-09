@@ -187,6 +187,29 @@ public class TextViewX extends AppCompatTextView implements ITextViewX<TextViewX
     }
 
     @Override
+    public TextViewX visible() {
+        setVisibility(View.VISIBLE);
+        return this;
+    }
+
+    @Override
+    public TextViewX invisible() {
+        setVisibility(View.INVISIBLE);
+        return this;
+    }
+
+    @Override
+    public TextViewX gone() {
+        setVisibility(View.GONE);
+        return this;
+    }
+
+    @Override
+    public boolean isVisible() {
+        return getVisibility() == View.VISIBLE;
+    }
+
+    @Override
     public TextViewX clickListener(OnClickListener clickListener) {
         this.setOnClickListener(clickListener);
         return this;

@@ -253,17 +253,19 @@ public final class FileUtils {
         }
     }
 
-    public static void installApkFile(FragmentActivity activity, File apk) {
+    public static void installApkFile(FragmentActivity activity, String applicationId,File apk) {
+        final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // >= 7.0
+            String authority = String.format("%s.local.fileprovider",applicationId);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            intent.setDataAndType(FileProvider.getUriForFile(activity,"com.zbase.local.fileprovider", apk), "application/vnd.android.package-archive");
+            intent.setDataAndType(FileProvider.getUriForFile(activity, authority, apk), PACKAGE_MIME_TYPE);
             activity.startActivity(intent);
         } else { // < 7.0
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            intent.setDataAndType(Uri.fromFile(apk), "application/vnd.android.package-archive");
+            intent.setDataAndType(Uri.fromFile(apk), PACKAGE_MIME_TYPE);
             activity.startActivity(intent);
         }
     }

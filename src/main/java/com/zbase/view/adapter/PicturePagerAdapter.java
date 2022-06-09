@@ -11,7 +11,7 @@ import com.zbase.view.x.ImageViewX;
 
 import java.util.List;
 
-public final class PicturePagerAdapter extends ZBaseRvAdapter<PicturePagerAdapter.PicturePagerHolder>{
+public final class PicturePagerAdapter extends ZBaseRvAdapter<PicturePagerAdapter.PicturePagerHolder,PicturePagerAdapter>{
 
     private final List<LocalMedia> PICTURE_LIST;
 
@@ -28,7 +28,9 @@ public final class PicturePagerAdapter extends ZBaseRvAdapter<PicturePagerAdapte
 
     @Override
     public void onBindViewHolder(@NonNull PicturePagerHolder holder, int position) {
-        ((ImageViewX)holder.itemView).uri(PICTURE_LIST.get(position).getPath());
+        View itemView = holder.itemView;
+        ((ImageViewX) itemView).uri(PICTURE_LIST.get(position).getPath());
+        setOnItemClickListener(itemView,position);
     }
 
     @Override
