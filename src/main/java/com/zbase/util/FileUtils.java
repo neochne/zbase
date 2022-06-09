@@ -57,59 +57,59 @@ public final class FileUtils {
     }
 
     /**
-     * @param dirPath   目录
-     * @param fileName  文件名（包含文件格式）
+     * @param dirPath  目录
+     * @param fileName 文件名（包含文件格式）
      * @return 图片文件
      */
-    public static File createPictureFile(Context context,String dirPath,String fileName) {
+    public static File createPictureFile(Context context, String dirPath, String fileName) {
         if (StringUtils.isEmpty(fileName)) {
             fileName = System.currentTimeMillis() + ".jpg";
         }
-        File pictureFile = new File(String.format("%s/%s/%s",getCachedPath(context),dirPath,fileName));
+        File pictureFile = new File(String.format("%s/%s/%s", getCachedPath(context), dirPath, fileName));
         return createFile(pictureFile) ? pictureFile : null;
     }
 
     /**
-     * @param dirPath   目录
-     * @param fileName  文件名（包含文件格式）
+     * @param dirPath  目录
+     * @param fileName 文件名（包含文件格式）
      * @return 日志文件
      */
-    public static File createLogFile(Context context,String dirPath,String fileName) {
+    public static File createLogFile(Context context, String dirPath, String fileName) {
         if (StringUtils.isEmpty(fileName)) {
             fileName = DateUtils.formatDate(new Date(), "yyyy-MM-dd-HH:mm:ss") + ".log";
         }
-        File logFile = new File(constructFilePath(context,dirPath,fileName));
+        File logFile = new File(constructFilePath(context, dirPath, fileName));
         return createFile(logFile) ? logFile : null;
     }
 
     /**
-     * @param dirPath   目录
-     * @param fileName  文件名（包含文件格式）
+     * @param dirPath  目录
+     * @param fileName 文件名（包含文件格式）
      * @return apk 文件
      */
-    public static File createApkFile(Context context,String dirPath,String fileName) {
+    public static File createApkFile(Context context, String dirPath, String fileName) {
         if (StringUtils.isEmpty(fileName)) {
             fileName = "app.apk";
         }
-        File apkFile = new File(constructFilePath(context,dirPath,fileName));
+        File apkFile = new File(constructFilePath(context, dirPath, fileName));
         return createFile(apkFile) ? apkFile : null;
     }
 
     /**
-     * @param dirPath   目录
-     * @param fileName  文件名（包含文件格式）
+     * @param dirPath  目录
+     * @param fileName 文件名（包含文件格式）
      * @return apk 文件
      */
-    public static File createTextFile(Context context,String dirPath,String fileName) {
+    public static File createTextFile(Context context, String dirPath, String fileName) {
         if (StringUtils.isEmpty(fileName)) {
             fileName = System.currentTimeMillis() + ".txt";
         }
-        File textFile = new File(constructFilePath(context,dirPath,fileName));
+        File textFile = new File(constructFilePath(context, dirPath, fileName));
         return createFile(textFile) ? textFile : null;
     }
 
-    public static String constructFilePath(Context context,String dirPath,String fileName) {
-        return String.format("%s/%s/%s",getCachedPath(context),dirPath,fileName);
+    public static String constructFilePath(Context context, String dirPath, String fileName) {
+        return String.format("%s/%s/%s", getCachedPath(context), dirPath, fileName);
     }
 
     public static boolean deleteFile(File file) {
@@ -253,10 +253,16 @@ public final class FileUtils {
         }
     }
 
-    public static void installApkFile(FragmentActivity activity, String applicationId,File apk) {
+    /**
+     * @param activity      activity
+     * @param applicationId the applicationId properties in app/build.gradle,
+     *                      use app module's BuildConfig.APPLICATION_ID to reference it
+     * @param apk           apk file
+     */
+    public static void installApkFile(FragmentActivity activity, String applicationId, File apk) {
         final String PACKAGE_MIME_TYPE = "application/vnd.android.package-archive";
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) { // >= 7.0
-            String authority = String.format("%s.local.fileprovider",applicationId);
+            String authority = String.format("%s.local.fileprovider", applicationId);
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
