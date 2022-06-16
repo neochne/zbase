@@ -30,7 +30,8 @@ public final class FileUtils {
     private FileUtils() {
     }
 
-    public static boolean createDir(File file) {
+    public static boolean createDir(String dir) {
+        File file = new File(dir);
         return file.exists() || file.mkdirs();
     }
 
