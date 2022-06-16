@@ -6,7 +6,9 @@
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
 
     <application>
-        <activity android:name=".activity.PictureSelectActivity" android:screenOrientation="portrait"/>
+        <activity
+            android:name=".activity.PictureSelectActivity"
+            android:screenOrientation="portrait" />
         <provider
             android:name="com.zbase.provider.BaseLocalFileProvider"
             android:authorities="${applicationId}.local.fileprovider"
