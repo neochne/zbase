@@ -66,6 +66,12 @@ public interface IViewX<T extends View> {
         return tv;
     }
 
+    default T padding(int padding) {
+        T tv = (T) this;
+        tv.setPadding(padding,padding,padding,padding);
+        return tv;
+    }
+
     default T lp(ViewGroup.LayoutParams lp) {
         T t = (T) this;
         t.setLayoutParams(lp);
@@ -100,6 +106,11 @@ public interface IViewX<T extends View> {
         return ((T)this).getVisibility() == View.VISIBLE;
     }
 
+    default T toFront() {
+        T t = (T) this;
+        t.bringToFront();
+        return t;
+    }
 
     default T clickListener(View.OnClickListener clickListener) {
         T t = (T) this;

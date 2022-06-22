@@ -22,6 +22,10 @@ dependencies {
     api "androidx.viewpager2:viewpager2:1.0.0"
     api "androidx.constraintlayout:constraintlayout:2.0.4"
     api "androidx.recyclerview:recyclerview:1.2.1"
+
+    // material
+    api 'com.google.android.material:material:1.4.0'
+
     // third
     api 'com.guolindev.permissionx:permissionx:1.6.1'
     api 'com.squareup.okhttp3:okhttp:4.9.3'

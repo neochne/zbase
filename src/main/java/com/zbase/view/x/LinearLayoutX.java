@@ -6,7 +6,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
-public final class LinearLayoutX extends LinearLayout implements IViewGroupX<LinearLayoutX> {
+public class LinearLayoutX extends LinearLayout implements IViewGroupX<LinearLayoutX> {
 
     public LinearLayoutX(Context context) {
         super(context);
