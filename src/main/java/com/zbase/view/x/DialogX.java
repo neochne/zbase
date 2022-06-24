@@ -2,7 +2,6 @@ package com.zbase.view.x;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.graphics.drawable.InsetDrawable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -33,7 +32,7 @@ public final class DialogX extends AlertDialog {
     }
 
     public DialogX backgroundDrawable(Drawable drawable) {
-        getWindow().setBackgroundDrawable(new InsetDrawable(drawable,0));
+        getWindow().setBackgroundDrawable(drawable);
         return this;
     }
 

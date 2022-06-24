@@ -77,7 +77,7 @@ public final class FileUtils {
      */
     public static File createLogFile(Context context, String dirPath, String fileName) {
         if (StringUtils.isEmpty(fileName)) {
-            fileName = DateUtils.formatDate(new Date(), "yyyy-MM-dd-HH:mm:ss") + ".log";
+            fileName = DateTimeUtils.formatDate(new Date(), "yyyy-MM-dd-HH:mm:ss") + ".log";
         }
         File logFile = new File(constructFilePath(context, dirPath, fileName));
         return createFile(logFile) ? logFile : null;

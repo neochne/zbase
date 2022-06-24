@@ -14,27 +14,25 @@ import androidx.core.widget.TextViewCompat;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
-import com.zbase.util.TextViewUtils;
+import com.zbase.util.ViewUtils;
 
-public final class PromptDialogView extends ConstraintLayout {
+public final class PromptView extends ConstraintLayout {
 
-    private TextView mNegativeTextView;
-
-    private TextView mPositiveTextView;
-
-    public PromptDialogView(@NonNull Context context) {
+    public PromptView(@NonNull Context context) {
         super(context);
     }
 
-    public PromptDialogView(@NonNull Context context,
-                            String title,
-                            String message,
-                            String negative,
-                            String positive) {
+    public PromptView(@NonNull Context context,
+                      String title,
+                      String message,
+                      String negative,
+                      String positive,
+                      View.OnClickListener negativeListener,
+                      View.OnClickListener positiveListener) {
         super(context);
 
         // Common
-        View horizontalDivider = initCommonView(context,title,message);
+        View horizontalDivider = initCommonView(context, title, message);
 
         /*
          * Vertical divider
@@ -58,17 +56,18 @@ public final class PromptDialogView extends ConstraintLayout {
         negativeLayoutParams.endToStart = verticalDivider.getId();
         negativeLayoutParams.topToBottom = horizontalDivider.getId();
         negativeLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        int operateTextViewPadding = ResourceUtils.getPixel(context, R.dimen.prompt_dialog_operate_text_padding);
-        mNegativeTextView = new TextView(context);
-        mNegativeTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
-        mNegativeTextView.setGravity(Gravity.CENTER);
-        TextViewUtils.setTextSizeInPixel(context, mNegativeTextView, R.dimen.dialog_title_text_size);
-        mNegativeTextView.setText(negative);
-        mNegativeTextView.setLayoutParams(negativeLayoutParams);
-        mNegativeTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        mNegativeTextView.setTextColor(Color.BLACK);
-        mNegativeTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
-        addView(mNegativeTextView);
+        int operateTextViewPadding = ResourceUtils.getPixel(context, R.dimen.dialog_btn_text_vertical_padding);
+        TextView negativeTextView = new TextView(context);
+        negativeTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
+        negativeTextView.setGravity(Gravity.CENTER);
+        ViewUtils.setTextSizeInPixel(context, negativeTextView, R.dimen.dialog_title_text_size);
+        negativeTextView.setText(negative);
+        negativeTextView.setLayoutParams(negativeLayoutParams);
+        negativeTextView.setTypeface(Typeface.DEFAULT_BOLD);
+        negativeTextView.setTextColor(Color.BLACK);
+        negativeTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
+        negativeTextView.setOnClickListener(negativeListener);
+        addView(negativeTextView);
 
 
         /*
@@ -79,24 +78,26 @@ public final class PromptDialogView extends ConstraintLayout {
         positiveLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         positiveLayoutParams.topToBottom = horizontalDivider.getId();
         positiveLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        mPositiveTextView = new TextView(context);
-        TextViewUtils.setTextSizeInPixel(context, mPositiveTextView, R.dimen.dialog_title_text_size);
-        mPositiveTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
-        mPositiveTextView.setText(positive);
-        mPositiveTextView.setGravity(Gravity.CENTER);
-        mPositiveTextView.setLayoutParams(positiveLayoutParams);
-        mPositiveTextView.setTextColor(ResourceUtils.getColor(context, R.color.prompt_dialog_positive));
-        mPositiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        mPositiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
-        addView(mPositiveTextView);
+        TextView positiveTextView = new TextView(context);
+        ViewUtils.setTextSizeInPixel(context, positiveTextView, R.dimen.dialog_title_text_size);
+        positiveTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
+        positiveTextView.setText(positive);
+        positiveTextView.setGravity(Gravity.CENTER);
+        positiveTextView.setLayoutParams(positiveLayoutParams);
+        positiveTextView.setTextColor(ResourceUtils.getColor(context, R.color.prompt_dialog_positive));
+        positiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
+        positiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
+        positiveTextView.setOnClickListener(positiveListener);
+        addView(positiveTextView);
     }
 
-    public PromptDialogView(@NonNull Context context,
-                            String title,
-                            String message,
-                            String positive) {
+    public PromptView(@NonNull Context context,
+                      String title,
+                      String message,
+                      String positive,
+                      View.OnClickListener positiveListener) {
         super(context);
-        View horizontalDivider = initCommonView(context,title,message);
+        View horizontalDivider = initCommonView(context, title, message);
         /*
          * Positive
          */
@@ -105,20 +106,21 @@ public final class PromptDialogView extends ConstraintLayout {
         positiveLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         positiveLayoutParams.topToBottom = horizontalDivider.getId();
         positiveLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        int operateTextViewPadding = ResourceUtils.getPixel(context, R.dimen.prompt_dialog_operate_text_padding);
-        mPositiveTextView = new TextView(context);
-        TextViewUtils.setTextSizeInPixel(context, mPositiveTextView, R.dimen.dialog_title_text_size);
-        mPositiveTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
-        mPositiveTextView.setText(positive);
-        mPositiveTextView.setGravity(Gravity.CENTER);
-        mPositiveTextView.setLayoutParams(positiveLayoutParams);
-        mPositiveTextView.setTextColor(ResourceUtils.getColor(context, R.color.prompt_dialog_positive));
-        mPositiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        mPositiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
-        addView(mPositiveTextView);
+        int operateTextViewPadding = ResourceUtils.getPixel(context, R.dimen.dialog_btn_text_vertical_padding);
+        TextView positiveTextView = new TextView(context);
+        ViewUtils.setTextSizeInPixel(context, positiveTextView, R.dimen.dialog_title_text_size);
+        positiveTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
+        positiveTextView.setText(positive);
+        positiveTextView.setGravity(Gravity.CENTER);
+        positiveTextView.setLayoutParams(positiveLayoutParams);
+        positiveTextView.setTextColor(ResourceUtils.getColor(context, R.color.prompt_dialog_positive));
+        positiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
+        positiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
+        positiveTextView.setOnClickListener(positiveListener);
+        addView(positiveTextView);
     }
 
-    private View initCommonView(Context context,String title,String message) {
+    private View initCommonView(Context context, String title, String message) {
         setBackgroundColor(Color.WHITE);
         /*
          * Title
@@ -127,11 +129,12 @@ public final class PromptDialogView extends ConstraintLayout {
         titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
         titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
         titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        titleLayoutParams.topMargin = ResourceUtils.getPixel(context, R.dimen.prompt_dialog_title_top_margin);
+        int verticalPadding = ResourceUtils.getPixel(context, R.dimen.dialog_title_text_vertical_padding);
         TextView titleTextView = new TextView(context);
+        titleTextView.setPadding(0, verticalPadding, 0, verticalPadding);
         titleTextView.setId(ViewCompat.generateViewId());
         titleTextView.setTextColor(Color.BLACK);
-        TextViewUtils.setTextSizeInPixel(context, titleTextView, R.dimen.dialog_title_text_size);
+        ViewUtils.setTextSizeInPixel(context, titleTextView, R.dimen.dialog_title_text_size);
         titleTextView.setText(title);
         titleTextView.setTypeface(Typeface.DEFAULT_BOLD);
         titleTextView.setLayoutParams(titleLayoutParams);
@@ -144,15 +147,14 @@ public final class PromptDialogView extends ConstraintLayout {
         messageLayoutParams.startToStart = LayoutParams.PARENT_ID;
         messageLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         messageLayoutParams.topToBottom = titleTextView.getId();
-        int paddingTop = ResourceUtils.getPixel(context, R.dimen.prompt_dialog_message_padding_top);
-        int padding = ResourceUtils.getPixel(context, R.dimen.prompt_dialog_message_padding);
         TextView messageTextView = new TextView(context);
-        messageTextView.setPadding(padding, paddingTop, padding, padding);
+        int msgPadding = ResourceUtils.getPixel(context, R.dimen.dialog_content_padding);
+        messageTextView.setPadding(msgPadding, msgPadding, msgPadding, msgPadding);
         messageTextView.setId(ViewCompat.generateViewId());
         messageTextView.setText(message);
         messageTextView.setGravity(Gravity.CENTER);
-        TextViewUtils.setTextSizeInPixel(context, messageTextView, R.dimen.prompt_dialog_message_text_size);
-        TextViewCompat.setLineHeight(messageTextView, ResourceUtils.getPixel(context, R.dimen.prompt_dialog_message_line_height));
+        ViewUtils.setTextSizeInPixel(context, messageTextView, R.dimen.dialog_content_text_size);
+        TextViewCompat.setLineHeight(messageTextView, ResourceUtils.getPixel(context, R.dimen.message_line_height));
         messageTextView.setLayoutParams(messageLayoutParams);
         addView(messageTextView);
 
@@ -167,14 +169,6 @@ public final class PromptDialogView extends ConstraintLayout {
         horizontalDivider.setBackgroundColor(ResourceUtils.getColor(context, R.color.divider));
         addView(horizontalDivider);
         return horizontalDivider;
-    }
-
-    public void setNegativeClickListener(View.OnClickListener clickListener) {
-        mNegativeTextView.setOnClickListener(clickListener);
-    }
-
-    public void setPositiveClickListener(View.OnClickListener clickListener) {
-        mPositiveTextView.setOnClickListener(clickListener);
     }
 
 }

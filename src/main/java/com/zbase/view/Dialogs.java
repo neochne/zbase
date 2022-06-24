@@ -1,18 +1,23 @@
 package com.zbase.view;
 
-import android.app.Dialog;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.InsetDrawable;
 import android.view.View;
 
 import androidx.appcompat.app.AlertDialog;
 
 import com.zbase.R;
+import com.zbase.interfaces.DateSelectListener;
+import com.zbase.interfaces.Event2Listener;
 import com.zbase.util.ResourceUtils;
+import com.zbase.view.x.DialogX;
 
 import java.util.Arrays;
 import java.util.List;
 
+// TODO: 2022/6/24 Dialog 1. 提取标题，操作按钮为公共组件
+//                        2. Dialog View 实现改为 X 库
 public final class Dialogs {
 
     private static AlertDialog sProgressDialog;
@@ -31,12 +36,10 @@ public final class Dialogs {
      * 加载对话框
      */
     public static void showLoadingDialog(Context context, String message) {
-        LoadingDialogView loadingDialogView = new LoadingDialogView(context,message);
-        sProgressDialog = new AlertDialog.Builder(context, R.style.ProgressDialogTheme)
-                .setView(loadingDialogView)
-                .create();
-        sProgressDialog.setCanceledOnTouchOutside(false);
-        sProgressDialog.show();
+        sProgressDialog = createDialog(context, R.style.ProgressDialogTheme, null)
+                .view(new LoadingView(context, message))
+                .canceledOnTouchOutside(false)
+                .display();
     }
 
     public static void cancelLoadingDialog() {
@@ -52,7 +55,7 @@ public final class Dialogs {
     public static void showPromptDialog(Context context,
                                         String message,
                                         View.OnClickListener positiveListener) {
-        showPromptDialog(context,"提示",message,"取消","确定",null,positiveListener);
+        showPromptDialog(context, "提示", message, "取消", "确定", null, positiveListener);
     }
 
     /**
@@ -65,17 +68,25 @@ public final class Dialogs {
                                         String positive,
                                         View.OnClickListener negativeListener,
                                         View.OnClickListener positiveListener) {
-        PromptDialogView promptDialogView = new PromptDialogView(context, title, message, negative, positive);
-        Dialog promptDialog = showDialog(context,promptDialogView);
-        promptDialogView.setNegativeClickListener(v -> {
-            promptDialog.cancel();
-            if (negativeListener == null) {return;}
-            negativeListener.onClick(v);
-        });
-        promptDialogView.setPositiveClickListener(v -> {
-            promptDialog.cancel();
-            positiveListener.onClick(v);
-        });
+        DialogX promptDialog = createHorMarginRadiusDialog(context);
+        promptDialog
+                .view(new PromptView(context,
+                        title,
+                        message,
+                        negative,
+                        positive,
+                        v -> {
+                            promptDialog.cancel();
+                            if (negativeListener == null) {
+                                return;
+                            }
+                            negativeListener.onClick(v);
+                        },
+                        v -> {
+                            promptDialog.cancel();
+                            positiveListener.onClick(v);
+                        }))
+                .show();
     }
 
     /**
@@ -86,16 +97,17 @@ public final class Dialogs {
                                         String message,
                                         String positive,
                                         View.OnClickListener positiveListener) {
-        PromptDialogView promptDialogView = new PromptDialogView(context, title, message, positive);
-        Dialog promptDialog = showDialog(context,promptDialogView);
-        promptDialogView.setPositiveClickListener(v -> {
-            promptDialog.cancel();
-            positiveListener.onClick(v);
-        });
-    }
-
-    public interface OnTextSelectListener {
-        void onTextSelect(String text, int pos);
+        DialogX promptDialog = createHorMarginRadiusDialog(context);
+        promptDialog
+                .view(new PromptView(context,
+                        title,
+                        message,
+                        positive,
+                        v -> {
+                            promptDialog.cancel();
+                            positiveListener.onClick(v);
+                        }))
+                .show();
     }
 
     /**
@@ -104,7 +116,7 @@ public final class Dialogs {
     public static void showSingleSelectDialog(Context context,
                                               String title,
                                               String[] items,
-                                              OnTextSelectListener listener) {
+                                              Event2Listener<String, Integer> listener) {
         showSingleSelectDialog(context, title, Arrays.asList(items), listener);
     }
 
@@ -114,28 +126,61 @@ public final class Dialogs {
     public static void showSingleSelectDialog(Context context,
                                               String title,
                                               final List<String> itemList,
-                                              final OnTextSelectListener listener) {
-        SingleSelectDialogView singleSelectDialogView = new SingleSelectDialogView(context,title,itemList);
-        Dialog selectDialog = showDialog(context,singleSelectDialogView);
-        singleSelectDialogView.setCancelClickListener((v)->selectDialog.cancel());
-        singleSelectDialogView.setItemSelectListener((parent, view, position, id) -> {
-            selectDialog.cancel();
-            listener.onTextSelect(itemList.get(position), position);
-        });
+                                              Event2Listener<String, Integer> listener) {
+        DialogX selectDialog = createHorMarginRadiusDialog(context);
+        selectDialog
+                .view(new SingleSelectView(context,
+                        title,
+                        itemList,
+                        v -> selectDialog.cancel(),
+                        (adapterView, view, position, l) -> {
+                            selectDialog.cancel();
+                            listener.done(itemList.get(position), position);
+                        }))
+                .show();
     }
 
     /**
-     * 自定义对话框
+     * @param limit Use java.util.Calendar class's
+     *              DAY_OF_MONTH,
+     *              HOUR,
+     *              MINUTE,
+     *              SECOND
+     *              constants to limit date select scope
      */
-    public static AlertDialog showDialog(Context context,View dialogView) {
-        final AlertDialog dialog = new AlertDialog.Builder(context)
-                .setView(dialogView)
-                .create();
-        InsetDrawable insetDrawable = new InsetDrawable(ResourceUtils.getDrawable(context, R.drawable.bg_prompt_dialog), ResourceUtils.getPixel(context, R.dimen.prompt_dialog_left_right_margin));
-        dialog.getWindow().setBackgroundDrawable(insetDrawable);
-        dialog.setCancelable(false);
-        dialog.show();
-        return dialog;
+    public static void showDateTimePickDialog(Context context,
+                                              String title,
+                                              int limit,
+                                              DateSelectListener listener) {
+        DialogX dateTimePickerDialog = createRadiusDialog(context);
+        dateTimePickerDialog
+                .view(new DateTimePickerView(context, title, limit, v -> dateTimePickerDialog.cancel(), listener))
+                .show();
+    }
+
+    /**
+     * 圆角对话框（左右有边距）
+     */
+    public static DialogX createHorMarginRadiusDialog(Context context) {
+        return createRadiusDialog(context)
+                .backgroundDrawable(new InsetDrawable(ResourceUtils.getDrawable(context, R.drawable.bg_prompt_dialog),
+                        ResourceUtils.getPixel(context, R.dimen.dialog_window_horizontal_margin)));
+    }
+
+
+    /**
+     * 圆角对话框
+     */
+    public static DialogX createRadiusDialog(Context context) {
+        return createDialog(context, 0, ResourceUtils.getDrawable(context, R.drawable.bg_prompt_dialog));
+    }
+
+    /**
+     * 对话框
+     */
+    public static DialogX createDialog(Context context, int theme, Drawable drawable) {
+        return new DialogX(context, theme)
+                .backgroundDrawable(drawable);
     }
 
 }

@@ -3,7 +3,7 @@ package com.zbase.view;
 import android.content.Context;
 
 import com.zbase.R;
-import com.zbase.util.ImageUtils;
+import com.zbase.util.DrawableUtils;
 import com.zbase.util.ResourceUtils;
 import com.zbase.view.x.ButtonX;
 
@@ -16,7 +16,7 @@ public final class RoundedButton extends ButtonX {
 
     public ButtonX solidColor(int color) {
         float r = ResourceUtils.getPixel(getContext(), R.dimen.btn_radius);
-        setBackground(ImageUtils.createShapeDrawable(color,0,0,new float[] {r,r,r,r,r,r,r,r}));
+        setBackground(DrawableUtils.createRectDrawable(color,0,0,new float[] {r,r,r,r,r,r,r,r}));
         return this;
     }
 

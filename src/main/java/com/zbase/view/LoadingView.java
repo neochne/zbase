@@ -12,15 +12,15 @@ import androidx.annotation.NonNull;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
-import com.zbase.util.TextViewUtils;
+import com.zbase.util.ViewUtils;
 
-public final class LoadingDialogView extends LinearLayout {
+public final class LoadingView extends LinearLayout {
 
-    public LoadingDialogView(Context context) {
+    public LoadingView(Context context) {
         super(context);
     }
 
-    public LoadingDialogView(@NonNull Context context, String message) {
+    public LoadingView(@NonNull Context context, String message) {
         super(context);
 
         /*
@@ -43,10 +43,10 @@ public final class LoadingDialogView extends LinearLayout {
          * Text
          */
         LayoutParams progressTextViewLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        progressTextViewLayoutParams.topMargin = ResourceUtils.getPixel(context, R.dimen.loading_dialog_text_margin);
+        progressTextViewLayoutParams.topMargin = ResourceUtils.getPixel(context, R.dimen.loading_dialog_text_top_margin);
         TextView progressTextView = new TextView(context);
         progressTextView.setLayoutParams(progressTextViewLayoutParams);
-        TextViewUtils.setTextSizeInPixel(context, progressTextView, R.dimen.loading_dialog_text_size);
+        ViewUtils.setTextSizeInPixel(context, progressTextView, R.dimen.dialog_content_text_size);
         progressTextView.setText(message);
         progressTextView.setTextColor(Color.WHITE);
         addView(progressTextView);

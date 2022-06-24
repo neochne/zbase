@@ -4,7 +4,9 @@
 
 package com.zbase.util;
 
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -12,6 +14,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.NestedScrollView;
@@ -120,6 +123,10 @@ public final class ViewUtils {
 
     public static void removeVp2SelectListener(ViewPager2 vp2, ViewPager2.OnPageChangeCallback listener) {
         vp2.unregisterOnPageChangeCallback(listener);
+    }
+
+    public static void setTextSizeInPixel(Context context, TextView textView, int id) {
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,ResourceUtils.getPixel(context,id));
     }
 
 }

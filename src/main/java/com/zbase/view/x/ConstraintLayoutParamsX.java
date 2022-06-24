@@ -44,6 +44,7 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
 
     public ConstraintLayoutParamsX bottom2bottom(int id) {
         this.bottomToBottom = id;
+
         return this;
     }
 

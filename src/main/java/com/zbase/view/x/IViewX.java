@@ -1,8 +1,13 @@
 package com.zbase.view.x;
 
+import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+
+import com.google.android.material.badge.BadgeDrawable;
+import com.google.android.material.badge.BadgeUtils;
 
 public interface IViewX<T extends View> {
 
@@ -18,9 +23,9 @@ public interface IViewX<T extends View> {
         return t;
     }
 
-    default T tag(int key,Object tag) {
+    default T tag(int key, Object tag) {
         T t = (T) this;
-        t.setTag(key,tag);
+        t.setTag(key, tag);
         return t;
     }
 
@@ -62,13 +67,13 @@ public interface IViewX<T extends View> {
 
     default T padding(int l, int t, int r, int b) {
         T tv = (T) this;
-        tv.setPadding(l,t,r,b);
+        tv.setPadding(l, t, r, b);
         return tv;
     }
 
     default T padding(int padding) {
         T tv = (T) this;
-        tv.setPadding(padding,padding,padding,padding);
+        tv.setPadding(padding, padding, padding, padding);
         return tv;
     }
 
@@ -103,12 +108,44 @@ public interface IViewX<T extends View> {
     }
 
     default boolean isVisible() {
-        return ((T)this).getVisibility() == View.VISIBLE;
+        return ((T) this).getVisibility() == View.VISIBLE;
     }
 
     default T toFront() {
         T t = (T) this;
         t.bringToFront();
+        return t;
+    }
+
+    default T attachBadgeDrawable(BadgeDrawable badgeDrawable) {
+        T t = (T) this;
+        t.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @SuppressLint("UnsafeExperimentalUsageError")
+            @Override
+            public void onGlobalLayout() {
+                BadgeUtils.attachBadgeDrawable(badgeDrawable, t);
+                t.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+            }
+        });
+        return t;
+    }
+
+    @SuppressLint("UnsafeExperimentalUsageError")
+    default T detachBadgeDrawable(BadgeDrawable badgeDrawable) {
+        T t = (T) this;
+        BadgeUtils.detachBadgeDrawable(badgeDrawable, t);
+        return t;
+    }
+
+    default T showBadgeDrawable(BadgeDrawable badgeDrawable) {
+        T t = (T) this;
+        badgeDrawable.setVisible(true);
+        return t;
+    }
+
+    default T hideBadgeDrawable(BadgeDrawable badgeDrawable) {
+        T t = (T) this;
+        badgeDrawable.setVisible(false);
         return t;
     }
 

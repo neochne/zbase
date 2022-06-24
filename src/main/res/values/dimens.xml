@@ -1,34 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Activity UI Padding-->
+    <!-- Activity ui padding-->
     <dimen name="activity_padding">10dp</dimen>
 
-    <!-- Toolbar Height   -->
+    <!-- Toolbar height   -->
     <dimen name="toolbar_height">56dp</dimen>
     <dimen name="toolbar_back_right_margin">10dp</dimen>
 
     <!-- Dialog -->
     <dimen name="dialog_title_text_size">17sp</dimen>
-
-    <!-- Loading Dialog -->
-    <dimen name="loading_dialog_text_size">15sp</dimen>
+    <dimen name="dialog_title_text_vertical_padding">10dp</dimen>
+    <dimen name="dialog_btn_text_vertical_padding">13dp</dimen>
+    <dimen name="dialog_content_padding">10dp</dimen>
+    <dimen name="dialog_content_text_size">14sp</dimen>
+    <dimen name="dialog_btn_text_size">16sp</dimen>
+    <dimen name="dialog_content_top_margin">10dp</dimen>
+    <dimen name="dialog_btn_top_margin">10dp</dimen>
+    <dimen name="dialog_window_horizontal_margin">20dp</dimen>
+    <dimen name="dialog_cancel_icon_right_margin">10dp</dimen>
     <dimen name="loading_dialog_padding">20dp</dimen>
-    <dimen name="loading_dialog_text_margin">5dp</dimen>
-
-    <!-- Prompt Dialog -->
-    <dimen name="prompt_dialog_title_top_margin">25dp</dimen>
-    <dimen name="prompt_dialog_left_right_margin">20dp</dimen>
-    <dimen name="prompt_dialog_message_text_size">16sp</dimen>
-    <dimen name="prompt_dialog_message_line_height">20dp</dimen>
-    <dimen name="prompt_dialog_message_padding_top">15dp</dimen>
-    <dimen name="prompt_dialog_message_padding">18dp</dimen>
-    <dimen name="prompt_dialog_operate_text_padding">13dp</dimen>
-
-    <!-- Select Dialog -->
-    <dimen name="select_dialog_title_margin">12dp</dimen>
-    <dimen name="select_dialog_cancel_icon_right_margin">10dp</dimen>
-    <dimen name="select_dialog_item_text_size">15sp</dimen>
-    <dimen name="select_dialog_item_text_padding">10dp</dimen>
+    <dimen name="loading_dialog_text_top_margin">5dp</dimen>
+    <dimen name="message_line_height">20dp</dimen>
+    <dimen name="list_item_vertical_padding">10dp</dimen>
 
     <!-- PictureSelectActivity -->
     <dimen name="bucket_left_padding">9dp</dimen>

@@ -19,21 +19,21 @@ import androidx.core.view.ViewCompat;
 
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
-import com.zbase.util.TextViewUtils;
+import com.zbase.util.ViewUtils;
 
 import java.util.List;
 
-public final class SingleSelectDialogView extends ConstraintLayout {
+public final class SingleSelectView extends ConstraintLayout {
 
-    private ImageView mCancelImageView;
-
-    private ListView mSelectListView;
-
-    public SingleSelectDialogView(@NonNull Context context) {
+    public SingleSelectView(@NonNull Context context) {
         super(context);
     }
 
-    public SingleSelectDialogView(@NonNull Context context, String title, List<String> itemList) {
+    public SingleSelectView(@NonNull Context context,
+                            String title,
+                            List<String> itemList,
+                            View.OnClickListener cancelIconListener,
+                            AdapterView.OnItemClickListener itemClickListener) {
         super(context);
 
         /*
@@ -48,11 +48,12 @@ public final class SingleSelectDialogView extends ConstraintLayout {
         titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
         titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
         titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        titleLayoutParams.topMargin = ResourceUtils.getPixel(context, R.dimen.select_dialog_title_margin);
+        int verticalPadding = ResourceUtils.getPixel(context,R.dimen.dialog_title_text_vertical_padding);
         TextView titleTextView = new TextView(context);
+        titleTextView.setPadding(0,verticalPadding,0,verticalPadding);
         titleTextView.setId(ViewCompat.generateViewId());
         titleTextView.setTextColor(Color.BLACK);
-        TextViewUtils.setTextSizeInPixel(context, titleTextView, R.dimen.dialog_title_text_size);
+        ViewUtils.setTextSizeInPixel(context, titleTextView, R.dimen.dialog_title_text_size);
         titleTextView.setText(title);
         titleTextView.setTypeface(Typeface.DEFAULT_BOLD);
         titleTextView.setLayoutParams(titleLayoutParams);
@@ -65,18 +66,18 @@ public final class SingleSelectDialogView extends ConstraintLayout {
         cancelLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         cancelLayoutParams.topToTop = titleTextView.getId();
         cancelLayoutParams.bottomToBottom = titleTextView.getId();
-        cancelLayoutParams.rightMargin = ResourceUtils.getPixel(context,R.dimen.select_dialog_cancel_icon_right_margin);
-        mCancelImageView = new ImageView(context);
-        mCancelImageView.setLayoutParams(cancelLayoutParams);
-        mCancelImageView.setImageResource(R.drawable.ic_clear_gray);
-        addView(mCancelImageView);
+        cancelLayoutParams.rightMargin = ResourceUtils.getPixel(context,R.dimen.dialog_cancel_icon_right_margin);
+        ImageView cancelImageView = new ImageView(context);
+        cancelImageView.setLayoutParams(cancelLayoutParams);
+        cancelImageView.setImageResource(R.drawable.ic_clear_gray);
+        cancelImageView.setOnClickListener(cancelIconListener);
+        addView(cancelImageView);
 
         /*
          * Horizontal divider
          */
         LayoutParams horizontalDividerLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, 1);
         horizontalDividerLayoutParams.topToBottom = titleTextView.getId();
-        horizontalDividerLayoutParams.topMargin = ResourceUtils.getPixel(context,R.dimen.select_dialog_title_margin);
         View horizontalDivider = new View(context);
         horizontalDivider.setId(ViewCompat.generateViewId());
         horizontalDivider.setLayoutParams(horizontalDividerLayoutParams);
@@ -88,12 +89,12 @@ public final class SingleSelectDialogView extends ConstraintLayout {
          */
         LayoutParams listLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         listLayoutParams.topToBottom = horizontalDivider.getId();
-        mSelectListView = new ListView(context);
-        mSelectListView.setDivider(new ColorDrawable(ResourceUtils.getColor(context,R.color.divider)));
-        mSelectListView.setDividerHeight(1);
-        mSelectListView.setLayoutParams(listLayoutParams);
-        int itemPadding = ResourceUtils.getPixel(context,R.dimen.select_dialog_item_text_padding);
-        mSelectListView.setAdapter(new BaseAdapter() {
+        ListView itemListView = new ListView(context);
+        itemListView.setDivider(new ColorDrawable(ResourceUtils.getColor(context,R.color.divider)));
+        itemListView.setDividerHeight(1);
+        itemListView.setLayoutParams(listLayoutParams);
+        int itemPadding = ResourceUtils.getPixel(context,R.dimen.list_item_vertical_padding);
+        itemListView.setAdapter(new BaseAdapter() {
 
             @Override
             public int getCount() {
@@ -120,15 +121,8 @@ public final class SingleSelectDialogView extends ConstraintLayout {
             }
 
         });
-        addView(mSelectListView);
-    }
-
-    public void setCancelClickListener(View.OnClickListener clickListener) {
-        mCancelImageView.setOnClickListener(clickListener);
-    }
-
-    public void setItemSelectListener(AdapterView.OnItemClickListener itemClickListener) {
-        mSelectListView.setOnItemClickListener(itemClickListener);
+        itemListView.setOnItemClickListener(itemClickListener);
+        addView(itemListView);
     }
 
 }

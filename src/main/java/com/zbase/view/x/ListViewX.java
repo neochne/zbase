@@ -2,6 +2,7 @@ package com.zbase.view.x;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.view.View;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -29,6 +30,11 @@ public final class ListViewX extends ListView implements IViewX<ListViewX> {
 
     public ListViewX adapter(BaseAdapter adapter) {
         setAdapter(adapter);
+        return this;
+    }
+
+    public ListViewX header(View view) {
+        addHeaderView(view);
         return this;
     }
 

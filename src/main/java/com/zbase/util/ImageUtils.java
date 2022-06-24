@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.webkit.MimeTypeMap;
@@ -165,18 +164,6 @@ public final class ImageUtils {
             ToastUtils.show(context, "未知异常");
             queryCallback.onComplete(new ArrayList<>());
         }
-    }
-
-    public static GradientDrawable createShapeDrawable(int solidColor,
-                                                       int strokeColor,
-                                                       int strokeWidth,
-                                                       float[] radii) {
-        GradientDrawable shapeDrawable = new GradientDrawable();
-        shapeDrawable.setShape(GradientDrawable.RECTANGLE);
-        shapeDrawable.setColor(solidColor);
-        shapeDrawable.setCornerRadii(radii);
-        shapeDrawable.setStroke(strokeWidth, strokeColor);
-        return shapeDrawable;
     }
 
 }
