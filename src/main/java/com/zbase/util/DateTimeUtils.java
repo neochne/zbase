@@ -9,7 +9,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public final class DateTimeUtils {
@@ -22,8 +21,17 @@ public final class DateTimeUtils {
     }
 
     /**
+     *
+     * 如果是 JDK8 的应用，可以使用：
+     * Instant 代替 Date，
+     * LocalDateTime 代替 Calendar，
+     * DateTimeFormatter 代替 SimpleDateFormat
+     * 官方给出的解释：simple beautiful strong immutable thread-safe
+     *
      * @param pattern 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
      *                2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
+     *                3. 表示年的占位符一定用小写
+     *
      */
     public static Date formatDate(String date, String pattern) {
         try {
@@ -41,45 +49,12 @@ public final class DateTimeUtils {
         }
     }
 
-    public static boolean is1gt2(String date1, String date2) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-        try {
-            return is1gt2(Objects.requireNonNull(sdf.parse(date1)), Objects.requireNonNull(sdf.parse(date2)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public static boolean is1gte2(String date1, String date2) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-        try {
-            return is1gte2(Objects.requireNonNull(sdf.parse(date1)), Objects.requireNonNull(sdf.parse(date2)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
     public static boolean is1gt2(Date date1, Date date2) {
         return (date1.getTime() - date2.getTime()) > 0;
     }
 
     public static boolean is1gte2(Date date1, Date date2) {
         return (date1.getTime() - date2.getTime()) >= 0;
-    }
-
-    public static String intervalDays(Date big, Date small) {
-        return intervalDays(big.getTime(), small.getTime());
-    }
-
-    public static String intervalDays(String big, String small) {
-        return intervalDays(Objects.requireNonNull(formatDate(big, "yyyy-MM-dd")).getTime(),
-                Objects.requireNonNull(formatDate(small, "yyyy-MM-dd")).getTime());
-    }
-
-    public static String intervalDays(long big, long small) {
-        return String.valueOf((int) ((big - small) / (1000 * 3600 * 24)));
     }
 
     /**
@@ -129,6 +104,15 @@ public final class DateTimeUtils {
      */
     public static long ms2Seconds(long ms) {
         return TimeUnit.MILLISECONDS.toSeconds(ms);
+    }
+
+    /**
+     * 计算两个日期间隔
+     *
+     * @param timeUnit 枚举类 TimeUnit.HOURS,TimeUnit.DAYS 等
+     */
+    public static long calcInterval(Date smallDate,Date bigDate,TimeUnit timeUnit) {
+        return timeUnit.convert(bigDate.getTime() - smallDate.getTime(),TimeUnit.MILLISECONDS);
     }
 
     public static String calcAgeByBirth(Date birthDate) {
@@ -190,7 +174,7 @@ public final class DateTimeUtils {
         return Calendar.getInstance().get(Calendar.SECOND);
     }
 
-    public static int getMaxDayByYearMonth(int year, int month) {
+    public static int getMaxDaysOfMonth(int year, int month) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, year);
         calendar.set(Calendar.MONTH, month - 1);

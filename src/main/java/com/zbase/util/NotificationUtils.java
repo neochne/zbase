@@ -3,6 +3,7 @@ package com.zbase.util;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.graphics.Color;
@@ -17,7 +18,12 @@ public final class NotificationUtils {
     private NotificationUtils() {
     }
 
-    public static void showMsgNotification(Context context, String title, String content, int icon) {
+    public static void showMsgNotification(Context context,
+                                           int notificationId,
+                                           String title,
+                                           String content,
+                                           int icon,
+                                           PendingIntent pendingIntent) {
         String channelId = "msg";
         int mediaDuration = 3000;
         Notification notification = new NotificationCompat.Builder(context, channelId)
@@ -29,12 +35,13 @@ public final class NotificationUtils {
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
                 .build();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId, channelId, NotificationManager.IMPORTANCE_HIGH);
             NotificationManagerCompat.from(context).createNotificationChannel(channel);
         }
-        NotificationManagerCompat.from(context).notify((int) (System.currentTimeMillis() % Integer.MAX_VALUE), notification);
+        NotificationManagerCompat.from(context).notify(notificationId, notification);
     }
 
     public static void startForegroundService(Service context, String title, String content, int icon) {
@@ -51,6 +58,10 @@ public final class NotificationUtils {
             NotificationManagerCompat.from(context).createNotificationChannel(channel);
         }
         context.startForeground(6, notification);
+    }
+
+    public static void clearAll(Context context) {
+        NotificationManagerCompat.from(context).cancelAll();
     }
 
 }
