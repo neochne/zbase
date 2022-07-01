@@ -4,9 +4,13 @@
 
 package com.zbase.http;
 
+import org.json.JSONObject;
+
 public interface Callback {
 
     default void onSuccess(Response response) {}
+
+    default void onBizSuccess(JSONObject bodyJsonObject) {}
 
     /**
      * @param progress download or upload progress,if the value is 100,it's done
@@ -18,5 +22,9 @@ public interface Callback {
     default void onFail(Response response) {}
 
     default void onException(Exception exception) {}
+
+    default void onStart() {}
+
+    default void onFinish() {}
 
 }

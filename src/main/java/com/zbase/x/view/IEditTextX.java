@@ -1,4 +1,4 @@
-package com.zbase.view.x;
+package com.zbase.x.view;
 
 import android.annotation.SuppressLint;
 import android.text.InputType;

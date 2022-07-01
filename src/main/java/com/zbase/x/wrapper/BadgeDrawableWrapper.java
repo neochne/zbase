@@ -1,33 +1,33 @@
-package com.zbase.util;
+package com.zbase.x.wrapper;
 
 import android.content.Context;
 
 import com.google.android.material.badge.BadgeDrawable;
 
-public final class BadgeDrawableBuilder {
+public final class BadgeDrawableWrapper {
 
     private final BadgeDrawable BADGE_DRAWABLE;
 
-    public BadgeDrawableBuilder(Context context) {
+    public BadgeDrawableWrapper(Context context) {
         this.BADGE_DRAWABLE = BadgeDrawable.create(context);
     }
 
-    public BadgeDrawableBuilder textColor(int color) {
+    public BadgeDrawableWrapper textColor(int color) {
         BADGE_DRAWABLE.setBadgeTextColor(color);
         return this;
     }
 
-    public BadgeDrawableBuilder backgroundColor(int color) {
+    public BadgeDrawableWrapper backgroundColor(int color) {
         BADGE_DRAWABLE.setBackgroundColor(color);
         return this;
     }
 
-    public BadgeDrawableBuilder number(int number) {
+    public BadgeDrawableWrapper number(int number) {
         BADGE_DRAWABLE.setNumber(number);
         return this;
     }
 
-    public BadgeDrawableBuilder visible(boolean visible) {
+    public BadgeDrawableWrapper visible(boolean visible) {
         BADGE_DRAWABLE.setVisible(visible);
         return this;
     }

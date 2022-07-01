@@ -8,16 +8,13 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 
 import com.zbase.R;
-import com.zbase.interfaces.DateSelectListener;
-import com.zbase.interfaces.Event2Listener;
 import com.zbase.util.ResourceUtils;
-import com.zbase.view.x.DialogX;
-
-import java.util.Arrays;
-import java.util.List;
+import com.zbase.x.view.DialogX;
 
 // TODO: 2022/6/24 Dialog 1. 提取标题，操作按钮为公共组件
 //                        2. Dialog View 实现改为 X 库
+//                        3. Dialog 改为只传 View
+//                        4. Dialogs 类合并到 DialogX
 public final class Dialogs {
 
     private static AlertDialog sProgressDialog;
@@ -113,49 +110,19 @@ public final class Dialogs {
     /**
      * 单项选择对话框
      */
-    public static void showSingleSelectDialog(Context context,
-                                              String title,
-                                              String[] items,
-                                              Event2Listener<String, Integer> listener) {
-        showSingleSelectDialog(context, title, Arrays.asList(items), listener);
+    public static DialogX createSingleSelectDialog(SingleSelectView singleSelectView) {
+        DialogX selectDialog = createHorMarginRadiusDialog(singleSelectView.getContext()).view(singleSelectView);
+        singleSelectView.setCancelClickListener(v -> selectDialog.cancel());
+        return selectDialog;
     }
 
     /**
-     * 单项选择对话框
+     * 日期选择对话框
      */
-    public static void showSingleSelectDialog(Context context,
-                                              String title,
-                                              final List<String> itemList,
-                                              Event2Listener<String, Integer> listener) {
-        DialogX selectDialog = createHorMarginRadiusDialog(context);
-        selectDialog
-                .view(new SingleSelectView(context,
-                        title,
-                        itemList,
-                        v -> selectDialog.cancel(),
-                        (adapterView, view, position, l) -> {
-                            selectDialog.cancel();
-                            listener.done(itemList.get(position), position);
-                        }))
-                .show();
-    }
-
-    /**
-     * @param limit Use java.util.Calendar class's
-     *              DAY_OF_MONTH,
-     *              HOUR,
-     *              MINUTE,
-     *              SECOND
-     *              constants to limit date select scope
-     */
-    public static void showDateTimePickDialog(Context context,
-                                              String title,
-                                              int limit,
-                                              DateSelectListener listener) {
-        DialogX dateTimePickerDialog = createRadiusDialog(context);
-        dateTimePickerDialog
-                .view(new DateTimePickerView(context, title, limit, v -> dateTimePickerDialog.cancel(), listener))
-                .show();
+    public static DialogX createDateTimePickDialog(DateTimePickerView dateTimePickerView) {
+        DialogX dateTimePickerDialog = createRadiusDialog(dateTimePickerView.getContext()).view(dateTimePickerView);
+        dateTimePickerView.setOnCancelAndConfirmClickListener(v -> dateTimePickerDialog.cancel());
+        return dateTimePickerDialog;
     }
 
     /**

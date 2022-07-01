@@ -1,4 +1,4 @@
-package com.zbase.view.x;
+package com.zbase.x.view;
 
 import android.graphics.Typeface;
 import android.text.TextUtils;
@@ -6,6 +6,12 @@ import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 
 public interface ITextViewX<T extends TextView> extends IViewX<T> {
+
+    default T text(CharSequence text) {
+        T t = (T) this;
+        t.setText(text);
+        return t;
+    }
 
     default T text(String text) {
         T t = (T) this;

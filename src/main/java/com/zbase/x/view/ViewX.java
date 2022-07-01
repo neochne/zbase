@@ -1,4 +1,4 @@
-package com.zbase.view.x;
+package com.zbase.x.view;
 
 import android.content.Context;
 import android.view.View;

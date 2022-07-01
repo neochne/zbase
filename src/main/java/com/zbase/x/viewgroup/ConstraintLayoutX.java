@@ -1,4 +1,4 @@
-package com.zbase.view.x;
+package com.zbase.x.viewgroup;
 
 import android.content.Context;
 import android.view.View;
@@ -6,6 +6,8 @@ import android.widget.FrameLayout;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
+import com.zbase.x.lp.ConstraintLayoutParamsX;
 
 public class ConstraintLayoutX extends ConstraintLayout implements IViewGroupX<ConstraintLayoutX>{
 

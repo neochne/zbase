@@ -9,28 +9,35 @@ import android.view.View;
 import androidx.annotation.NonNull;
 
 import com.zbase.R;
+import com.zbase.entity.NumberPickerValue;
 import com.zbase.interfaces.DateSelectListener;
 import com.zbase.util.DateTimeUtils;
 import com.zbase.util.ResourceUtils;
-import com.zbase.view.x.ConstraintLayoutParamsX;
-import com.zbase.view.x.ConstraintLayoutX;
-import com.zbase.view.x.NumberPickerX;
-import com.zbase.view.x.TextViewX;
-import com.zbase.view.x.ViewX;
+import com.zbase.x.lp.ConstraintLayoutParamsX;
+import com.zbase.x.viewgroup.ConstraintLayoutX;
+import com.zbase.x.view.NumberPickerX;
+import com.zbase.x.view.TextViewX;
+import com.zbase.x.view.ViewX;
 
 import java.util.Calendar;
 
 public final class DateTimePickerView extends ConstraintLayoutX {
 
+    private View.OnClickListener mClickListener;
+
     public DateTimePickerView(@NonNull Context context) {
         super(context);
     }
 
-    public DateTimePickerView(@NonNull Context context,
-                              String title,
-                              int limit,
-                              View.OnClickListener clickListener,
-                              DateSelectListener selectListener) {
+    /**
+     * @param limit Use java.util.Calendar class's
+     *              DAY_OF_MONTH,
+     *              HOUR,
+     *              MINUTE,
+     *              SECOND
+     *              constants to limit date select scope
+     */
+    public DateTimePickerView(@NonNull Context context, String title, int limit, DateSelectListener selectListener) {
         super(context);
         setBackgroundColor(Color.WHITE);
         /*
@@ -46,20 +53,24 @@ public final class DateTimePickerView extends ConstraintLayoutX {
         /*
          * Year
          */
-        NumberPickerX yearPicker = createPicker(context, DateTimeUtils.getYears(2), 0, 4, 2);
+
+        NumberPickerValue yearValue = DateTimeUtils.getYears(2);
+        NumberPickerX yearPicker = createPicker(context, yearValue.getValues(), 0, 4, yearValue.getCurIndex());
         TextViewX yearTv = createTextView(context, "年");
 
         /*
          * Month
          */
-        NumberPickerX monthPicker = createPicker(context, DateTimeUtils.getMonths(), 0, 11, DateTimeUtils.sCurMonthIndex);
+        NumberPickerValue monthValue = DateTimeUtils.getMonths();
+        NumberPickerX monthPicker = createPicker(context, monthValue.getValues(), 0, 11, monthValue.getCurIndex());
         TextViewX monthTv = createTextView(context, "月");
         ViewX pickerDivider = createDivider(context);
 
         /*
          * Day
          */
-        NumberPickerX dayPicker = createPicker(context, DateTimeUtils.getDays(), 0, 30, DateTimeUtils.sCurDayIndex);
+        NumberPickerValue dayValue = DateTimeUtils.getDays();
+        NumberPickerX dayPicker = createPicker(context, dayValue.getValues(), 0, 30, dayValue.getCurIndex());
         TextViewX dayTv = createTextView(context, "日");
 
         /*
@@ -69,7 +80,7 @@ public final class DateTimePickerView extends ConstraintLayoutX {
                 .textColor(Color.BLACK)
                 .padding(0, 20, 0, 20)
                 .gravity(Gravity.CENTER)
-                .clickListener(clickListener);
+                .clickListener(view -> mClickListener.onClick(view));
         ViewX btnDivider = createDivider(context);
         TextViewX confirmTv = createTextView(context, "确认")
                 .textColor(Color.BLACK)
@@ -185,8 +196,8 @@ public final class DateTimePickerView extends ConstraintLayoutX {
                 /*
                  * Create second view
                  */
-                String[] seconds = DateTimeUtils.getSeconds();
-                secondPicker = createPicker(context, seconds, 0, 59, DateTimeUtils.sCurSecondIndex);
+                NumberPickerValue secondValue = DateTimeUtils.getSeconds();
+                secondPicker = createPicker(context, secondValue.getValues(), 0, 59, secondValue.getCurIndex());
                 TextViewX secondTv = createTextView(context, secondTvId, "秒");
                 this.
                         addChildView(secondPicker,
@@ -218,8 +229,8 @@ public final class DateTimePickerView extends ConstraintLayoutX {
                 /*
                  * Create minute view
                  */
-                String[] minutes = DateTimeUtils.getMinutes();
-                minutePicker = createPicker(context, minutes, 0, 59, DateTimeUtils.sCurMinuteIndex);
+                NumberPickerValue minuteValue = DateTimeUtils.getMinutes();
+                minutePicker = createPicker(context, minuteValue.getValues(), 0, 59, minuteValue.getCurIndex());
                 TextViewX minuteTv = createTextView(context, minuteTvId, "分");
                 this.
                         addChildView(minutePicker,
@@ -254,8 +265,8 @@ public final class DateTimePickerView extends ConstraintLayoutX {
                 /*
                  * Create hour view
                  */
-                String[] hours = DateTimeUtils.getHours();
-                hourPicker = createPicker(context, hours, 0, 23, DateTimeUtils.sCurHourIndex);
+                NumberPickerValue hourValue = DateTimeUtils.getHours();
+                hourPicker = createPicker(context, hourValue.getValues(), 0, 23, hourValue.getCurIndex());
                 TextViewX hourTv = createTextView(context, hourTvId, "时");
                 this.
                         addChildView(hourPicker,
@@ -307,7 +318,7 @@ public final class DateTimePickerView extends ConstraintLayoutX {
                 second = finalSecondPicker.getDisplayedValues()[finalSecondPicker.getValue()];
                 date += (":" + second);
             }
-            clickListener.onClick(v);
+            mClickListener.onClick(v);
             selectListener.done(year, month, day, hour, minute, second, date);
         });
     }
@@ -342,6 +353,10 @@ public final class DateTimePickerView extends ConstraintLayoutX {
         return new ViewX(context)
                 .id(generateViewId())
                 .backgroundColor(Color.LTGRAY);
+    }
+
+    public void setOnCancelAndConfirmClickListener(View.OnClickListener clickListener) {
+        mClickListener = clickListener;
     }
 
 }

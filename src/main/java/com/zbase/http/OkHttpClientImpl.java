@@ -57,10 +57,12 @@ public final class OkHttpClientImpl extends YesHttpClient {
 
     @Override
     public void downloadFileAsync(Callback callback) {
+        callback.onStart();
         okHttpClient.newCall(makeJsonRequest(HttpMethod.GET)).enqueue(new okhttp3.Callback() {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) {
+                callback.onFinish();
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
@@ -78,6 +80,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFinish();
                 callback.onException(e);
             }
 
@@ -146,6 +149,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     private void enqueue(Request request, Callback callback) {
+        callback.onStart();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
 
             /**
@@ -153,6 +157,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
              */
             @Override
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
+                callback.onFinish();
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
@@ -164,6 +169,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                callback.onFinish();
                 callback.onException(e);
             }
 

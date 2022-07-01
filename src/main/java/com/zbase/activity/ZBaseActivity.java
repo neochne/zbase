@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
 import com.zbase.util.ViewUtils;
-import com.zbase.view.x.FrameLayoutParamsX;
+import com.zbase.x.lp.FrameLayoutParamsX;
 
 public class ZBaseActivity extends AppCompatActivity {
 
@@ -24,9 +24,11 @@ public class ZBaseActivity extends AppCompatActivity {
         /*
          * Is Show?
          */
-        int loadingId = 666;
-        View loadingView = findViewById(loadingId);
+        int loadingViewId = 0xAA666601;
+        int loadingTvId = 0xAA666602;
+        View loadingView = findViewById(loadingViewId);
         if (loadingView != null) {
+            ((TextView) findViewById(loadingTvId)).setText(text);
             loadingView.setVisibility(View.VISIBLE);
             return;
         }
@@ -34,7 +36,7 @@ public class ZBaseActivity extends AppCompatActivity {
          * Background
          */
         LinearLayout backgroundLayout = new LinearLayout(this);
-        backgroundLayout.setId(loadingId);
+        backgroundLayout.setId(loadingViewId);
         backgroundLayout.setPadding(50, 40, 50, 40);
         backgroundLayout.setOrientation(LinearLayout.VERTICAL);
         backgroundLayout.setGravity(Gravity.CENTER);
@@ -49,6 +51,7 @@ public class ZBaseActivity extends AppCompatActivity {
          * Prompt Text
          */
         TextView promptTextView = new TextView(this);
+        promptTextView.setId(loadingTvId);
         promptTextView.setTextColor(Color.WHITE);
         promptTextView.setText(text);
         backgroundLayout.addView(promptTextView, new FrameLayoutParamsX().margins(0, 20, 0, 0));
@@ -57,7 +60,7 @@ public class ZBaseActivity extends AppCompatActivity {
     }
 
     public void cancelLoading() {
-        int loadingId = 666;
+        int loadingId = 0xAA666601;
         View loadingView = findViewById(loadingId);
         if (loadingView == null) {
             return;

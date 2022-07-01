@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.zbase.entity.LocalMedia;
-import com.zbase.view.x.ImageViewX;
+import com.zbase.x.view.ImageViewX;
 
 import java.util.List;
 

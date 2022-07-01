@@ -1,4 +1,4 @@
-package com.zbase.view.x;
+package com.zbase.x.view;
 
 import android.annotation.SuppressLint;
 import android.graphics.drawable.Drawable;
@@ -158,6 +158,18 @@ public interface IViewX<T extends View> {
     default T longClickListener(View.OnLongClickListener longClickListener) {
         T t = (T) this;
         t.setOnLongClickListener(longClickListener);
+        return t;
+    }
+
+    default T globalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener globalLayoutListener) {
+        T t = (T) this;
+        t.getViewTreeObserver().addOnGlobalLayoutListener(globalLayoutListener);
+        return t;
+    }
+
+    default T removeGlobalLayoutListener(ViewTreeObserver.OnGlobalLayoutListener globalLayoutListener) {
+        T t = (T) this;
+        t.getViewTreeObserver().removeOnGlobalLayoutListener(globalLayoutListener);
         return t;
     }
 

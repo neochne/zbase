@@ -5,7 +5,7 @@ import android.content.Context;
 import com.zbase.R;
 import com.zbase.util.DrawableUtils;
 import com.zbase.util.ResourceUtils;
-import com.zbase.view.x.ButtonX;
+import com.zbase.x.view.ButtonX;
 
 public final class RoundedButton extends ButtonX {
 

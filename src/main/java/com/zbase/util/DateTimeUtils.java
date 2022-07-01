@@ -4,6 +4,8 @@
 
 package com.zbase.util;
 
+import com.zbase.entity.NumberPickerValue;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -21,7 +23,6 @@ public final class DateTimeUtils {
     }
 
     /**
-     *
      * 如果是 JDK8 的应用，可以使用：
      * Instant 代替 Date，
      * LocalDateTime 代替 Calendar，
@@ -31,7 +32,6 @@ public final class DateTimeUtils {
      * @param pattern 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
      *                2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
      *                3. 表示年的占位符一定用小写
-     *
      */
     public static Date formatDate(String date, String pattern) {
         try {
@@ -111,8 +111,8 @@ public final class DateTimeUtils {
      *
      * @param timeUnit 枚举类 TimeUnit.HOURS,TimeUnit.DAYS 等
      */
-    public static long calcInterval(Date smallDate,Date bigDate,TimeUnit timeUnit) {
-        return timeUnit.convert(bigDate.getTime() - smallDate.getTime(),TimeUnit.MILLISECONDS);
+    public static long calcInterval(Date smallDate, Date bigDate, TimeUnit timeUnit) {
+        return timeUnit.convert(bigDate.getTime() - smallDate.getTime(), TimeUnit.MILLISECONDS);
     }
 
     public static String calcAgeByBirth(Date birthDate) {
@@ -181,12 +181,7 @@ public final class DateTimeUtils {
         return calendar.getActualMaximum(Calendar.DATE);
     }
 
-    public static String[] sYears;
-
-    public static String[] getYears(int offset) {
-        if (sYears != null) {
-            return sYears;
-        }
+    public static NumberPickerValue getYears(int offset) {
         int curYear = getCurYear();
         int len = offset * 2 + 1;
         String[] years = new String[len];
@@ -195,100 +190,74 @@ public final class DateTimeUtils {
             years[i] = curYear - offset + i + "";
             years[offset + i] = curYear + i + "";
         }
-        sYears = years;
-        return sYears;
+        return new NumberPickerValue(offset, years);
     }
 
-    public static String[] sMonths;
-    public static int sCurMonthIndex;
-    public static String[] getMonths() {
-        if (sMonths != null) {
-            return sMonths;
-        }
+    public static NumberPickerValue getMonths() {
         String[] months = new String[12];
         int curMonth = getCurMonth();
+        int curIndex = 0;
         for (int i = 0; i < 12; i++) {
             int month = i + 1;
             months[i] = add0AtFirst(month);
             if (month == curMonth) {
-                sCurMonthIndex = i;
+                curIndex = i;
             }
         }
-        sMonths = months;
-        return sMonths;
+        return new NumberPickerValue(curIndex, months);
     }
 
-    public static String[] sDays;
-    public static int sCurDayIndex;
-    public static String[] getDays() {
-        if (sDays != null) {
-            return sDays;
-        }
+    public static NumberPickerValue getDays() {
         String[] days = new String[31];
         int curDay = getCurDay();
+        int curIndex = 0;
         for (int i = 0; i < 31; i++) {
             int day = i + 1;
             days[i] = add0AtFirst(day);
             if (day == curDay) {
-                sCurDayIndex = i;
+                curIndex = i;
             }
         }
-        sDays = days;
-        return sDays;
+        return new NumberPickerValue(curIndex, days);
     }
 
-    public static String[] sHours;
-    public static int sCurHourIndex;
-    public static String[] getHours() {
-        if (sHours != null) {
-            return sHours;
-        }
+    public static NumberPickerValue getHours() {
         String[] hours = new String[24];
         int curHour = getCurHour();
+        int curIndex = 0;
         for (int hour = 0; hour < 24; hour++) {
             hours[hour] = add0AtFirst(hour);
             if (hour == curHour) {
-                sCurHourIndex = hour;
+                curIndex = hour;
             }
         }
-        sHours = hours;
-        return sHours;
+        return new NumberPickerValue(curIndex, hours);
     }
 
-    public static String[] sMinutes;
-    public static int sCurMinuteIndex;
-    public static String[] getMinutes() {
-        if (sMinutes != null) {
-            return sMinutes;
-        }
+    public static NumberPickerValue getMinutes() {
         String[] minutes = new String[60];
         int curMinute = getCurMinute();
+        int curIndex = 0;
         for (int minute = 0; minute < 60; minute++) {
             minutes[minute] = add0AtFirst(minute);
             if (minute == curMinute) {
-                sCurMinuteIndex = minute;
+                curIndex = minute;
             }
         }
-        sMinutes = minutes;
-        return sMinutes;
+        return new NumberPickerValue(curIndex, minutes);
     }
 
-    public static String[] sSeconds;
-    public static int sCurSecondIndex;
-    public static String[] getSeconds() {
-        if (sSeconds != null) {
-            return sSeconds;
-        }
+    public static NumberPickerValue getSeconds() {
         String[] seconds = new String[60];
         int curSecond = getCurSecond();
+        int curIndex = 0;
         for (int second = 0; second < 60; second++) {
             seconds[second] = add0AtFirst(second);
             if (second == curSecond) {
-                sCurSecondIndex = second;
+                curIndex = second;
             }
         }
-        sSeconds = seconds;
-        return sSeconds;
+        return new NumberPickerValue(curIndex, seconds);
     }
 
 }
