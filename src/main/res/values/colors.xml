@@ -16,5 +16,6 @@
     <color name="black_EF000000">#EF000000</color>
     <color name="gray_808080">#808080</color>
     <color name="gray_353535">#353535</color>
+    <color name="gray_ECECEC">#ECECEC</color>
     <color name="green_549588">#549588</color>
 </resources>

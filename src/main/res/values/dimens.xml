@@ -33,6 +33,12 @@
     <dimen name="pic_preview_bar_padding">8dp</dimen>
     <dimen name="bucket_list_item_padding">10dp</dimen>
 
+    <!-- TvItemLayout -->
+    <dimen name="tv_item_layout_vertical_padding">10dp</dimen>
+    <dimen name="tv_item_layout_left_margin">10dp</dimen>
+    <dimen name="tv_item_layout_right_margin">10dp</dimen>
+    <dimen name="tv_item_layout_divider_height">1px</dimen>
+
     <!-- Common -->
     <dimen name="btn_radius">5dp</dimen>
     <dimen name="btn_height">40dp</dimen>

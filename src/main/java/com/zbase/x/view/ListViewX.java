@@ -28,6 +28,12 @@ public final class ListViewX extends ListView implements IViewX<ListViewX> {
         return this;
     }
 
+    public ListViewX noDivider() {
+        setDivider(null);
+        setDividerHeight(0);
+        return this;
+    }
+
     public ListViewX adapter(BaseAdapter adapter) {
         setAdapter(adapter);
         return this;

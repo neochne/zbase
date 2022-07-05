@@ -7,7 +7,7 @@ import androidx.appcompat.widget.AppCompatCheckBox;
 
 import com.zbase.util.ViewUtils;
 
-public final class CheckBoxX extends AppCompatCheckBox implements IViewX<CheckBoxX>{
+public final class CheckBoxX extends AppCompatCheckBox implements ICompoundButtonX<CheckBoxX> {
 
     public CheckBoxX(Context context) {
         super(context, null, android.R.attr.checkboxStyle);
