@@ -6,6 +6,7 @@ import android.view.View;
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
+import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.view.ViewX;
 import com.zbase.x.viewgroup.ConstraintLayoutX;
@@ -16,7 +17,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
         super(context);
     }
 
-    public TvItemLayout startText(String text,int color) {
+    public TvItemLayout startText(String text, int color) {
         int verticalPadding = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding);
         int leftMargin = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin);
         addChildView(new TextViewX(getContext())
@@ -31,7 +32,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
         return this;
     }
 
-    public TvItemLayout centerText(String text,int color) {
+    public TvItemLayout centerText(String text, int color) {
         int verticalPadding = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding);
         addChildView(new TextViewX(getContext())
                         .text(text)
@@ -43,6 +44,10 @@ public final class TvItemLayout extends ConstraintLayoutX {
                         .top2top(ConstraintLayoutParamsX.PARENT_ID)
                         .bottom2bottom(ConstraintLayoutParamsX.PARENT_ID));
         return this;
+    }
+
+    public TvItemLayout enableRightArrow() {
+        return endView(new ImageViewX(getContext()).src(R.drawable.ic_arrow_right_gray));
     }
 
     public TvItemLayout endView(View view) {

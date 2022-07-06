@@ -11,8 +11,8 @@ public class SwitchX extends SwitchCompat implements ICompoundButtonX<SwitchX> {
         super(context);
     }
 
-    public SwitchX check() {
-        setChecked(true);
+    public SwitchX checked(boolean checked) {
+        setChecked(checked);
         return this;
     }
 
