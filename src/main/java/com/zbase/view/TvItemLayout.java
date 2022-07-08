@@ -18,8 +18,14 @@ public final class TvItemLayout extends ConstraintLayoutX {
     }
 
     public TvItemLayout startText(String text, int color) {
-        int verticalPadding = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding);
-        int leftMargin = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin);
+        return startText(text, color, ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin), ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding));
+    }
+
+    public TvItemLayout startText(String text, int color, int verticalMargin) {
+        return startText(text, color, ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin), verticalMargin);
+    }
+
+    public TvItemLayout startText(String text, int color, int leftMargin, int verticalPadding) {
         addChildView(new TextViewX(getContext())
                         .text(text)
                         .textColor(color)
@@ -33,7 +39,10 @@ public final class TvItemLayout extends ConstraintLayoutX {
     }
 
     public TvItemLayout centerText(String text, int color) {
-        int verticalPadding = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding);
+        return centerText(text, color, ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding));
+    }
+
+    public TvItemLayout centerText(String text, int color, int verticalPadding) {
         addChildView(new TextViewX(getContext())
                         .text(text)
                         .textColor(color)

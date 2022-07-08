@@ -34,9 +34,9 @@
     <dimen name="bucket_list_item_padding">10dp</dimen>
 
     <!-- TvItemLayout -->
-    <dimen name="tv_item_layout_vertical_padding">10dp</dimen>
-    <dimen name="tv_item_layout_left_margin">10dp</dimen>
-    <dimen name="tv_item_layout_right_margin">10dp</dimen>
+    <dimen name="tv_item_layout_vertical_padding">15dp</dimen>
+    <dimen name="tv_item_layout_left_margin">15dp</dimen>
+    <dimen name="tv_item_layout_right_margin">15dp</dimen>
     <dimen name="tv_item_layout_divider_height">1px</dimen>
 
     <!-- Common -->

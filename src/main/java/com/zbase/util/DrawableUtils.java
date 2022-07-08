@@ -12,6 +12,13 @@ public final class DrawableUtils {
     public static GradientDrawable createRectDrawable(int solidColor,
                                                       int strokeColor,
                                                       int strokeWidth,
+                                                      float r) {
+        return createRectDrawable(solidColor,strokeColor,strokeWidth,new float[]{r, r, r, r, r, r, r, r});
+    }
+
+    public static GradientDrawable createRectDrawable(int solidColor,
+                                                      int strokeColor,
+                                                      int strokeWidth,
                                                       float[] radii) {
         GradientDrawable gradientDrawable = new GradientDrawable();
         gradientDrawable.setShape(GradientDrawable.RECTANGLE);

@@ -30,6 +30,12 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
         }
     }
 
+    @Override
+    public DynamicVerTvLayout padding(int l, int t, int r, int b) {
+        super.padding(l, t, r, b);
+        return this;
+    }
+
     public DynamicVerTvLayout text(JSONObject itemObject, String... names) {
         int i = 0;
         Iterator<String> iterator = itemObject.keys();

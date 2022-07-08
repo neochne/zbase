@@ -1,6 +1,7 @@
 package com.zbase.x.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -31,6 +32,12 @@ public final class ListViewX extends ListView implements IViewX<ListViewX> {
     public ListViewX noDivider() {
         setDivider(null);
         setDividerHeight(0);
+        return this;
+    }
+
+    public ListViewX noClickColor() {
+        setCacheColorHint(Color.TRANSPARENT);
+        setSelector(android.R.color.transparent);
         return this;
     }
 

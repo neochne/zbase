@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
@@ -62,6 +63,15 @@ public final class NotificationUtils {
 
     public static void clearAll(Context context) {
         NotificationManagerCompat.from(context).cancelAll();
+    }
+
+    public static PendingIntent createPendingIntent(Context context, int requestCode, Intent intent) {
+        return PendingIntent.getActivity(
+                context,
+                requestCode,
+                intent,
+                // 12.0需要明确设置flag，否则会有报错：
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
 }
