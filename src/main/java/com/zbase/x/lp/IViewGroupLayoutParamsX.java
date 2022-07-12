@@ -16,6 +16,25 @@ public interface IViewGroupLayoutParamsX<T extends ViewGroup.MarginLayoutParams>
         return t;
     }
 
+    default T wMatchParent() {
+        T t = (T) this;
+        t.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        return t;
+    }
+
+    default T hMatchParent() {
+        T t = (T) this;
+        t.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        return t;
+    }
+
+    default T matchParent() {
+        T t = (T) this;
+        t.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        t.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        return t;
+    }
+
     default T margins(int margin) {
         T t = (T) this;
         t.setMargins(margin,margin,margin,margin);

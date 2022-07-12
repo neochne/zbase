@@ -6,15 +6,14 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 
+import com.zbase.R;
 import com.zbase.util.JsonUtils;
+import com.zbase.util.ResourceUtils;
 import com.zbase.x.lp.LinearLayoutParamsX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.viewgroup.LinearLayoutX;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 public final class DynamicVerTvLayout extends LinearLayoutX {
 
@@ -36,40 +35,24 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
         return this;
     }
 
-    public DynamicVerTvLayout text(JSONObject itemObject, String... names) {
-        int i = 0;
-        Iterator<String> iterator = itemObject.keys();
-        while (iterator.hasNext()) {
-            String name = names[i];
-            String key = iterator.next();
-            String value = JsonUtils.getString(itemObject, key);
-            SpannableString ss = new SpannableString(name + value);
-            ss.setSpan(new ForegroundColorSpan(Color.BLACK), 0, name.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            ((TextViewX) getChildAt(i)).text(ss);
-            i++;
+    public DynamicVerTvLayout text(JSONObject itemObject, String[] keys, String[] names) {
+        text(itemObject,Color.BLACK, ResourceUtils.getColor(getContext(), R.color.tv_default_color),keys,names);
+        return this;
+    }
+
+    public DynamicVerTvLayout text(JSONObject itemObject, int nameColor, int valueColor, String[] keys, String[] names) {
+        for (int i = 0, l = keys.length; i < l; i++) {
+            text((TextViewX) getChildAt(i),names[i],JsonUtils.getString(itemObject, keys[i]),nameColor,valueColor);
         }
         return this;
     }
 
-    public DynamicVerTvLayout text(JSONArray jsonArray, String... names) {
-        for (int i = 0, l = jsonArray.length(); i < l; i++) {
-            String name = names[i];
-            String value = JsonUtils.getString(jsonArray, i);
-            SpannableString ss = new SpannableString(name + value);
-            ss.setSpan(new ForegroundColorSpan(Color.BLACK), 0, name.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            ((TextViewX) getChildAt(i)).text(ss);
-        }
-        return this;
-    }
-
-    public DynamicVerTvLayout text(JSONArray jsonArray, String key, String... names) {
-        for (int i = 0, l = jsonArray.length(); i < l; i++) {
-            String name = names[i];
-            String value = JsonUtils.getString(JsonUtils.getJSONObject(jsonArray, i), key);
-            SpannableString ss = new SpannableString(name + value);
-            ss.setSpan(new ForegroundColorSpan(Color.BLACK), 0, name.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-            ((TextViewX) getChildAt(i)).text(ss);
-        }
+    public DynamicVerTvLayout text(TextViewX tvx, String name, String value, int nameColor, int valueColor) {
+        String source = name + value;
+        SpannableString ss = new SpannableString(source);
+        ss.setSpan(new ForegroundColorSpan(nameColor), 0, name.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        ss.setSpan(new ForegroundColorSpan(valueColor), name.length(), source.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+        tvx.text(ss);
         return this;
     }
 

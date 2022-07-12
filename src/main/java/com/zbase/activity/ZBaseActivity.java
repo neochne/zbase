@@ -1,5 +1,6 @@
 package com.zbase.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -7,6 +8,10 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zbase.R;
@@ -66,6 +71,14 @@ public class ZBaseActivity extends AppCompatActivity {
             return;
         }
         loadingView.setVisibility(View.GONE);
+    }
+
+    public ActivityResultLauncher<Intent> register4ActivityResult(ActivityResultCallback<ActivityResult> callback) {
+        return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
+    }
+
+    public void startActivity4Result(ActivityResultLauncher<Intent> launcher,Intent intent) {
+        launcher.launch(intent);
     }
 
 }

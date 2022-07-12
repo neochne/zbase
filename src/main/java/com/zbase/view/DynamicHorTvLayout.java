@@ -8,7 +8,6 @@ import com.zbase.x.lp.LinearLayoutParamsX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.viewgroup.LinearLayoutX;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.Iterator;
@@ -37,18 +36,12 @@ public final class DynamicHorTvLayout extends LinearLayoutX {
         return this;
     }
 
-    public DynamicHorTvLayout text(JSONArray jsonArray) {
-        for (int i = 0, l = jsonArray.length(); i < l; i++) {
-            ((TextViewX) getChildAt(i)).text(JsonUtils.getString(jsonArray, i));
+    public DynamicHorTvLayout text(JSONObject itemObject,String[] keys) {
+        for (int i = 0,l = keys.length; i < l; i++) {
+            ((TextViewX) getChildAt(i)).gravity(Gravity.CENTER).text(JsonUtils.getString(itemObject, keys[i]));
         }
         return this;
     }
 
-    public DynamicHorTvLayout text(JSONArray jsonArray, String key) {
-        for (int i = 0, l = jsonArray.length(); i < l; i++) {
-            ((TextViewX) getChildAt(i)).text(JsonUtils.getString(JsonUtils.getJSONObject(jsonArray, i), key));
-        }
-        return this;
-    }
 
 }
