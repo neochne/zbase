@@ -7,6 +7,7 @@ package com.zbase.util;
 import android.text.TextUtils;
 import android.util.Base64;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -50,7 +51,7 @@ public final class CipherUtils {
             e.printStackTrace();
         }
         if (null == digesta) return "";
-        StringBuilder hs = new StringBuilder("");
+        StringBuilder hs = new StringBuilder();
         String stmp;
         for (byte b : digesta) {
             stmp = (Integer.toHexString(b & 0XFF));
@@ -72,7 +73,7 @@ public final class CipherUtils {
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             IvParameterSpec iv = new IvParameterSpec(vector.getBytes());// 使用CBC模式，需要一个向量iv，可增加加密算法的强度
             cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-            encrypted = cipher.doFinal(encData.getBytes("utf-8"));
+            encrypted = cipher.doFinal(encData.getBytes(StandardCharsets.UTF_8));
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -83,14 +84,14 @@ public final class CipherUtils {
         if (!TextUtils.isEmpty(aesStr) && TextUtils.isEmpty(key)) return aesStr;
         if (TextUtils.isEmpty(aesStr) && TextUtils.isEmpty(key)) return "";
         try {
-            byte[] raw = key.getBytes("ASCII");
+            byte[] raw = key.getBytes(StandardCharsets.US_ASCII);
             SecretKeySpec skeySpec = new SecretKeySpec(raw, "AES");
             Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
             IvParameterSpec iv = new IvParameterSpec(p.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
             byte[] encrypted1 = Base64.decode(aesStr, Base64.DEFAULT);// 先用base64解密
             byte[] original = cipher.doFinal(encrypted1);
-            return new String(original, "utf-8");
+            return new String(original, StandardCharsets.UTF_8);
         } catch (Exception ex) {
             return null;
         }

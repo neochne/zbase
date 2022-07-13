@@ -6,6 +6,7 @@ package com.zbase.util;
 
 import com.zbase.entity.NumberPickerValue;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -15,11 +16,43 @@ import java.util.concurrent.TimeUnit;
 
 public final class DateTimeUtils {
 
+    public static final String YEAR = "yyyy";
+
+    public static final String MONTH = "MM";
+
+    public static final String DAY = "dd";
+
+    public static final String HOUR_24 = "HH";
+
+    public static final String HOUR_12 = "hh";
+
+    public static final String MINUTE = "mm";
+
+    public static final String SECOND = "ss";
+
+    public static final String MICRO_SECOND = "SSS";
+
+    public static final String P1 = "yyyy-MM-dd HH:mm:ss";
+
+    public static final String P12 = "yyyy-MM-dd HH:mm";
+
+    public static final String P13 = "yyyy-MM-dd HH";
+
+    public static final String P14 = "yyyy-MM-dd";
+
+    public static final String P2 = "yyyy/MM/dd HH:mm:ss";
+
+    public static final String P22 = "yyyy/MM/dd HH:mm";
+
+    public static final String P23 = "yyyy/MM/dd";
+
+    public static final String P3 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
+
     private DateTimeUtils() {
     }
 
-    public static String formatDate(Date date, String pattern) {
-        return new SimpleDateFormat(pattern, Locale.CHINA).format(date);
+    public static String formatDate(Date date, String formatPattern) {
+        return new SimpleDateFormat(formatPattern, Locale.CHINA).format(date);
     }
 
     /**
@@ -29,23 +62,53 @@ public final class DateTimeUtils {
      * DateTimeFormatter 代替 SimpleDateFormat
      * 官方给出的解释：simple beautiful strong immutable thread-safe
      *
-     * @param pattern 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
-     *                2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
-     *                3. 表示年的占位符一定用小写
+     * @param parsePattern 1. yyyy-MM-dd HH:mm:ss（ H:24小时制 h：12小时制）
+     *                     2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
+     *                     3. 表示年的占位符一定用小写
      */
-    public static Date formatDate(String date, String pattern) {
+    public static Date formatDate(String date, String parsePattern) {
         try {
-            return new SimpleDateFormat(pattern, Locale.CHINA).parse(date);
+            return new SimpleDateFormat(parsePattern, Locale.CHINA).parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static String formatDate(String date, String parsePattern,String formatPattern) {
+        try {
+            Date parseDate = new SimpleDateFormat(parsePattern, Locale.CHINA).parse(date);
+            if (parseDate == null) {
+                return null;
+            }
+            return new SimpleDateFormat(formatPattern,Locale.CHINA).format(parseDate);
         } catch (ParseException e) {
             return null;
         }
     }
 
-    public static String formatDate2Day(String date) {
+    public static String formatDate2Relative(String date, String parsePattern) {
         try {
-            return formatDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA).parse(date), "yyyy-MM-dd");
+            Date parseDate = new SimpleDateFormat(parsePattern, Locale.CHINA).parse(date);
+            if (parseDate == null) {
+                return null;
+            }
+            Calendar parseCalendar = Calendar.getInstance();
+            parseCalendar.setTime(parseDate);
+            Calendar todayCalendar = Calendar.getInstance();
+            Calendar yesterdayCalendar = Calendar.getInstance();
+            yesterdayCalendar.add(Calendar.DATE, -1);
+            DateFormat timeFormatter = new SimpleDateFormat("HH:mm", Locale.CHINA);
+            if (parseCalendar.get(Calendar.YEAR) == todayCalendar.get(Calendar.YEAR) && parseCalendar.get(Calendar.DAY_OF_YEAR) == todayCalendar.get(Calendar.DAY_OF_YEAR)) {
+                return "今天 " + timeFormatter.format(parseDate);
+            } else if (parseCalendar.get(Calendar.YEAR) == yesterdayCalendar.get(Calendar.YEAR) && parseCalendar.get(Calendar.DAY_OF_YEAR) == yesterdayCalendar.get(Calendar.DAY_OF_YEAR)) {
+                return "昨天 " + timeFormatter.format(parseDate);
+            } else {
+                return new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA).format(parseDate);
+            }
         } catch (ParseException e) {
-            return "";
+            e.printStackTrace();
+            return null;
         }
     }
 

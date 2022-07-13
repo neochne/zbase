@@ -22,8 +22,8 @@ public abstract class ToolbarActivityExample extends AppCompatActivity {
 
     ToolbarLayout createToolbar() {
         return new ToolbarLayout(this)
-                .setTitle(getTitle().toString(), Color.WHITE, Color.BLACK, 16, Typeface.DEFAULT_BOLD)
-                .setBackIcon(R.drawable.ic_back_gray_ripple, 0, v -> {
+                .addTitle(getTitle().toString(), Color.WHITE, Color.BLACK, 16, Typeface.DEFAULT_BOLD)
+                .addBackIcon(R.drawable.ic_back_gray_ripple, 0, v -> {
                 });
     }
 

@@ -82,7 +82,7 @@ public final class VerifyUtils {
                     }
                     char idCardLast = charArray[17];
                     int idCardMod = sum % 11;
-                    return idCardY[idCardMod].toUpperCase().equals(String.valueOf(idCardLast).toUpperCase());
+                    return idCardY[idCardMod].equalsIgnoreCase(String.valueOf(idCardLast));
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;

@@ -15,9 +15,9 @@ import androidx.annotation.NonNull;
 import com.zbase.R;
 import com.zbase.util.ResourceUtils;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
-import com.zbase.x.viewgroup.ConstraintLayoutX;
 import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.TextViewX;
+import com.zbase.x.viewgroup.ConstraintLayoutX;
 
 public final class ToolbarLayout extends ConstraintLayoutX {
 
@@ -34,7 +34,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
         return TOOLBAR_ID;
     }
 
-    public ToolbarLayout setTitle(String title, int color, int bgColor, int sp, Typeface typeface) {
+    public ToolbarLayout addTitle(String title, int color, int bgColor, int sp, Typeface typeface) {
         Context context = getContext();
         return addChildView(new TextViewX(context)
                         .id(TOOLBAR_ID)
@@ -52,7 +52,12 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .end2end(ConstraintLayoutParamsX.PARENT_ID));
     }
 
-    public ToolbarLayout setBackIcon(int res, int leftMargin, View.OnClickListener listener) {
+    public ToolbarLayout title(String title) {
+        ((TextViewX)findViewById(TOOLBAR_ID)).setText(title);
+        return this;
+    }
+
+    public ToolbarLayout addBackIcon(int res, int leftMargin, View.OnClickListener listener) {
         return addChildView(new ImageViewX(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar)
                         .src(res)
                         .clickListener(listener),
@@ -63,7 +68,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .margins(leftMargin,0,0,0));
     }
 
-    public ToolbarLayout setRightIcon(int res, int rightMargin, View.OnClickListener listener) {
+    public ToolbarLayout addRightIcon(int res, int rightMargin, View.OnClickListener listener) {
         return addChildView(new ImageViewX(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar)
                         .src(res)
                         .clickListener(listener),
@@ -74,7 +79,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .margins(0,0,rightMargin,0));
     }
 
-    public ToolbarLayout setRightText(String text,
+    public ToolbarLayout addRightText(String text,
                                       int color,
                                       int sp,
                                       int rightMargin,

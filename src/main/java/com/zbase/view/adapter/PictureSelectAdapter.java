@@ -13,10 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zbase.R;
 import com.zbase.entity.LocalMedia;
 import com.zbase.util.ResourceUtils;
-import com.zbase.x.view.CheckBoxX;
 import com.zbase.x.lp.FrameLayoutParamsX;
-import com.zbase.x.viewgroup.FrameLayoutX;
+import com.zbase.x.view.CheckBoxX;
 import com.zbase.x.view.ImageViewX;
+import com.zbase.x.viewgroup.FrameLayoutX;
 
 import java.util.List;
 

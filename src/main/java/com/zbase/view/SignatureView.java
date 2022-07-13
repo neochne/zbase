@@ -24,7 +24,7 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
 
     private final Paint mPaint;
 
-    private  Path mPath;
+    private final Path mPath;
 
     private float mPreviousX = 0;
 

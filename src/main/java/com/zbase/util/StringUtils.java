@@ -54,7 +54,7 @@ public final class StringUtils {
                 return (stringEntry.getValue().compareTo(t1.getValue()));
             }
         });
-        StringBuilder ascStringBuilder = new StringBuilder("");
+        StringBuilder ascStringBuilder = new StringBuilder();
         for (Map.Entry<String, String> entry:dataEntries){
             ascStringBuilder.append(entry.getValue());
         }

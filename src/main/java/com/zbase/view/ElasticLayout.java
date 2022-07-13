@@ -29,7 +29,7 @@ public class ElasticLayout extends LinearLayout {
     // Member Variable Block
     // ----------------------------------------------------
     private final String TAG = "ElasticLayout";
-    private Context mContext;
+    private final Context mContext;
     private View mScrolledChildView;
 
     // Header
@@ -38,7 +38,7 @@ public class ElasticLayout extends LinearLayout {
 
     // Scroll
     private int mDownY, mTouchSlop, mScrolledYDistance;
-    private Scroller mScroller;
+    private final Scroller mScroller;
     private float mScrollRate = .5f;
     private boolean mIsUIRefreshing, mIsUILoading;
     private boolean mRefresh;
@@ -257,10 +257,7 @@ public class ElasticLayout extends LinearLayout {
             if (firstPos == 0 && firstChildView != null && firstChildView.getTop() >= absListView.getPaddingTop()) {
                 return false;
             }
-            if (lastPos > 0 && count > 0 && lastPos == count - 1) {
-                return true;
-            }
-            return false;
+            return lastPos > 0 && count > 0 && lastPos == count - 1;
         } else if (mScrolledChildView instanceof ScrollView) {
             ScrollView scrollView = (ScrollView) mScrolledChildView;
             View view = scrollView.getChildAt(scrollView.getChildCount() - 1);
