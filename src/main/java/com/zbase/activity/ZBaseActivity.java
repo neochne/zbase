@@ -15,12 +15,17 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zbase.R;
+import com.zbase.http.JDataCallback;
+import com.zbase.http.YesHttp;
 import com.zbase.util.ResourceUtils;
 import com.zbase.util.ViewUtils;
 import com.zbase.x.lp.FrameLayoutParamsX;
 
 public class ZBaseActivity extends AppCompatActivity {
 
+    /*
+     * Loading ...
+     */
     public void showLoading() {
         showLoading("加载中...");
     }
@@ -29,29 +34,30 @@ public class ZBaseActivity extends AppCompatActivity {
         /*
          * Is Show?
          */
-        int loadingViewId = 0xAA666601;
+        int loadingLayoutId = 0xAA666601;
         int loadingTvId = 0xAA666602;
-        View loadingView = findViewById(loadingViewId);
-        if (loadingView != null) {
+        View loadingLayoutLast = findViewById(loadingLayoutId);
+        if (loadingLayoutLast != null) {
             ((TextView) findViewById(loadingTvId)).setText(text);
-            loadingView.setVisibility(View.VISIBLE);
+            loadingLayoutLast.setVisibility(View.VISIBLE);
+            loadingLayoutLast.bringToFront();
             return;
         }
         /*
          * Background
          */
-        LinearLayout backgroundLayout = new LinearLayout(this);
-        backgroundLayout.setId(loadingViewId);
-        backgroundLayout.setPadding(50, 40, 50, 40);
-        backgroundLayout.setOrientation(LinearLayout.VERTICAL);
-        backgroundLayout.setGravity(Gravity.CENTER);
-        backgroundLayout.setBackground(ResourceUtils.getDrawable(this, R.drawable.bg_loading_dialog));
+        LinearLayout loadingLayout = new LinearLayout(this);
+        loadingLayout.setId(loadingLayoutId);
+        loadingLayout.setPadding(50, 40, 50, 40);
+        loadingLayout.setOrientation(LinearLayout.VERTICAL);
+        loadingLayout.setGravity(Gravity.CENTER);
+        loadingLayout.setBackground(ResourceUtils.getDrawable(this, R.drawable.bg_loading_dialog));
         /*
          * Circle ProgressBar
          */
         ProgressBar circleProgressBar = new ProgressBar(this);
         ViewUtils.setProgressBarColor(circleProgressBar, Color.WHITE);
-        backgroundLayout.addView(circleProgressBar);
+        loadingLayout.addView(circleProgressBar);
         /*
          * Prompt Text
          */
@@ -59,9 +65,10 @@ public class ZBaseActivity extends AppCompatActivity {
         promptTextView.setId(loadingTvId);
         promptTextView.setTextColor(Color.WHITE);
         promptTextView.setText(text);
-        backgroundLayout.addView(promptTextView, new FrameLayoutParamsX().margins(0, 20, 0, 0));
+        loadingLayout.addView(promptTextView, new FrameLayoutParamsX().margins(0, 20, 0, 0));
         // add to content view
-        addContentView(backgroundLayout, new FrameLayoutParamsX().gravity(Gravity.CENTER));
+        addContentView(loadingLayout, new FrameLayoutParamsX().gravity(Gravity.CENTER));
+        loadingLayout.bringToFront();
     }
 
     public void cancelLoading() {
@@ -73,12 +80,49 @@ public class ZBaseActivity extends AppCompatActivity {
         loadingView.setVisibility(View.GONE);
     }
 
+    /*
+     * Change view background color
+     */
+    public void grayViewBackground(View view) {
+        view.setBackgroundColor(ResourceUtils.getColor(this, R.color.gray_ECECEC));
+    }
+
+    public void grayContentViewBackground() {
+        setContentViewBackgroundColor(ResourceUtils.getColor(this, R.color.gray_ECECEC));
+    }
+
+    public void setContentViewBackgroundColor(int color) {
+        findViewById(android.R.id.content).setBackgroundColor(color);
+    }
+
+    /*
+     * Start activity for result
+     */
     public ActivityResultLauncher<Intent> register4ActivityResult(ActivityResultCallback<ActivityResult> callback) {
         return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
     }
 
     public void startActivity4Result(ActivityResultLauncher<Intent> launcher,Intent intent) {
         launcher.launch(intent);
+    }
+
+    /*
+     * Http request
+     */
+    public void getArray(String url,
+                         String[] queryParams,
+                         JDataCallback callback) {
+        YesHttp
+                .request(url)
+                .addQueryNamesAndValues(queryParams)
+                .getAsync(callback);
+    }
+
+    public void post(String url, Object[] bodyParams, JDataCallback callback) {
+        YesHttp
+                .request(url)
+                .addBodyNamesAndValues(bodyParams)
+                .postAsync(callback);
     }
 
 }

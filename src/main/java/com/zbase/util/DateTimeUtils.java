@@ -75,16 +75,8 @@ public final class DateTimeUtils {
         }
     }
 
-    public static String formatDate(String date, String parsePattern,String formatPattern) {
-        try {
-            Date parseDate = new SimpleDateFormat(parsePattern, Locale.CHINA).parse(date);
-            if (parseDate == null) {
-                return null;
-            }
-            return new SimpleDateFormat(formatPattern,Locale.CHINA).format(parseDate);
-        } catch (ParseException e) {
-            return null;
-        }
+    public static String formatDate(String date, String parsePattern, String formatPattern) {
+        return formatDate(formatDate(date,parsePattern),formatPattern);
     }
 
     public static String formatDate2Relative(String date, String parsePattern) {

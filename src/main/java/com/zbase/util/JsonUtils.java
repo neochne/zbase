@@ -13,6 +13,15 @@ public final class JsonUtils {
     private JsonUtils() {
     }
 
+    public static Object get(JSONObject object, String key) {
+        try {
+            return object.get(key);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public static String getString(JSONObject object, String key) {
         try {
             return String.valueOf(object.get(key));
@@ -55,6 +64,15 @@ public final class JsonUtils {
         } catch (JSONException e) {
             e.printStackTrace();
             return new JSONArray();
+        }
+    }
+
+    public static Object get(JSONArray array, int index) {
+        try {
+            return array.get(index);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 
