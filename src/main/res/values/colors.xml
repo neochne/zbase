@@ -1,22 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="prompt_dialog_positive">#606D96</color>
-    <color name="divider">#EEEEEE</color>
-    <color name="tv_default_color">@color/gray_808080</color>
+    <color name="prompt_dialog_positive">@color/color_606d96</color>
+    <color name="divider">@color/color_eeeeee</color>
+    <color name="tv_default_color">@color/color_808080</color>
 
     <!-- PictureSelectActivity -->
-    <color name="pic_preview_rv">@color/gray_353535</color>
-    <color name="pic_preview_bucket_list_bg">@color/black_A0000000</color>
-    <color name="pic_preview_bar_bg">@color/black_EF000000</color>
-    <color name="pic_preview_confirm_btn_color">@color/green_549588</color>
-    <color name="pic_preview_check_box_color">@color/green_549588</color>
+    <color name="pic_preview_rv">@color/color_353535</color>
+    <color name="pic_preview_bucket_list_bg">@color/color_a0000000</color>
+    <color name="pic_preview_bar_bg">@color/color_ef000000</color>
+    <color name="pic_preview_confirm_btn_color">@color/color_549588</color>
+    <color name="pic_preview_check_box_color">@color/color_549588</color>
 
-    <!-- raw color value-->
-    <color name="black_A0000000">#A0000000</color>
-    <color name="black_EF000000">#EF000000</color>
-    <color name="gray_808080">#808080</color>
-    <color name="gray_353535">#353535</color>
-    <color name="gray_ECECEC">#ECECEC</color>
-    <color name="green_549588">#549588</color>
-    <color name="red_B87174">#B87174</color>
+    <!-- Raw color value-->
+    <color name="color_a0000000">#A0000000</color>
+    <color name="color_ef000000">#EF000000</color>
+    <color name="color_808080">#808080</color>
+    <color name="color_353535">#353535</color>
+    <color name="color_ececec">#ECECEC</color>
+    <color name="color_549588">#549588</color>
+    <color name="color_b87174">#B87174</color>
+    <color name="color_bb86fc">#BB86FC</color>
+    <color name="color_6200ee">#6200EE</color>
+    <color name="color_3700b3">#3700B3</color>
+    <color name="color_03dac5">#03DAC5</color>
+    <color name="color_018786">#018786</color>
+    <color name="color_669efc">#669EFC</color>
+    <color name="color_81c978">#81C978</color>
+    <color name="color_606d96">#606D96</color>
+    <color name="color_eeeeee">#EEEEEE</color>
 </resources>

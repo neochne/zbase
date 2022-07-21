@@ -121,6 +121,14 @@ public final class JsonUtils {
         }
     }
 
+    public static void put(JSONObject object,String k,Object v) {
+        try {
+            object.put(k,v);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static JSONArray newJSONArray(String json) {
         try {
             return new JSONArray(json);

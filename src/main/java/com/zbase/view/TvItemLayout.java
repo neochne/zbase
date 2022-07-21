@@ -76,7 +76,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
     public TvItemLayout enableDivider() {
         return enableDivider(0, 0, 0, 0,
                 ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_divider_height),
-                ResourceUtils.getColor(getContext(), R.color.gray_ECECEC));
+                ResourceUtils.getColor(getContext(), R.color.color_ececec));
     }
 
     public TvItemLayout enableLeftMarginDivider() {
@@ -85,7 +85,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
                 0,
                 0,
                 ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_divider_height),
-                ResourceUtils.getColor(getContext(), R.color.gray_ECECEC));
+                ResourceUtils.getColor(getContext(), R.color.color_ececec));
     }
 
     public TvItemLayout enableDivider(int l, int t, int r, int b, int height, int color) {
