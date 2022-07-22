@@ -16,42 +16,10 @@ import java.util.concurrent.TimeUnit;
 
 public final class DateTimeUtils {
 
-    public static final String YEAR = "yyyy";
-
-    public static final String MONTH = "MM";
-
-    public static final String DAY = "dd";
-
-    public static final String HOUR_24 = "HH";
-
-    public static final String HOUR_12 = "hh";
-
-    public static final String MINUTE = "mm";
-
-    public static final String SECOND = "ss";
-
-    public static final String MICRO_SECOND = "SSS";
-
-    public static final String P1 = "yyyy-MM-dd HH:mm:ss";
-
-    public static final String P12 = "yyyy-MM-dd HH:mm";
-
-    public static final String P13 = "yyyy-MM-dd HH";
-
-    public static final String P14 = "yyyy-MM-dd";
-
-    public static final String P2 = "yyyy/MM/dd HH:mm:ss";
-
-    public static final String P22 = "yyyy/MM/dd HH:mm";
-
-    public static final String P23 = "yyyy/MM/dd";
-
-    public static final String P3 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
-
     private DateTimeUtils() {
     }
 
-    public static String formatDate(Date date, String formatPattern) {
+    public static String format(Date date, String formatPattern) {
         return new SimpleDateFormat(formatPattern, Locale.CHINA).format(date);
     }
 
@@ -66,7 +34,7 @@ public final class DateTimeUtils {
      *                     2. yyyy-MM-dd'T'HH:mm:ss.SSS'Z'（格林威治时间格式）
      *                     3. 表示年的占位符一定用小写
      */
-    public static Date formatDate(String date, String parsePattern) {
+    public static Date parse(String date, String parsePattern) {
         try {
             return new SimpleDateFormat(parsePattern, Locale.CHINA).parse(date);
         } catch (ParseException e) {
@@ -75,11 +43,11 @@ public final class DateTimeUtils {
         }
     }
 
-    public static String formatDate(String date, String parsePattern, String formatPattern) {
-        return formatDate(formatDate(date,parsePattern),formatPattern);
+    public static String parseAndFormat(String date, String parsePattern, String formatPattern) {
+        return format(parse(date,parsePattern),formatPattern);
     }
 
-    public static String formatDate2Relative(String date, String parsePattern) {
+    public static String parseDate2Relative(String date, String parsePattern) {
         try {
             Date parseDate = new SimpleDateFormat(parsePattern, Locale.CHINA).parse(date);
             if (parseDate == null) {

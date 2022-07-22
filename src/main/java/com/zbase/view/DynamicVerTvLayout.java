@@ -19,13 +19,16 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
 
     public DynamicVerTvLayout(Context context, int count) {
         super(context);
-        orientation(VERTICAL);
-        int marginBottom = 0;
+        backgroundColor(Color.WHITE)
+                .orientation(VERTICAL);
+        int horMargin = ResourceUtils.getPixel(context, R.dimen.dvt_layout_horizontal_margin);
+        int verMargin = ResourceUtils.getPixel(context, R.dimen.dvt_layout_vertical_margin);
         for (int i = 0; i < count; i++) {
             if (i == count - 1) {
-                marginBottom = 20;
+                addChildView(new TextViewX(getContext()), new LinearLayoutParamsX().margins(horMargin, verMargin, 0, verMargin));
+                break;
             }
-            addChildView(new TextViewX(getContext()), new LinearLayoutParamsX().margins(0, 20, 0, marginBottom));
+            addChildView(new TextViewX(getContext()), new LinearLayoutParamsX().margins(horMargin, verMargin, 0, 0));
         }
     }
 

@@ -1,9 +1,12 @@
 package com.zbase.view;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.Gravity;
 
+import com.zbase.R;
 import com.zbase.util.JsonUtils;
+import com.zbase.util.ResourceUtils;
 import com.zbase.x.lp.LinearLayoutParamsX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.viewgroup.LinearLayoutX;
@@ -16,7 +19,9 @@ public final class DynamicHorTvLayout extends LinearLayoutX {
 
     public DynamicHorTvLayout(Context context, int count) {
         super(context);
-        padding(0, 30, 0, 30);
+        final int verPadding = ResourceUtils.getPixel(context, R.dimen.dht_layout_vertical_padding);
+        backgroundColor(Color.WHITE)
+                .padding(0,verPadding,0,verPadding);
         for (int i = 0; i < count; i++) {
             addChildView(new TextViewX(getContext())
                             .gravity(Gravity.CENTER),
@@ -43,5 +48,24 @@ public final class DynamicHorTvLayout extends LinearLayoutX {
         return this;
     }
 
+    public DynamicHorTvLayout textDftHorPadding(int index) {
+        textHorPadding(index,ResourceUtils.getPixel(getContext(), R.dimen.dht_layout_horizontal_padding));
+        return this;
+    }
+
+    public DynamicHorTvLayout textHorPadding(int index,int padding) {
+        ((TextViewX)getChildAt(index)).padding(padding,0,padding,0);
+        return this;
+    }
+
+    public DynamicHorTvLayout textGravity(int index,int gravity) {
+        ((TextViewX)getChildAt(index)).gravity(gravity);
+        return this;
+    }
+
+    public DynamicHorTvLayout textColor(int index,int color) {
+        ((TextViewX)getChildAt(index)).textColor(color);
+        return this;
+    }
 
 }
