@@ -72,9 +72,9 @@ public class JDataCallback extends ContextCallback {
     public void handleMultiPageArray(JSONArray dataJsonArray, String noMore) {
         if (dataJsonArray.length() < 1) {
             if (mPage == 1) {
-                ToastUtils.showInWorkThread(CONTEXT, mEmptyArrayPrompt);
+                ToastUtils.showOnWorkThread(CONTEXT, mEmptyArrayPrompt);
             } else {
-                ToastUtils.showInWorkThread(CONTEXT, noMore);
+                ToastUtils.showOnWorkThread(CONTEXT, noMore);
             }
         }
     }

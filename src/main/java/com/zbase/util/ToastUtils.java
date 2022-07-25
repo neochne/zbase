@@ -17,7 +17,7 @@ public final class ToastUtils {
         Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
     }
 
-    public static void showInWorkThread(final Context context, final String msg){
+    public static void showOnWorkThread(final Context context, final String msg){
         new Handler(Looper.getMainLooper()).post(() -> Toast.makeText(context, msg, Toast.LENGTH_LONG).show());
     }
 

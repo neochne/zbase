@@ -118,7 +118,14 @@ public class ZBaseActivity extends AppCompatActivity {
                 .getAsync(callback);
     }
 
-    public void post(String url, Object[] bodyParams, JDataCallback callback) {
+    public void postForm(String url, String[] formParams, JDataCallback callback) {
+        YesHttp
+                .request(url)
+                .addQueryNamesAndValues(formParams)
+                .postAsync(callback);
+    }
+
+    public void postBody(String url, Object[] bodyParams, JDataCallback callback) {
         YesHttp
                 .request(url)
                 .addBodyNamesAndValues(bodyParams)

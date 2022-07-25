@@ -20,7 +20,7 @@ public abstract class ContextCallback implements Callback {
     public void onSuccess(Response response) {
         JSONObject bodyJsonObject = response.getBodyJsonObject();
         if (JsonUtils.getInt(bodyJsonObject, "code") != 0) {
-            ToastUtils.showInWorkThread(CONTEXT, JsonUtils.getString(bodyJsonObject, "message"));
+            ToastUtils.showOnWorkThread(CONTEXT, JsonUtils.getString(bodyJsonObject, "message"));
             return;
         }
         onBizSuccess(bodyJsonObject);
@@ -28,7 +28,7 @@ public abstract class ContextCallback implements Callback {
 
     @Override
     public void onFail(Response response) {
-        ToastUtils.showInWorkThread(CONTEXT, "请求失败：" + response.getHttpCode());
+        ToastUtils.showOnWorkThread(CONTEXT, "请求失败：" + response.getHttpCode());
     }
 
     @Override
@@ -38,7 +38,7 @@ public abstract class ContextCallback implements Callback {
             Throwable cause = exception.getCause();
             errMsg = cause != null ? cause.getMessage() : "-1";
         }
-        ToastUtils.showInWorkThread(CONTEXT, "请求异常：" + errMsg);
+        ToastUtils.showOnWorkThread(CONTEXT, "请求异常：" + errMsg);
     }
 
 }
