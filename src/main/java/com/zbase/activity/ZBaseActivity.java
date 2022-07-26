@@ -109,9 +109,9 @@ public class ZBaseActivity extends AppCompatActivity {
     /*
      * Http request
      */
-    public void getArray(String url,
-                         String[] queryParams,
-                         JDataCallback callback) {
+    public void get(String url,
+                    String[] queryParams,
+                    JDataCallback callback) {
         YesHttp
                 .request(url)
                 .addQueryNamesAndValues(queryParams)
