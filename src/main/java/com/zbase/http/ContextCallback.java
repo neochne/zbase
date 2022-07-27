@@ -8,9 +8,11 @@ import com.zbase.util.ToastUtils;
 
 import org.json.JSONObject;
 
-public abstract class ContextCallback implements Callback {
+public class ContextCallback implements Callback {
 
     final Context CONTEXT;
+
+    boolean mFeedback = true;
 
     public ContextCallback(Context context) {
         this.CONTEXT = context;
@@ -20,7 +22,9 @@ public abstract class ContextCallback implements Callback {
     public void onSuccess(Response response) {
         JSONObject bodyJsonObject = response.getBodyJsonObject();
         if (JsonUtils.getInt(bodyJsonObject, "code") != 0) {
-            ToastUtils.showOnWorkThread(CONTEXT, JsonUtils.getString(bodyJsonObject, "message"));
+            if (mFeedback) {
+                ToastUtils.showOnWorkThread(CONTEXT, JsonUtils.getString(bodyJsonObject, "message"));
+            }
             return;
         }
         onBizSuccess(bodyJsonObject);
@@ -28,7 +32,9 @@ public abstract class ContextCallback implements Callback {
 
     @Override
     public void onFail(Response response) {
-        ToastUtils.showOnWorkThread(CONTEXT, "请求失败：" + response.getHttpCode());
+        if (mFeedback) {
+            ToastUtils.showOnWorkThread(CONTEXT, "请求失败：" + response.getHttpCode());
+        }
     }
 
     @Override
@@ -38,7 +44,9 @@ public abstract class ContextCallback implements Callback {
             Throwable cause = exception.getCause();
             errMsg = cause != null ? cause.getMessage() : "-1";
         }
-        ToastUtils.showOnWorkThread(CONTEXT, "请求异常：" + errMsg);
+        if (mFeedback) {
+            ToastUtils.showOnWorkThread(CONTEXT, "请求异常：" + errMsg);
+        }
     }
 
 }

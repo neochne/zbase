@@ -95,7 +95,11 @@ public class JDataCallback extends ContextCallback {
         super.onStart();
         if (CONTEXT instanceof ZBaseActivity) {
             ZBaseActivity zBaseActivity = (ZBaseActivity) CONTEXT;
-            zBaseActivity.runOnUiThread(() -> zBaseActivity.showLoading(mLoadingPrompt));
+            zBaseActivity.runOnUiThread(() -> {
+                if (mFeedback) {
+                    zBaseActivity.showLoading(mLoadingPrompt);
+                }
+            });
         }
     }
 
@@ -107,4 +111,10 @@ public class JDataCallback extends ContextCallback {
             zBaseActivity.runOnUiThread(zBaseActivity::cancelLoading);
         }
     }
+
+    public JDataCallback feedback(boolean enable) {
+        mFeedback = enable;
+        return this;
+    }
+
 }
