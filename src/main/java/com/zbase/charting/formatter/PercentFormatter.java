@@ -13,13 +13,22 @@ import java.text.DecimalFormat;
  *
  * @author Philipp Jahoda
  */
-public class PercentFormatter implements IValueFormatter, IAxisValueFormatter
-{
+public class PercentFormatter implements IValueFormatter, IAxisValueFormatter {
 
     protected DecimalFormat mFormat;
 
     public PercentFormatter() {
         mFormat = new DecimalFormat("###,###,##0.0");
+    }
+
+    public PercentFormatter(int scale) {
+        if (scale < 2) {
+            mFormat = new DecimalFormat("###,###,##0.0");
+            return;
+        }
+        if (scale == 2) {
+            mFormat = new DecimalFormat("###,###,##0.00");
+        }
     }
 
     /**

@@ -40,6 +40,15 @@ public final class JsonUtils {
         }
     }
 
+    public static float getFloat(JSONObject object, String key) {
+        try {
+            return Float.parseFloat(String.valueOf(object.get(key)));
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public static boolean getBoolean(JSONObject object, String key) {
         try {
             return object.getBoolean(key);
@@ -88,6 +97,15 @@ public final class JsonUtils {
     public static int getInt(JSONArray array, int index) {
         try {
             return array.getInt(index);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public static float getFloat(JSONArray array, int index) {
+        try {
+            return Float.parseFloat(String.valueOf(array.get(index)));
         } catch (JSONException e) {
             e.printStackTrace();
             return 0;
