@@ -13,22 +13,12 @@ import java.text.DecimalFormat;
  *
  * @author Philipp Jahoda
  */
-public class PercentFormatter implements IValueFormatter, IAxisValueFormatter {
+public class IntegerFormatter implements IValueFormatter, IAxisValueFormatter {
 
     protected DecimalFormat mFormat;
-    
-    public PercentFormatter(int scale) {
-        switch (scale) {
-            case 0:
-                mFormat = new DecimalFormat("###,###,##0");
-                break;
-            case 1:
-                mFormat = new DecimalFormat("###,###,##0.0");
-                break;
-            case 2:
-                mFormat = new DecimalFormat("###,###,##0.00");
-                break;
-        }
+
+    public IntegerFormatter() {
+        mFormat = new DecimalFormat("###,###,##0");
     }
 
     /**
@@ -36,20 +26,20 @@ public class PercentFormatter implements IValueFormatter, IAxisValueFormatter {
      *
      * @param format
      */
-    public PercentFormatter(DecimalFormat format) {
+    public IntegerFormatter(DecimalFormat format) {
         this.mFormat = format;
     }
 
     // IValueFormatter
     @Override
     public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
-        return mFormat.format(value) + " %";
+        return mFormat.format(value);
     }
 
     // IAxisValueFormatter
     @Override
     public String getFormattedValue(float value, AxisBase axis) {
-        return mFormat.format(value) + " %";
+        return mFormat.format(value);
     }
 
     public int getDecimalDigits() {
