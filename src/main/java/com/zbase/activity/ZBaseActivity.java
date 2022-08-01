@@ -1,6 +1,8 @@
 package com.zbase.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
@@ -78,6 +80,14 @@ public class ZBaseActivity extends AppCompatActivity {
             return;
         }
         loadingView.setVisibility(View.GONE);
+    }
+
+    /*
+     * Force screen portrait
+     */
+    @SuppressLint("SourceLockedOrientationActivity")
+    public void forceScreenPortrait() {
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
     /*
