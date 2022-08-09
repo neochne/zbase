@@ -237,7 +237,7 @@ public final class SingleSelectView extends ConstraintLayout {
         View horizontalDivider = new View(context);
         horizontalDivider.setId(ViewCompat.generateViewId());
         horizontalDivider.setLayoutParams(horizontalDividerLayoutParams);
-        horizontalDivider.setBackgroundColor(ColorX.HEX_EEEEEE);
+        horizontalDivider.setBackgroundColor(ColorX.HEX_FFEEEEEE);
         addView(horizontalDivider);
 
         /*
@@ -246,7 +246,7 @@ public final class SingleSelectView extends ConstraintLayout {
         LayoutParams listLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         listLayoutParams.topToBottom = horizontalDivider.getId();
         ListView itemListView = new ListView(context);
-        itemListView.setDivider(new ColorDrawable(ColorX.HEX_EEEEEE));
+        itemListView.setDivider(new ColorDrawable(ColorX.HEX_FFEEEEEE));
         itemListView.setDividerHeight(1);
         itemListView.setLayoutParams(listLayoutParams);
         itemListView.setAdapter(adapter);

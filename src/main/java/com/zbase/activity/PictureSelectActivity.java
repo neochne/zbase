@@ -161,7 +161,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                 .id(pictureRvId)
                                 .layoutManager(new GridLayoutManager(this, 4))
                                 .itemDecoration(new GridSpacingItemDecoration(4, 20, true))
-                                .backgroundColor(ColorX.HEX_353535)
+                                .backgroundColor(ColorX.HEX_FF353535)
                                 .adapter(pictureAdapter),
                         new ConstraintLayoutParamsX().width(0)
                                 .height(0)
@@ -332,7 +332,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.CENTER_IN_PARENT))
                     .addChildView(new CheckBoxX(this)
-                                    .color(ColorX.HEX_549588),
+                                    .color(ColorX.HEX_FF549588),
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                     .rule(RelativeLayout.CENTER_VERTICAL));
@@ -344,7 +344,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                     .backgroundColor(barColor)
                     .padding(barPadding, barPadding, barPadding, barPadding)
                     .addChildView(new RoundedButton(this)
-                                    .solidColor(ColorX.HEX_549588)
+                                    .solidColor(ColorX.HEX_FF549588)
                                     .text("确定")
                                     .textColor(Color.WHITE),
                             new RelativeLayoutParamsX()

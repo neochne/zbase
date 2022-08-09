@@ -46,7 +46,7 @@ public final class PromptView extends ConstraintLayout {
         View verticalDivider = new View(context);
         verticalDivider.setId(ViewCompat.generateViewId());
         verticalDivider.setLayoutParams(verticalLayoutParams);
-        verticalDivider.setBackgroundColor(ColorX.HEX_EEEEEE);
+        verticalDivider.setBackgroundColor(ColorX.HEX_FFEEEEEE);
         addView(verticalDivider);
 
         /*
@@ -85,7 +85,7 @@ public final class PromptView extends ConstraintLayout {
         positiveTextView.setText(positive);
         positiveTextView.setGravity(Gravity.CENTER);
         positiveTextView.setLayoutParams(positiveLayoutParams);
-        positiveTextView.setTextColor(ColorX.HEX_606D96);
+        positiveTextView.setTextColor(ColorX.HEX_FF606D96);
         positiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
         positiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
         positiveTextView.setOnClickListener(positiveListener);
@@ -114,7 +114,7 @@ public final class PromptView extends ConstraintLayout {
         positiveTextView.setText(positive);
         positiveTextView.setGravity(Gravity.CENTER);
         positiveTextView.setLayoutParams(positiveLayoutParams);
-        positiveTextView.setTextColor(ColorX.HEX_606D96);
+        positiveTextView.setTextColor(ColorX.HEX_FF606D96);
         positiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
         positiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
         positiveTextView.setOnClickListener(positiveListener);
@@ -167,7 +167,7 @@ public final class PromptView extends ConstraintLayout {
         View horizontalDivider = new View(context);
         horizontalDivider.setId(ViewCompat.generateViewId());
         horizontalDivider.setLayoutParams(horizontalDividerLayoutParams);
-        horizontalDivider.setBackgroundColor(ColorX.HEX_EEEEEE);
+        horizontalDivider.setBackgroundColor(ColorX.HEX_FFEEEEEE);
         addView(horizontalDivider);
         return horizontalDivider;
     }

@@ -95,11 +95,11 @@ public class ZBaseActivity extends AppCompatActivity {
      * Change view background color
      */
     public void grayViewBackground(View view) {
-        view.setBackgroundColor(ColorX.HEX_ECECEC);
+        view.setBackgroundColor(ColorX.HEX_FFECECEC);
     }
 
     public void grayContentViewBackground() {
-        setContentViewBackgroundColor(ColorX.HEX_ECECEC);
+        setContentViewBackgroundColor(ColorX.HEX_FFECECEC);
     }
 
     public void setContentViewBackgroundColor(int color) {

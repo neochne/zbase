@@ -44,7 +44,7 @@ public final class PictureSelectAdapter extends ZBaseRvAdapter<PictureSelectAdap
                         new FrameLayoutParamsX(FrameLayoutParamsX.MATCH_PARENT, FrameLayoutParamsX.MATCH_PARENT))
                 .addChildView(new CheckBoxX(CONTEXT)
                                 .id(67)
-                                .color(ColorX.HEX_549588),
+                                .color(ColorX.HEX_FF549588),
                         new FrameLayoutParamsX().gravity(Gravity.TOP | Gravity.END)), 66, 67);
     }
 
