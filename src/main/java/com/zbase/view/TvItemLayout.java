@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.View;
 
 import com.zbase.R;
-import com.zbase.util.ResourceUtils;
+import com.zbase.util.DensityUtils;
+import com.zbase.x.ColorX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.TextViewX;
@@ -18,11 +19,11 @@ public final class TvItemLayout extends ConstraintLayoutX {
     }
 
     public TvItemLayout startText(String text, int color) {
-        return startText(text, color, ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin), ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding));
+        return startText(text, color, DensityUtils.dp2px2int(getContext(), 15), DensityUtils.dp2px2int(getContext(), 15));
     }
 
     public TvItemLayout startText(String text, int color, int verticalMargin) {
-        return startText(text, color, ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin), verticalMargin);
+        return startText(text, color, DensityUtils.dp2px2int(getContext(), 15), verticalMargin);
     }
 
     public TvItemLayout startText(String text, int color, int leftMargin, int verticalPadding) {
@@ -39,7 +40,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
     }
 
     public TvItemLayout centerText(String text, int color) {
-        return centerText(text, color, ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_vertical_padding));
+        return centerText(text, color, DensityUtils.dp2px2int(getContext(), 15));
     }
 
     public TvItemLayout centerText(String text, int color, int verticalPadding) {
@@ -60,8 +61,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
     }
 
     public TvItemLayout endView(View view) {
-        int rightMargin = ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_right_margin);
-        return endView(view, 0, 0, rightMargin, 0);
+        return endView(view, 0, 0, DensityUtils.dp2px2int(getContext(), 15), 0);
     }
 
     public TvItemLayout endView(View view, int l, int t, int r, int b) {
@@ -75,17 +75,17 @@ public final class TvItemLayout extends ConstraintLayoutX {
 
     public TvItemLayout enableDivider() {
         return enableDivider(0, 0, 0, 0,
-                ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_divider_height),
-                ResourceUtils.getColor(getContext(), R.color.color_ececec));
+                1,
+                ColorX.HEX_ECECEC);
     }
 
     public TvItemLayout enableLeftMarginDivider() {
-        return enableDivider(ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_left_margin),
+        return enableDivider(DensityUtils.dp2px2int(getContext(), 15),
                 0,
                 0,
                 0,
-                ResourceUtils.getPixel(getContext(), R.dimen.tv_item_layout_divider_height),
-                ResourceUtils.getColor(getContext(), R.color.color_ececec));
+                1,
+                ColorX.HEX_ECECEC);
     }
 
     public TvItemLayout enableDivider(int l, int t, int r, int b, int height, int color) {

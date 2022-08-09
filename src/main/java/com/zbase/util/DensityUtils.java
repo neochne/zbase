@@ -5,44 +5,46 @@ import android.content.Context;
 /**
  * author:       sharp
  * created at:   2018/10/16 6:25 PM
- * company:      JingYouGroup
  */
 public final class DensityUtils {
 
     private DensityUtils(){}
 
     /**
-     * dp > px
+     * @param dp: (dp or dip)(Density-independent Pixels)
      */
-    public static float dip2px(Context context, float dpValue) {
-        return dpValue * getDensity(context);
+    public static int dp2px2int(Context context, float dp) {
+        return (int) dp2px(context,dp);
     }
-    /**
-     * px > dp
-     */
-    public static float px2dip(Context context, float pxValue) {
-        return pxValue / getDensity(context);
+
+    public static float dp2px(Context context, float dp) {
+        return dp * getDensity(context);
+    }
+
+    public static int px2dp2int(Context context, float px) {
+        return (int) px2dp(context,px);
+    }
+
+    public static float px2dp(Context context, float px) {
+        return px / getDensity(context);
     }
 
     /**
-     * sp > px
+     * @param sp: Scale Pixels OR Scale-independent Pixels
      */
-    public static float sp2px(Context context, float spValue) {
-        return spValue * getScaledDensity(context);
+    public static float sp2px(Context context, float sp) {
+        return sp * getScaledDensity(context);
     }
 
-    /**
-     * px > sp
-     */
-    public static float px2sp(Context context, float pxValue) {
-        return pxValue / getScaledDensity(context);
+    public static float px2sp(Context context, float px) {
+        return px / getScaledDensity(context);
     }
 
-    private static float getDensity(Context context){
+    public static float getDensity(Context context){
         return context.getResources().getDisplayMetrics().density;
     }
 
-    private static float getScaledDensity(Context context){
+    public static float getScaledDensity(Context context){
         return context.getResources().getDisplayMetrics().scaledDensity;
     }
 

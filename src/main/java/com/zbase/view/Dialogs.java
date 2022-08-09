@@ -8,6 +8,7 @@ import android.view.View;
 import androidx.appcompat.app.AlertDialog;
 
 import com.zbase.R;
+import com.zbase.util.DensityUtils;
 import com.zbase.util.ResourceUtils;
 import com.zbase.x.view.DialogX;
 
@@ -131,7 +132,7 @@ public final class Dialogs {
     public static DialogX createHorMarginRadiusDialog(Context context) {
         return createRadiusDialog(context)
                 .backgroundDrawable(new InsetDrawable(ResourceUtils.getDrawable(context, R.drawable.bg_prompt_dialog),
-                        ResourceUtils.getPixel(context, R.dimen.dialog_window_horizontal_margin)));
+                        DensityUtils.dp2px2int(context,20)));
     }
 
 

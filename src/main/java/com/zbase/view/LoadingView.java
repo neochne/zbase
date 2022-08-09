@@ -10,9 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.zbase.R;
-import com.zbase.util.ResourceUtils;
-import com.zbase.util.ViewUtils;
+import com.zbase.util.DensityUtils;
 
 public final class LoadingView extends LinearLayout {
 
@@ -27,7 +25,7 @@ public final class LoadingView extends LinearLayout {
          * Container
          */
         setOrientation(LinearLayout.VERTICAL);
-        int padding = ResourceUtils.getPixel(context, R.dimen.loading_dialog_padding);
+        int padding =  DensityUtils.dp2px2int(context,20);
         setPadding(padding, padding - 10, padding, padding - 10);
 
         /*
@@ -43,10 +41,10 @@ public final class LoadingView extends LinearLayout {
          * Text
          */
         LayoutParams progressTextViewLayoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        progressTextViewLayoutParams.topMargin = ResourceUtils.getPixel(context, R.dimen.loading_dialog_text_top_margin);
+        progressTextViewLayoutParams.topMargin =  DensityUtils.dp2px2int(context,5);
         TextView progressTextView = new TextView(context);
         progressTextView.setLayoutParams(progressTextViewLayoutParams);
-        ViewUtils.setTextSizeInPixel(context, progressTextView, R.dimen.dialog_content_text_size);
+        progressTextView.setTextSize(14);
         progressTextView.setText(message);
         progressTextView.setTextColor(Color.WHITE);
         addView(progressTextView);

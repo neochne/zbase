@@ -4,9 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.view.Gravity;
 
-import com.zbase.R;
+import com.zbase.util.DensityUtils;
 import com.zbase.util.JsonUtils;
-import com.zbase.util.ResourceUtils;
 import com.zbase.x.lp.LinearLayoutParamsX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.viewgroup.LinearLayoutX;
@@ -19,7 +18,7 @@ public final class DynamicHorTvLayout extends LinearLayoutX {
 
     public DynamicHorTvLayout(Context context, int count) {
         super(context);
-        final int verPadding = ResourceUtils.getPixel(context, R.dimen.dht_layout_vertical_padding);
+        final int verPadding = DensityUtils.dp2px2int(context,15);
         backgroundColor(Color.WHITE)
                 .padding(0,verPadding,0,verPadding);
         for (int i = 0; i < count; i++) {
@@ -49,7 +48,7 @@ public final class DynamicHorTvLayout extends LinearLayoutX {
     }
 
     public DynamicHorTvLayout textDftHorPadding(int index) {
-        textHorPadding(index,ResourceUtils.getPixel(getContext(), R.dimen.dht_layout_horizontal_padding));
+        textHorPadding(index, DensityUtils.dp2px2int(getContext(),13));
         return this;
     }
 

@@ -21,6 +21,7 @@ import com.zbase.http.JDataCallback;
 import com.zbase.http.YesHttp;
 import com.zbase.util.ResourceUtils;
 import com.zbase.util.ViewUtils;
+import com.zbase.x.ColorX;
 import com.zbase.x.lp.FrameLayoutParamsX;
 
 public class ZBaseActivity extends AppCompatActivity {
@@ -94,11 +95,11 @@ public class ZBaseActivity extends AppCompatActivity {
      * Change view background color
      */
     public void grayViewBackground(View view) {
-        view.setBackgroundColor(ResourceUtils.getColor(this, R.color.color_ececec));
+        view.setBackgroundColor(ColorX.HEX_ECECEC);
     }
 
     public void grayContentViewBackground() {
-        setContentViewBackgroundColor(ResourceUtils.getColor(this, R.color.color_ececec));
+        setContentViewBackgroundColor(ColorX.HEX_ECECEC);
     }
 
     public void setContentViewBackgroundColor(int color) {

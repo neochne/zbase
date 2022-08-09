@@ -15,11 +15,6 @@ public class ConstraintLayoutX extends ConstraintLayout implements IViewGroupX<C
         super(context);
     }
 
-    public ConstraintLayoutX(@NonNull Context context,int width,int height) {
-        super(context);
-        setLayoutParams(new FrameLayout.LayoutParams(width,height));
-    }
-
     public ConstraintLayoutParamsX addViewX(View view) {
         return addViewX(view, View.generateViewId());
     }

@@ -20,9 +20,9 @@ import androidx.core.view.ViewCompat;
 import com.zbase.R;
 import com.zbase.interfaces.Event2Listener;
 import com.zbase.interfaces.Event3Listener;
+import com.zbase.util.DensityUtils;
 import com.zbase.util.JsonUtils;
-import com.zbase.util.ResourceUtils;
-import com.zbase.util.ViewUtils;
+import com.zbase.x.ColorX;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -43,7 +43,7 @@ public final class SingleSelectView extends ConstraintLayout {
                             String key,
                             Event3Listener<String, Integer, JSONObject> itemSelectListener) {
         super(context);
-        int itemPadding = ResourceUtils.getPixel(context, R.dimen.list_item_vertical_padding);
+        int itemPadding =  DensityUtils.dp2px2int(context,10);
         initView(context, title, new BaseAdapter() {
 
             @Override
@@ -82,7 +82,7 @@ public final class SingleSelectView extends ConstraintLayout {
                             JSONArray itemJsonArray,
                             Event2Listener<String, Integer> itemSelectListener) {
         super(context);
-        int itemPadding = ResourceUtils.getPixel(context, R.dimen.list_item_vertical_padding);
+        int itemPadding =  DensityUtils.dp2px2int(context,10);
         initView(context, title, new BaseAdapter() {
 
             @Override
@@ -120,7 +120,7 @@ public final class SingleSelectView extends ConstraintLayout {
                             String[] items,
                             Event2Listener<String, Integer> itemSelectListener) {
         super(context);
-        int itemPadding = ResourceUtils.getPixel(context, R.dimen.list_item_vertical_padding);
+        int itemPadding =  DensityUtils.dp2px2int(context,10);
         initView(context, title, new BaseAdapter() {
 
             @Override
@@ -158,7 +158,7 @@ public final class SingleSelectView extends ConstraintLayout {
                             List<String> itemList,
                             Event2Listener<String, Integer> itemSelectListener) {
         super(context);
-        int itemPadding = ResourceUtils.getPixel(context, R.dimen.list_item_vertical_padding);
+        int itemPadding =  DensityUtils.dp2px2int(context,10);
         initView(context, title, new BaseAdapter() {
 
             @Override
@@ -204,12 +204,12 @@ public final class SingleSelectView extends ConstraintLayout {
         titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
         titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
         titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        int verticalPadding = ResourceUtils.getPixel(context, R.dimen.dialog_title_text_vertical_padding);
+        int verticalPadding = DensityUtils.dp2px2int(context,10);
         TextView titleTextView = new TextView(context);
         titleTextView.setPadding(0, verticalPadding, 0, verticalPadding);
         titleTextView.setId(ViewCompat.generateViewId());
         titleTextView.setTextColor(Color.BLACK);
-        ViewUtils.setTextSizeInPixel(context, titleTextView, R.dimen.dialog_title_text_size);
+        titleTextView.setTextSize(17);
         titleTextView.setText(title);
         titleTextView.setTypeface(Typeface.DEFAULT_BOLD);
         titleTextView.setLayoutParams(titleLayoutParams);
@@ -222,7 +222,7 @@ public final class SingleSelectView extends ConstraintLayout {
         cancelLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         cancelLayoutParams.topToTop = titleTextView.getId();
         cancelLayoutParams.bottomToBottom = titleTextView.getId();
-        cancelLayoutParams.rightMargin = ResourceUtils.getPixel(context, R.dimen.dialog_cancel_icon_right_margin);
+        cancelLayoutParams.rightMargin =  DensityUtils.dp2px2int(context,10);
         ImageView cancelIv = new ImageView(context);
         cancelIv.setLayoutParams(cancelLayoutParams);
         cancelIv.setImageResource(R.drawable.ic_clear_gray);
@@ -237,7 +237,7 @@ public final class SingleSelectView extends ConstraintLayout {
         View horizontalDivider = new View(context);
         horizontalDivider.setId(ViewCompat.generateViewId());
         horizontalDivider.setLayoutParams(horizontalDividerLayoutParams);
-        horizontalDivider.setBackgroundColor(ResourceUtils.getColor(context, R.color.divider));
+        horizontalDivider.setBackgroundColor(ColorX.HEX_EEEEEE);
         addView(horizontalDivider);
 
         /*
@@ -246,7 +246,7 @@ public final class SingleSelectView extends ConstraintLayout {
         LayoutParams listLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         listLayoutParams.topToBottom = horizontalDivider.getId();
         ListView itemListView = new ListView(context);
-        itemListView.setDivider(new ColorDrawable(ResourceUtils.getColor(context, R.color.divider)));
+        itemListView.setDivider(new ColorDrawable(ColorX.HEX_EEEEEE));
         itemListView.setDividerHeight(1);
         itemListView.setLayoutParams(listLayoutParams);
         itemListView.setAdapter(adapter);

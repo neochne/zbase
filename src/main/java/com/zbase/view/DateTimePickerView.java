@@ -8,11 +8,10 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import com.zbase.R;
 import com.zbase.entity.NumberPickerValue;
 import com.zbase.interfaces.DateSelectListener;
 import com.zbase.util.DateTimeUtils;
-import com.zbase.util.ResourceUtils;
+import com.zbase.util.DensityUtils;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.view.NumberPickerX;
 import com.zbase.x.view.TextViewX;
@@ -43,7 +42,7 @@ public final class DateTimePickerView extends ConstraintLayoutX {
         /*
          * Title
          */
-        int titleVerticalPadding = ResourceUtils.getPixel(context, R.dimen.dialog_title_text_vertical_padding);
+        int titleVerticalPadding = DensityUtils.dp2px2int(context,10);
         TextViewX titleTv = createTextView(context, title)
                 .textColor(Color.BLACK).textSize(16)
                 .padding(0, titleVerticalPadding, 0, titleVerticalPadding)

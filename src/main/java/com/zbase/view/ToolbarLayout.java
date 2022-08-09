@@ -12,8 +12,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
-import com.zbase.R;
-import com.zbase.util.ResourceUtils;
+import com.zbase.util.DensityUtils;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.TextViewX;
@@ -46,7 +45,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .typeFace(typeface),
                 new ConstraintLayoutParamsX()
                         .width(0)
-                        .height(ResourceUtils.getPixel(context, R.dimen.toolbar_height))
+                        .height(DensityUtils.dp2px2int(context,56))
                         .start2start(ConstraintLayoutParamsX.PARENT_ID)
                         .top2top(ConstraintLayoutParamsX.PARENT_ID)
                         .end2end(ConstraintLayoutParamsX.PARENT_ID));

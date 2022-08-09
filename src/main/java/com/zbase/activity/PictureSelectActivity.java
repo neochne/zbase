@@ -20,6 +20,7 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import com.zbase.R;
 import com.zbase.entity.LocalMedia;
+import com.zbase.util.DensityUtils;
 import com.zbase.util.ImageUtils;
 import com.zbase.util.ResourceUtils;
 import com.zbase.util.SystemBarUtils;
@@ -29,6 +30,7 @@ import com.zbase.view.RoundedButton;
 import com.zbase.view.adapter.PicturePagerAdapter;
 import com.zbase.view.adapter.PictureSelectAdapter;
 import com.zbase.view.decor.GridSpacingItemDecoration;
+import com.zbase.x.ColorX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.lp.FrameLayoutParamsX;
 import com.zbase.x.lp.LinearLayoutParamsX;
@@ -63,8 +65,8 @@ public final class PictureSelectActivity extends ZBaseActivity {
          * Container Layout
          */
         findViewById(android.R.id.content).setBackgroundColor(Color.BLACK);
-        int containerPadding = ResourceUtils.getPixel(this, R.dimen.activity_padding);
-        int bucketItemPadding = ResourceUtils.getPixel(this, R.dimen.bucket_list_item_padding);
+        int containerPadding = DensityUtils.dp2px2int(this, 10);
+        int bucketItemPadding = DensityUtils.dp2px2int(this, 10);
 
         /*
          * Id
@@ -128,7 +130,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
         setContentView(containerLayout
                 .addChildView(new LinearLayoutX(this)
                                 .id(bucketLayoutId)
-                                .padding(ResourceUtils.getPixel(this, R.dimen.bucket_left_padding), ResourceUtils.getPixel(this, R.dimen.bucket_top_padding), ResourceUtils.getPixel(this, R.dimen.bucket_right_padding), ResourceUtils.getPixel(this, R.dimen.bucket_bottom_padding))
+                                .padding(DensityUtils.dp2px2int(this, 9), DensityUtils.dp2px2int(this, 3), DensityUtils.dp2px2int(this, 1), DensityUtils.dp2px2int(this, 3))
                                 .gravity(Gravity.CENTER)
                                 .background(ResourceUtils.getDrawable(this, R.drawable.bg_picture_select_bucket))
                                 .addChildView(bucketNameTv.text("相机胶卷").textColor(Color.WHITE))
@@ -159,13 +161,13 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                 .id(pictureRvId)
                                 .layoutManager(new GridLayoutManager(this, 4))
                                 .itemDecoration(new GridSpacingItemDecoration(4, 20, true))
-                                .backgroundColor(ResourceUtils.getColor(this, R.color.pic_preview_rv))
+                                .backgroundColor(ColorX.HEX_353535)
                                 .adapter(pictureAdapter),
                         new ConstraintLayoutParamsX().width(0)
                                 .height(0)
                                 .top2bottom(bucketLayoutId)
                                 .bottom2top(previewTvId)
-                                .margins(0, ResourceUtils.getPixel(this, R.dimen.pic_rv_top_margin), 0, 0)
+                                .margins(0, DensityUtils.dp2px2int(this, 5), 0, 0)
                                 .start2start(ConstraintLayoutParamsX.PARENT_ID)
                                 .end2end(ConstraintLayoutParamsX.PARENT_ID)
                                 .weightVertical(1))
@@ -199,7 +201,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
             selectedBucketMediaList.addAll(mediaList.get(0));
             pictureAdapter.notifyDataSetChanged();
             containerLayout.addChildView(bucketLvParentLayout
-                            .backgroundColor(ResourceUtils.getColor(this, R.color.pic_preview_bucket_list_bg))
+                            .backgroundColor(ColorX.HEX_A0000000)
                             .clickListener(v -> hideBucketLv(bucketLvParentLayout, bucketLv, downIv))
                             .invisible()
                             .addChildView(bucketLv
@@ -309,8 +311,8 @@ public final class PictureSelectActivity extends ZBaseActivity {
             /*
              * Bar
              */
-            int barColor = ResourceUtils.getColor(this, R.color.pic_preview_bar_bg);
-            int barPadding = ResourceUtils.getPixel(this, R.dimen.pic_preview_bar_padding);
+            int barColor = ColorX.HEX_EF000000;
+            int barPadding = DensityUtils.dp2px2int(this, 8);
 
             /*
              * Top Bar
@@ -330,7 +332,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.CENTER_IN_PARENT))
                     .addChildView(new CheckBoxX(this)
-                                    .color(ResourceUtils.getColor(this, R.color.pic_preview_check_box_color)),
+                                    .color(ColorX.HEX_549588),
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                     .rule(RelativeLayout.CENTER_VERTICAL));
@@ -342,13 +344,13 @@ public final class PictureSelectActivity extends ZBaseActivity {
                     .backgroundColor(barColor)
                     .padding(barPadding, barPadding, barPadding, barPadding)
                     .addChildView(new RoundedButton(this)
-                                    .solidColor(ResourceUtils.getColor(this, R.color.pic_preview_confirm_btn_color))
+                                    .solidColor(ColorX.HEX_549588)
                                     .text("确定")
                                     .textColor(Color.WHITE),
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                     .rule(RelativeLayout.CENTER_VERTICAL)
-                                    .height(ResourceUtils.getPixel(this, R.dimen.btn_height)));
+                                    .height(DensityUtils.dp2px2int(this, 40)));
 
             /*
              * Picture Pager
