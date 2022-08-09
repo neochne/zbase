@@ -12,10 +12,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.ViewCompat;
 import androidx.core.widget.TextViewCompat;
 
-import com.zbase.R;
 import com.zbase.util.DensityUtils;
-import com.zbase.util.ResourceUtils;
 import com.zbase.x.ColorX;
+import com.zbase.x.drawable.StateListDrawableX;
 
 public final class PromptView extends ConstraintLayout {
 
@@ -34,6 +33,9 @@ public final class PromptView extends ConstraintLayout {
 
         // Common
         View horizontalDivider = initCommonView(context, title, message);
+        StateListDrawableX pressedSateDrawable = new StateListDrawableX()
+                .stateColors(new int[]{android.R.attr.state_pressed}, ColorX.HEX_FFEEEEEE)
+                .stateColors(new int[]{}, ColorX.WHITE);
 
         /*
          * Vertical divider
@@ -57,7 +59,7 @@ public final class PromptView extends ConstraintLayout {
         negativeLayoutParams.endToStart = verticalDivider.getId();
         negativeLayoutParams.topToBottom = horizontalDivider.getId();
         negativeLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        int operateTextViewPadding = DensityUtils.dp2px2int(context,13);
+        int operateTextViewPadding = DensityUtils.dp2px2int(context, 13);
         TextView negativeTextView = new TextView(context);
         negativeTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
         negativeTextView.setGravity(Gravity.CENTER);
@@ -66,7 +68,7 @@ public final class PromptView extends ConstraintLayout {
         negativeTextView.setLayoutParams(negativeLayoutParams);
         negativeTextView.setTypeface(Typeface.DEFAULT_BOLD);
         negativeTextView.setTextColor(Color.BLACK);
-        negativeTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
+        negativeTextView.setBackground(pressedSateDrawable);
         negativeTextView.setOnClickListener(negativeListener);
         addView(negativeTextView);
 
@@ -87,7 +89,7 @@ public final class PromptView extends ConstraintLayout {
         positiveTextView.setLayoutParams(positiveLayoutParams);
         positiveTextView.setTextColor(ColorX.HEX_FF606D96);
         positiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        positiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
+        positiveTextView.setBackground(pressedSateDrawable);
         positiveTextView.setOnClickListener(positiveListener);
         addView(positiveTextView);
     }
@@ -107,7 +109,7 @@ public final class PromptView extends ConstraintLayout {
         positiveLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         positiveLayoutParams.topToBottom = horizontalDivider.getId();
         positiveLayoutParams.bottomToBottom = LayoutParams.PARENT_ID;
-        int operateTextViewPadding =  DensityUtils.dp2px2int(context,13);
+        int operateTextViewPadding = DensityUtils.dp2px2int(context, 13);
         TextView positiveTextView = new TextView(context);
         positiveTextView.setTextSize(17);
         positiveTextView.setPadding(0, operateTextViewPadding, 0, operateTextViewPadding);
@@ -116,7 +118,9 @@ public final class PromptView extends ConstraintLayout {
         positiveTextView.setLayoutParams(positiveLayoutParams);
         positiveTextView.setTextColor(ColorX.HEX_FF606D96);
         positiveTextView.setTypeface(Typeface.DEFAULT_BOLD);
-        positiveTextView.setBackground(ResourceUtils.getDrawable(context, R.drawable.bg_pressed));
+        positiveTextView.setBackground(new StateListDrawableX()
+                .stateColors(new int[]{android.R.attr.state_pressed}, ColorX.HEX_FFEEEEEE)
+                .stateColors(new int[]{}, ColorX.WHITE));
         positiveTextView.setOnClickListener(positiveListener);
         addView(positiveTextView);
     }
@@ -130,7 +134,7 @@ public final class PromptView extends ConstraintLayout {
         titleLayoutParams.topToTop = LayoutParams.PARENT_ID;
         titleLayoutParams.startToStart = LayoutParams.PARENT_ID;
         titleLayoutParams.endToEnd = LayoutParams.PARENT_ID;
-        int verticalPadding = DensityUtils.dp2px2int(context,10);
+        int verticalPadding = DensityUtils.dp2px2int(context, 10);
         TextView titleTextView = new TextView(context);
         titleTextView.setPadding(0, verticalPadding, 0, verticalPadding);
         titleTextView.setId(ViewCompat.generateViewId());
@@ -149,13 +153,13 @@ public final class PromptView extends ConstraintLayout {
         messageLayoutParams.endToEnd = LayoutParams.PARENT_ID;
         messageLayoutParams.topToBottom = titleTextView.getId();
         TextView messageTextView = new TextView(context);
-        int msgPadding =  DensityUtils.dp2px2int(context,10);
+        int msgPadding = DensityUtils.dp2px2int(context, 10);
         messageTextView.setPadding(msgPadding, msgPadding, msgPadding, msgPadding);
         messageTextView.setId(ViewCompat.generateViewId());
         messageTextView.setText(message);
         messageTextView.setGravity(Gravity.CENTER);
         messageTextView.setTextSize(14);
-        TextViewCompat.setLineHeight(messageTextView,  DensityUtils.dp2px2int(context,20));
+        TextViewCompat.setLineHeight(messageTextView, DensityUtils.dp2px2int(context, 20));
         messageTextView.setLayoutParams(messageLayoutParams);
         addView(messageTextView);
 
