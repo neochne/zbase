@@ -15,46 +15,46 @@ public class ColorX extends Color {
     public static final int HEX_EF000000 = 0xEF000000;
 
     @ColorInt
-    public static final int HEX_808080 = 0x808080;
+    public static final int HEX_808080 = 0xFF808080;
 
     @ColorInt
-    public static final int HEX_353535 = 0x353535;
+    public static final int HEX_353535 = 0xFF353535;
 
     @ColorInt
-    public static final int HEX_ECECEC = 0xECECEC;
+    public static final int HEX_ECECEC = 0xFFECECEC;
 
     @ColorInt
-    public static final int HEX_549588 = 0x549588;
+    public static final int HEX_549588 = 0xFF549588;
 
     @ColorInt
-    public static final int HEX_B87174 = 0xB87174;
+    public static final int HEX_B87174 = 0xFFB87174;
 
     @ColorInt
-    public static final int HEX_BB86FC = 0xBB86FC;
+    public static final int HEX_BB86FC = 0xFFBB86FC;
 
     @ColorInt
-    public static final int HEX_6200EE = 0x6200EE;
+    public static final int HEX_6200EE = 0xFF6200EE;
 
     @ColorInt
-    public static final int HEX_3700B3 = 0x3700B3;
+    public static final int HEX_3700B3 = 0xFF3700B3;
 
     @ColorInt
-    public static final int HEX_03DAC5 = 0x03DAC5;
+    public static final int HEX_03DAC5 = 0xFF03DAC5;
 
     @ColorInt
-    public static final int HEX_018786 = 0x018786;
+    public static final int HEX_018786 = 0xFF018786;
 
     @ColorInt
-    public static final int HEX_669EFC = 0x669EFC;
+    public static final int HEX_669EFC = 0xFF669EFC;
 
     @ColorInt
-    public static final int HEX_81C978 = 0x81C978;
+    public static final int HEX_81C978 = 0xFF81C978;
 
     @ColorInt
-    public static final int HEX_606D96 = 0x606D96;
+    public static final int HEX_606D96 = 0xFF606D96;
 
     @ColorInt
-    public static final int HEX_EEEEEE = 0xEEEEEE;
+    public static final int HEX_EEEEEE = 0xFFEEEEEE;
 
     /*
      * Object color
