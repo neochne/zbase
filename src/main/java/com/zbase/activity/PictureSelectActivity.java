@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -31,6 +30,7 @@ import com.zbase.view.adapter.PicturePagerAdapter;
 import com.zbase.view.adapter.PictureSelectAdapter;
 import com.zbase.view.decor.GridSpacingItemDecoration;
 import com.zbase.x.ColorX;
+import com.zbase.x.drawable.ColorDrawableX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.lp.FrameLayoutParamsX;
 import com.zbase.x.lp.LinearLayoutParamsX;
@@ -206,7 +206,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                             .invisible()
                             .addChildView(bucketLv
                                             .backgroundColor(Color.BLACK)
-                                            .divider(new ColorDrawable(Color.DKGRAY))
+                                            .divider(new ColorDrawableX(Color.DKGRAY))
                                             .dividerHeight(1)
                                             .adapter(new BaseAdapter() {
                                                 @Override

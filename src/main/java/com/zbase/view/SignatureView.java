@@ -8,13 +8,14 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
 import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+
+import com.zbase.x.drawable.ColorDrawableX;
 
 public final class SignatureView extends SurfaceView implements SurfaceHolder.Callback,Runnable{
 
@@ -42,7 +43,7 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
         // SurfaceView 默认背景色是黑色，下面为变成白色
         setZOrderOnTop(true);
         mSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
-        setBackground(new ColorDrawable(Color.WHITE));
+        setBackground(new ColorDrawableX(Color.WHITE));
         mSurfaceHolder.addCallback(this);
 
         /*

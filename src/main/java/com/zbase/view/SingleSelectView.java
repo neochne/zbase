@@ -3,7 +3,6 @@ package com.zbase.view;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +22,7 @@ import com.zbase.interfaces.Event3Listener;
 import com.zbase.util.DensityUtils;
 import com.zbase.util.JsonUtils;
 import com.zbase.x.ColorX;
+import com.zbase.x.drawable.ColorDrawableX;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -246,7 +246,7 @@ public final class SingleSelectView extends ConstraintLayout {
         LayoutParams listLayoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
         listLayoutParams.topToBottom = horizontalDivider.getId();
         ListView itemListView = new ListView(context);
-        itemListView.setDivider(new ColorDrawable(ColorX.HEX_FFEEEEEE));
+        itemListView.setDivider(new ColorDrawableX(ColorX.HEX_FFEEEEEE));
         itemListView.setDividerHeight(1);
         itemListView.setLayoutParams(listLayoutParams);
         itemListView.setAdapter(adapter);
