@@ -2,11 +2,9 @@ package com.zbase.http;
 
 import android.content.Context;
 
-import com.zbase.util.JsonUtils;
 import com.zbase.util.StringUtils;
 import com.zbase.util.ToastUtils;
-
-import org.json.JSONObject;
+import com.zbase.x.json.JSONObjectX;
 
 public class ContextCallback implements Callback {
 
@@ -20,32 +18,32 @@ public class ContextCallback implements Callback {
 
     @Override
     public void onSuccess(Response response) {
-        JSONObject bodyJsonObject = response.getBodyJsonObject();
-        if (JsonUtils.getInt(bodyJsonObject, "code") != 0) {
+        JSONObjectX bodyJson = response.getJson();
+        if (bodyJson.get1int("code") != 0) {
             if (mFeedback) {
-                ToastUtils.showOnWorkThread(CONTEXT, JsonUtils.getString(bodyJsonObject, "message"));
+                ToastUtils.showOnWorkThread(CONTEXT, bodyJson.get1string("message"));
             }
             return;
         }
-        onBizSuccess(bodyJsonObject);
+        onBizSuccess(bodyJson);
     }
 
     @Override
     public void onFail(Response response) {
         if (mFeedback) {
-            ToastUtils.showOnWorkThread(CONTEXT, "请求失败：" + response.getHttpCode());
+            ToastUtils.showOnWorkThread(CONTEXT, "请求失败：" + response.getCode());
         }
     }
 
     @Override
     public void onException(Exception exception) {
-        String errMsg = exception.getMessage();
-        if (StringUtils.isEmpty(errMsg)) {
+        String err = exception.getMessage();
+        if (StringUtils.isEmpty(err)) {
             Throwable cause = exception.getCause();
-            errMsg = cause != null ? cause.getMessage() : "-1";
+            err = cause != null ? cause.getMessage() : "-1";
         }
         if (mFeedback) {
-            ToastUtils.showOnWorkThread(CONTEXT, "请求异常：" + errMsg);
+            ToastUtils.showOnWorkThread(CONTEXT, "请求异常：" + err);
         }
     }
 

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="dialog_title" type="id"/>
+    <item name="dialog_above_btn" type="id"/>
+    <item name="dialog_year_picker" type="id"/>
+    <item name="dialog_month_picker" type="id"/>
+    <item name="dialog_day_picker" type="id"/>
+    <item name="dialog_day_tv" type="id"/>
+    <item name="dialog_hour_picker" type="id"/>
+    <item name="dialog_minute_picker" type="id"/>
+    <item name="dialog_second_picker" type="id"/>
+</resources>

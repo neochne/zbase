@@ -7,13 +7,11 @@ import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
 
 import com.zbase.util.DensityUtils;
-import com.zbase.util.JsonUtils;
 import com.zbase.x.ColorX;
+import com.zbase.x.json.JSONObjectX;
 import com.zbase.x.lp.LinearLayoutParamsX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.viewgroup.LinearLayoutX;
-
-import org.json.JSONObject;
 
 public final class DynamicVerTvLayout extends LinearLayoutX {
 
@@ -38,14 +36,14 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
         return this;
     }
 
-    public DynamicVerTvLayout text(JSONObject itemObject, String[] keys, String[] names) {
+    public DynamicVerTvLayout text(JSONObjectX itemObject, String[] keys, String[] names) {
         text(itemObject,Color.BLACK, ColorX.HEX_FF808080,keys,names);
         return this;
     }
 
-    public DynamicVerTvLayout text(JSONObject itemObject, int nameColor, int valueColor, String[] keys, String[] names) {
+    public DynamicVerTvLayout text(JSONObjectX itemObject, int nameColor, int valueColor, String[] keys, String[] names) {
         for (int i = 0, l = keys.length; i < l; i++) {
-            text((TextViewX) getChildAt(i),names[i],JsonUtils.getString(itemObject, keys[i]),nameColor,valueColor);
+            text((TextViewX) getChildAt(i),names[i],itemObject.get2string(keys[i]),nameColor,valueColor);
         }
         return this;
     }

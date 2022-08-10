@@ -1,9 +1,12 @@
 package com.zbase.x.view;
 
 import android.graphics.Typeface;
+import android.os.Build;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
 
 public interface ITextViewX<T extends TextView> extends IViewX<T> {
 
@@ -94,6 +97,13 @@ public interface ITextViewX<T extends TextView> extends IViewX<T> {
     default T typeFace(Typeface typeface) {
         T t = (T) this;
         t.setTypeface(typeface);
+        return t;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.P)
+    default T lineHeight(int height) {
+        T t = (T) this;
+        t.setLineHeight(height);
         return t;
     }
 

@@ -4,7 +4,7 @@
 
 package com.zbase.http;
 
-import org.json.JSONObject;
+import com.zbase.x.json.JSONObjectX;
 
 import java.io.File;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ public abstract class YesHttpClient {
 
     Object[] bodyNamesAndValues;
 
-    JSONObject bodyJsonObject;
+    JSONObjectX bodyJsonObject;
 
     String bodyJsonString;
 
@@ -97,7 +97,7 @@ public abstract class YesHttpClient {
         return this;
     }
 
-    public YesHttpClient addBodyJsonObject(JSONObject bodyJsonObject) {
+    public YesHttpClient addBodyJsonObject(JSONObjectX bodyJsonObject) {
         this.bodyJsonObject = bodyJsonObject;
         return this;
     }

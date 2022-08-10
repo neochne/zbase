@@ -4,25 +4,25 @@
 
 package com.zbase.http;
 
-import org.json.JSONObject;
+import com.zbase.x.json.JSONObjectX;
 
 public class Response {
 
-    private final int httpCode;
+    private final int code;
 
-    private final JSONObject bodyJsonObject;
+    private final JSONObjectX json;
 
-    public Response(int httpCode, JSONObject bodyJsonObject) {
-        this.httpCode = httpCode;
-        this.bodyJsonObject = bodyJsonObject;
+    public Response(int code, JSONObjectX json) {
+        this.code = code;
+        this.json = json;
     }
 
-    public int getHttpCode() {
-        return httpCode;
+    public int getCode() {
+        return code;
     }
 
-    public JSONObject getBodyJsonObject() {
-        return bodyJsonObject;
+    public JSONObjectX getJson() {
+        return json;
     }
 
 }
