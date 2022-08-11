@@ -2,7 +2,6 @@
 package com.zbase.charting.data;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.util.Log;
 
@@ -11,6 +10,7 @@ import com.zbase.charting.formatter.IFillFormatter;
 import com.zbase.charting.interfaces.datasets.ILineDataSet;
 import com.zbase.charting.utils.ColorTemplate;
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +28,9 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     private List<Integer> mCircleColors = null;
 
     /**
-     * the color of the inner circles
+     * the ColorX of the inner circles
      */
-    private int mCircleHoleColor = Color.WHITE;
+    private int mCircleHoleColor = ColorX.WHITE;
 
     /**
      * the radius of the circle-shaped value indicators
@@ -77,9 +77,9 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
         mCircleColors.clear();
 
         // default colors
-        // mColors.add(Color.rgb(192, 255, 140));
-        // mColors.add(Color.rgb(255, 247, 140));
-        mCircleColors.add(Color.rgb(140, 234, 255));
+        // mColors.add(ColorX.rgb(192, 255, 140));
+        // mColors.add(ColorX.rgb(255, 247, 140));
+        mCircleColors.add(ColorX.rgb(140, 234, 255));
     }
 
     @Override
@@ -319,7 +319,7 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
      * ets the colors that should be used for the circles of this DataSet.
      * Colors are reused as soon as the number of Entries the DataSet represents
      * is higher than the size of the colors array. You can use
-     * "new String[] { R.color.red, R.color.green, ... }" to provide colors for
+     * "new String[] { R.ColorX.red, R.ColorX.green, ... }" to provide colors for
      * this method. Internally, the colors are resolved using
      * getResources().getColor(...)
      *
@@ -333,22 +333,22 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
         }
         clrs.clear();
 
-        for (int color : colors) {
-            clrs.add(c.getResources().getColor(color));
+        for (int ColorX : colors) {
+            clrs.add(c.getResources().getColor(ColorX));
         }
 
         mCircleColors = clrs;
     }
 
     /**
-     * Sets the one and ONLY color that should be used for this DataSet.
-     * Internally, this recreates the colors array and adds the specified color.
+     * Sets the one and ONLY ColorX that should be used for this DataSet.
+     * Internally, this recreates the colors array and adds the specified ColorX.
      *
-     * @param color
+     * @param ColorX
      */
-    public void setCircleColor(int color) {
+    public void setCircleColor(int ColorX) {
         resetCircleColors();
-        mCircleColors.add(color);
+        mCircleColors.add(ColorX);
     }
 
     /**
@@ -362,12 +362,12 @@ public class LineDataSet extends LineRadarDataSet<Entry> implements ILineDataSet
     }
 
     /**
-     * Sets the color of the inner circle of the line-circles.
+     * Sets the ColorX of the inner circle of the line-circles.
      *
-     * @param color
+     * @param ColorX
      */
-    public void setCircleHoleColor(int color) {
-        mCircleHoleColor = color;
+    public void setCircleHoleColor(int ColorX) {
+        mCircleHoleColor = ColorX;
     }
 
     @Override

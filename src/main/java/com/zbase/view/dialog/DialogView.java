@@ -1,7 +1,6 @@
 package com.zbase.view.dialog;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
@@ -31,10 +30,10 @@ public class DialogView<T extends DialogView<?>> extends ConstraintLayoutX {
          * View
          */
         int titleVerPadding = DensityUtils.dp2px2int(context, 10);
-        this.backgroundColor(Color.WHITE)
+        this.backgroundColor(ColorX.WHITE)
                 .addChildView(new TextViewX(context)
                                 .id(titleId)
-                                .textColor(Color.BLACK)
+                                .textColor(ColorX.BLACK)
                                 .textSize(17)
                                 .typeFace(Typeface.DEFAULT_BOLD)
                                 .padding(0, titleVerPadding, 0, titleVerPadding)

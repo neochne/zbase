@@ -2,7 +2,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint.Style;
 import android.graphics.drawable.Drawable;
 
@@ -16,6 +15,7 @@ import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.util.List;
 
@@ -157,8 +157,8 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleRenderer {
                 for (int j = 0; j < positions.length; j += 2) {
 
                     int valueTextColor = dataSet.getValueTextColor(j / 2 + mXBounds.min);
-                    valueTextColor = Color.argb(Math.round(255.f * alpha), Color.red(valueTextColor),
-                            Color.green(valueTextColor), Color.blue(valueTextColor));
+                    valueTextColor = ColorX.argb(Math.round(255.f * alpha), ColorX.red(valueTextColor),
+                            ColorX.green(valueTextColor), ColorX.blue(valueTextColor));
 
                     float x = positions[j];
                     float y = positions[j + 1];
@@ -261,10 +261,10 @@ public class BubbleChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
             final int originalColor = set.getColor((int) entry.getX());
 
-            Color.RGBToHSV(Color.red(originalColor), Color.green(originalColor),
-                    Color.blue(originalColor), _hsvBuffer);
+            ColorX.RGBToHSV(ColorX.red(originalColor), ColorX.green(originalColor),
+                    ColorX.blue(originalColor), _hsvBuffer);
             _hsvBuffer[2] *= 0.5f;
-            final int color = Color.HSVToColor(Color.alpha(originalColor), _hsvBuffer);
+            final int color = ColorX.HSVToColor(ColorX.alpha(originalColor), _hsvBuffer);
 
             mHighlightPaint.setColor(color);
             mHighlightPaint.setStrokeWidth(set.getHighlightCircleWidth());

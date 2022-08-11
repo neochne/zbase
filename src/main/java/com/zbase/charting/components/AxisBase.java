@@ -1,13 +1,13 @@
 
 package com.zbase.charting.components;
 
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.util.Log;
 
 import com.zbase.charting.formatter.DefaultAxisValueFormatter;
 import com.zbase.charting.formatter.IAxisValueFormatter;
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,11 +24,11 @@ public abstract class AxisBase extends ComponentBase {
      */
     protected IAxisValueFormatter mAxisValueFormatter;
 
-    private int mGridColor = Color.GRAY;
+    private int mGridColor = ColorX.GRAY;
 
     private float mGridLineWidth = 1f;
 
-    private int mAxisLineColor = Color.GRAY;
+    private int mAxisLineColor = ColorX.GRAY;
 
     private float mAxisLineWidth = 1f;
 

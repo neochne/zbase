@@ -6,7 +6,6 @@ package com.zbase.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -22,6 +21,8 @@ import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+
+import com.zbase.x.ColorX;
 
 public class ElasticLayout extends LinearLayout {
 
@@ -289,7 +290,7 @@ public class ElasticLayout extends LinearLayout {
         }
         if (refresh) {
             mHeaderView = new ProgressBar(mContext);
-            mHeaderView.setBackgroundColor(Color.parseColor("#EEEEEE"));
+            mHeaderView.setBackgroundColor(ColorX.parseColor("#EEEEEE"));
             this.addView(mHeaderView, 0);
         }
     }

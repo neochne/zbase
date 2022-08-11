@@ -1,10 +1,10 @@
 
 package com.zbase.charting.data;
 
-import android.graphics.Color;
 
 import com.zbase.charting.interfaces.datasets.IRadarDataSet;
 import com.zbase.charting.utils.ColorTemplate;
+import com.zbase.x.ColorX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class RadarDataSet extends LineRadarDataSet<RadarEntry> implements IRadar
     /// flag indicating whether highlight circle should be drawn or not
     protected boolean mDrawHighlightCircleEnabled = false;
 
-    protected int mHighlightCircleFillColor = Color.WHITE;
+    protected int mHighlightCircleFillColor = ColorX.WHITE;
 
     /// The stroke color for highlight circle.
     /// If Utils.COLOR_NONE, the color of the dataset is taken.

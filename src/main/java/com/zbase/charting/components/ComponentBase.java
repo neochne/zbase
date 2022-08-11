@@ -1,10 +1,10 @@
 
 package com.zbase.charting.components;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 /**
  * This class encapsulates everything both Axis, Legend and LimitLines have in common.
@@ -41,7 +41,7 @@ public abstract class ComponentBase {
     /**
      * the text color to use for the labels
      */
-    protected int mTextColor = Color.BLACK;
+    protected int mTextColor = ColorX.BLACK;
 
 
     public ComponentBase() {

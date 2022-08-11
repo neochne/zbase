@@ -1,6 +1,5 @@
 package com.zbase.activity;
 
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zbase.view.ToolbarLayout;
+import com.zbase.x.ColorX;
 import com.zbase.x.lp.FrameLayoutParamsX;
 
 public abstract class ToolbarActivityExample extends AppCompatActivity {
@@ -28,7 +28,7 @@ public abstract class ToolbarActivityExample extends AppCompatActivity {
 
     ToolbarLayout createToolbar() {
         return new ToolbarLayout(this)
-                .addTitle(getTitle().toString(), Color.WHITE, Color.BLACK, 16, Typeface.DEFAULT_BOLD)
+                .addTitle(getTitle().toString(), ColorX.WHITE, ColorX.BLACK, 16, Typeface.DEFAULT_BOLD)
                 .addBackIcon(com.zbase.R.drawable.ic_back_gray_ripple, 0, v -> finish());
     }
 

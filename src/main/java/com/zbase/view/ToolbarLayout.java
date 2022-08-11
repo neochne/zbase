@@ -4,7 +4,6 @@ import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 
 import com.zbase.util.DensityUtils;
+import com.zbase.x.ColorX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.TextViewX;
@@ -24,7 +24,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
 
     public ToolbarLayout(@NonNull Context context) {
         super(context);
-        setBackgroundColor(Color.WHITE);
+        setBackgroundColor(ColorX.WHITE);
         setLayoutParams(new ConstraintLayoutParamsX(MATCH_PARENT, WRAP_CONTENT));
         TOOLBAR_ID = generateViewId();
     }
@@ -33,12 +33,12 @@ public final class ToolbarLayout extends ConstraintLayoutX {
         return TOOLBAR_ID;
     }
 
-    public ToolbarLayout addTitle(String title, int color, int bgColor, int sp, Typeface typeface) {
+    public ToolbarLayout addTitle(String title, int ColorX, int bgColor, int sp, Typeface typeface) {
         Context context = getContext();
         return addChildView(new TextViewX(context)
                         .id(TOOLBAR_ID)
                         .text(title)
-                        .textColor(color)
+                        .textColor(ColorX)
                         .textSize(sp)
                         .backgroundColor(bgColor)
                         .gravity(Gravity.CENTER)
@@ -79,14 +79,14 @@ public final class ToolbarLayout extends ConstraintLayoutX {
     }
 
     public ToolbarLayout addRightText(String text,
-                                      int color,
+                                      int ColorX,
                                       int sp,
                                       int rightMargin,
                                       View.OnClickListener listener) {
 
         return addChildView(new TextViewX(getContext(), null, androidx.appcompat.R.style.Widget_AppCompat_Toolbar)
                         .text(text)
-                        .textColor(color)
+                        .textColor(ColorX)
                         .textSize(sp)
                         .clickListener(listener),
                 new ConstraintLayoutParamsX()

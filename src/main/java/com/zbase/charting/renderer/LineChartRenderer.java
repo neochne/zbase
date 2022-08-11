@@ -2,7 +2,6 @@ package com.zbase.charting.renderer;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
@@ -22,6 +21,7 @@ import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -63,7 +63,7 @@ public class LineChartRenderer extends LineRadarRenderer {
 
         mCirclePaintInner = new Paint(Paint.ANTI_ALIAS_FLAG);
         mCirclePaintInner.setStyle(Paint.Style.FILL);
-        mCirclePaintInner.setColor(Color.WHITE);
+        mCirclePaintInner.setColor(ColorX.WHITE);
     }
 
     @Override
@@ -90,7 +90,7 @@ public class LineChartRenderer extends LineRadarRenderer {
                 return;
         }
 
-        drawBitmap.eraseColor(Color.TRANSPARENT);
+        drawBitmap.eraseColor(ColorX.TRANSPARENT);
 
         LineData lineData = mChart.getLineData();
 
@@ -319,7 +319,7 @@ public class LineChartRenderer extends LineRadarRenderer {
             drawLinearFill(c, dataSet, trans, mXBounds);
         }
 
-        // more than 1 color
+        // more than 1 ColorX
         if (dataSet.getColors().size() > 1) {
 
             int numberOfFloats = pointsPerEntryPair * 2;
@@ -382,13 +382,13 @@ public class LineChartRenderer extends LineRadarRenderer {
                         !mViewPortHandler.isInBoundsBottom(Math.min(firstCoordinateY, lastCoordinateY)))
                     continue;
 
-                // get the color that is set for this line-segment
+                // get the ColorX that is set for this line-segment
                 mRenderPaint.setColor(dataSet.getColor(j));
 
                 canvas.drawLines(mLineBuffer, 0, pointsPerEntryPair * 2, mRenderPaint);
             }
 
-        } else { // only one color per dataset
+        } else { // only one ColorX per dataset
 
             if (mLineBuffer.length < Math.max((entryCount) * pointsPerEntryPair, pointsPerEntryPair) * 2)
                 mLineBuffer = new float[Math.max((entryCount) * pointsPerEntryPair, pointsPerEntryPair) * 4];

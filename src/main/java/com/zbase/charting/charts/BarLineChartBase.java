@@ -5,7 +5,6 @@ import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
@@ -35,6 +34,7 @@ import com.zbase.charting.utils.MPPointD;
 import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 /**
  * Base-class of LineChart, BarChart, ScatterChart and CandleStickChart.
@@ -171,13 +171,13 @@ public abstract class BarLineChartBase<T extends BarLineScatterCandleBubbleData<
 
         mGridBackgroundPaint = new Paint();
         mGridBackgroundPaint.setStyle(Style.FILL);
-        // mGridBackgroundPaint.setColor(Color.WHITE);
-        mGridBackgroundPaint.setColor(Color.rgb(240, 240, 240)); // light
+        // mGridBackgroundPaint.setColor(ColorX.WHITE);
+        mGridBackgroundPaint.setColor(ColorX.rgb(240, 240, 240)); // light
         // grey
 
         mBorderPaint = new Paint();
         mBorderPaint.setStyle(Style.STROKE);
-        mBorderPaint.setColor(Color.BLACK);
+        mBorderPaint.setColor(ColorX.BLACK);
         mBorderPaint.setStrokeWidth(Utils.convertDpToPixel(1f));
     }
 

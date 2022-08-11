@@ -2,11 +2,11 @@
 package com.zbase.charting.data;
 
 import android.annotation.TargetApi;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 
 import com.zbase.charting.interfaces.datasets.ILineRadarDataSet;
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 import java.util.List;
 
@@ -19,9 +19,9 @@ public abstract class LineRadarDataSet<T extends Entry> extends LineScatterCandl
 
     // TODO: Move to using `Fill` class
     /**
-     * the color that is used for filling the line surface
+     * the ColorX that is used for filling the line surface
      */
-    private int mFillColor = Color.rgb(140, 234, 255);
+    private int mFillColor = ColorX.rgb(140, 234, 255);
 
     /**
      * the drawable to be used for filling the line surface
@@ -54,13 +54,13 @@ public abstract class LineRadarDataSet<T extends Entry> extends LineScatterCandl
     }
 
     /**
-     * Sets the color that is used for filling the area below the line.
+     * Sets the ColorX that is used for filling the area below the line.
      * Resets an eventually set "fillDrawable".
      *
-     * @param color
+     * @param ColorX
      */
-    public void setFillColor(int color) {
-        mFillColor = color;
+    public void setFillColor(int ColorX) {
+        mFillColor = ColorX;
         mFillDrawable = null;
     }
 

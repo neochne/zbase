@@ -1,7 +1,6 @@
 package com.zbase.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -20,7 +19,7 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
     }
 
     public DynamicVerTvLayout count(int count) {
-        backgroundColor(Color.WHITE)
+        backgroundColor(ColorX.WHITE)
                 .orientation(VERTICAL);
         int horMargin = DensityUtils.dp2px2int(getContext(),10);
         int verMargin = DensityUtils.dp2px2int(getContext(),10);
@@ -41,7 +40,7 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
     }
 
     public DynamicVerTvLayout text(JSONObject itemObject, String[] keys, String[] names) {
-        text(itemObject,Color.BLACK, ColorX.HEX_FF808080,keys,names);
+        text(itemObject,ColorX.BLACK, ColorX.HEX_FF808080,keys,names);
         return this;
     }
 

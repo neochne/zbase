@@ -1,11 +1,11 @@
 
 package com.zbase.charting.components;
 
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
 
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 /**
  * The limit line is an additional feature for all Line-, Bar- and
@@ -22,8 +22,8 @@ public class LimitLine extends ComponentBase {
     /** the width of the limit line */
     private float mLineWidth = 2f;
 
-    /** the color of the limit line */
-    private int mLineColor = Color.rgb(237, 91, 91);
+    /** the ColorX of the limit line */
+    private int mLineColor = ColorX.rgb(237, 91, 91);
 
     /** the style of the label text */
     private Paint.Style mTextStyle = Paint.Style.FILL_AND_STROKE;
@@ -101,14 +101,14 @@ public class LimitLine extends ComponentBase {
      * Sets the linecolor for this LimitLine. Make sure to use
      * getResources().getColor(...)
      * 
-     * @param color
+     * @param ColorX
      */
-    public void setLineColor(int color) {
-        mLineColor = color;
+    public void setLineColor(int ColorX) {
+        mLineColor = ColorX;
     }
 
     /**
-     * Returns the color that is used for this LimitLine
+     * Returns the ColorX that is used for this LimitLine
      * 
      * @return
      */
@@ -156,7 +156,7 @@ public class LimitLine extends ComponentBase {
     }
 
     /**
-     * Sets the color of the value-text that is drawn next to the LimitLine.
+     * Sets the ColorX of the value-text that is drawn next to the LimitLine.
      * Default: Paint.Style.FILL_AND_STROKE
      *
      * @param style
@@ -166,7 +166,7 @@ public class LimitLine extends ComponentBase {
     }
 
     /**
-     * Returns the color of the value-text that is drawn next to the LimitLine.
+     * Returns the ColorX of the value-text that is drawn next to the LimitLine.
      *
      * @return
      */

@@ -2,7 +2,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
@@ -17,6 +16,7 @@ import com.zbase.charting.utils.ColorTemplate;
 import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 public class RadarChartRenderer extends LineRadarRenderer {
 
@@ -36,7 +36,7 @@ public class RadarChartRenderer extends LineRadarRenderer {
         mHighlightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mHighlightPaint.setStyle(Paint.Style.STROKE);
         mHighlightPaint.setStrokeWidth(2f);
-        mHighlightPaint.setColor(Color.rgb(255, 187, 115));
+        mHighlightPaint.setColor(ColorX.rgb(255, 187, 115));
 
         mWebPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mWebPaint.setStyle(Paint.Style.STROKE);

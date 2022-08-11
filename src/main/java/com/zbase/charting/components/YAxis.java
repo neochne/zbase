@@ -1,9 +1,9 @@
 package com.zbase.charting.components;
 
-import android.graphics.Color;
 import android.graphics.Paint;
 
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 /**
  * Class representing the y-axis labels settings and its entries. Only use the setter methods to
@@ -49,9 +49,9 @@ public class YAxis extends AxisBase {
     private boolean mUseAutoScaleRestrictionMax = false;
 
     /**
-     * Color of the zero line
+     * ColorX of the zero line
      */
-    protected int mZeroLineColor = Color.GRAY;
+    protected int mZeroLineColor = ColorX.GRAY;
 
     /**
      * Width of the zero line in pixels

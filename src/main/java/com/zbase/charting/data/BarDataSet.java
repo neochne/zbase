@@ -1,10 +1,10 @@
 
 package com.zbase.charting.data;
 
-import android.graphics.Color;
 
 import com.zbase.charting.interfaces.datasets.IBarDataSet;
 import com.zbase.charting.utils.Fill;
+import com.zbase.x.ColorX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,11 +20,11 @@ public class BarDataSet extends BarLineScatterCandleBubbleDataSet<BarEntry> impl
     /**
      * the color used for drawing the bar shadows
      */
-    private int mBarShadowColor = Color.rgb(215, 215, 215);
+    private int mBarShadowColor = ColorX.rgb(215, 215, 215);
 
     private float mBarBorderWidth = 0.0f;
 
-    private int mBarBorderColor = Color.BLACK;
+    private int mBarBorderColor = ColorX.BLACK;
 
     /**
      * the alpha value used to draw the highlight indicator bar
@@ -46,7 +46,7 @@ public class BarDataSet extends BarLineScatterCandleBubbleDataSet<BarEntry> impl
     public BarDataSet(List<BarEntry> yVals, String label) {
         super(yVals, label);
 
-        mHighLightColor = Color.rgb(0, 0, 0);
+        mHighLightColor = ColorX.rgb(0, 0, 0);
 
         calcStackSize(yVals);
         calcEntryCountIncludingStacks(yVals);
@@ -215,7 +215,7 @@ public class BarDataSet extends BarLineScatterCandleBubbleDataSet<BarEntry> impl
     /**
      * Sets the color used for drawing the bar-shadows. The bar shadows is a
      * surface behind the bar that indicates the maximum value. Don't for get to
-     * use getResources().getColor(...) to set this. Or Color.rgb(...).
+     * use getResources().getColor(...) to set this. Or ColorX.rgb(...).
      *
      * @param color
      */

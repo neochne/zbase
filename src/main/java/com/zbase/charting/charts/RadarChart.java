@@ -3,7 +3,6 @@ package com.zbase.charting.charts;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 
@@ -15,6 +14,7 @@ import com.zbase.charting.renderer.RadarChartRenderer;
 import com.zbase.charting.renderer.XAxisRendererRadarChart;
 import com.zbase.charting.renderer.YAxisRendererRadarChart;
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 /**
  * Implementation of the RadarChart, a "spidernet"-like chart. It works best
@@ -35,14 +35,14 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
     private float mInnerWebLineWidth = 1.5f;
 
     /**
-     * color for the main web lines
+     * ColorX for the main web lines
      */
-    private int mWebColor = Color.rgb(122, 122, 122);
+    private int mWebColor = ColorX.rgb(122, 122, 122);
 
     /**
-     * color for the inner web
+     * ColorX for the inner web
      */
-    private int mWebColorInner = Color.rgb(122, 122, 122);
+    private int mWebColorInner = ColorX.rgb(122, 122, 122);
 
     /**
      * transparency the grid is drawn with (0-255)
@@ -260,14 +260,14 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
     }
 
     /**
-     * Sets the color for the web lines that come from the center. Don't forget
-     * to use getResources().getColor(...) when loading a color from the
-     * resources. Default: Color.rgb(122, 122, 122)
+     * Sets the ColorX for the web lines that come from the center. Don't forget
+     * to use getResources().getColor(...) when loading a ColorX from the
+     * resources. Default: ColorX.rgb(122, 122, 122)
      *
-     * @param color
+     * @param ColorX
      */
-    public void setWebColor(int color) {
-        mWebColor = color;
+    public void setWebColor(int ColorX) {
+        mWebColor = ColorX;
     }
 
     public int getWebColor() {
@@ -275,14 +275,14 @@ public class RadarChart extends PieRadarChartBase<RadarData> {
     }
 
     /**
-     * Sets the color for the web lines in between the lines that come from the
+     * Sets the ColorX for the web lines in between the lines that come from the
      * center. Don't forget to use getResources().getColor(...) when loading a
-     * color from the resources. Default: Color.rgb(122, 122, 122)
+     * ColorX from the resources. Default: ColorX.rgb(122, 122, 122)
      *
-     * @param color
+     * @param ColorX
      */
-    public void setWebColorInner(int color) {
-        mWebColorInner = color;
+    public void setWebColorInner(int ColorX) {
+        mWebColorInner = ColorX;
     }
 
     public int getWebColorInner() {

@@ -2,7 +2,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 
@@ -11,6 +10,7 @@ import com.zbase.charting.utils.MPPointD;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 
 /**
@@ -57,13 +57,13 @@ public abstract class AxisRenderer extends Renderer {
             mAxisLabelPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
             mGridPaint = new Paint();
-            mGridPaint.setColor(Color.GRAY);
+            mGridPaint.setColor(ColorX.GRAY);
             mGridPaint.setStrokeWidth(1f);
             mGridPaint.setStyle(Style.STROKE);
             mGridPaint.setAlpha(90);
 
             mAxisLinePaint = new Paint();
-            mAxisLinePaint.setColor(Color.BLACK);
+            mAxisLinePaint.setColor(ColorX.BLACK);
             mAxisLinePaint.setStrokeWidth(1f);
             mAxisLinePaint.setStyle(Style.STROKE);
 

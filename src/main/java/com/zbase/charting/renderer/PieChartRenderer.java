@@ -3,7 +3,6 @@ package com.zbase.charting.renderer;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
@@ -29,6 +28,7 @@ import com.zbase.charting.utils.ColorTemplate;
 import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -74,24 +74,24 @@ public class PieChartRenderer extends DataRenderer {
         mChart = chart;
 
         mHolePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mHolePaint.setColor(Color.WHITE);
+        mHolePaint.setColor(ColorX.WHITE);
         mHolePaint.setStyle(Style.FILL);
 
         mTransparentCirclePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mTransparentCirclePaint.setColor(Color.WHITE);
+        mTransparentCirclePaint.setColor(ColorX.WHITE);
         mTransparentCirclePaint.setStyle(Style.FILL);
         mTransparentCirclePaint.setAlpha(105);
 
         mCenterTextPaint = new TextPaint(Paint.ANTI_ALIAS_FLAG);
-        mCenterTextPaint.setColor(Color.BLACK);
+        mCenterTextPaint.setColor(ColorX.BLACK);
         mCenterTextPaint.setTextSize(Utils.convertDpToPixel(12f));
 
         mValuePaint.setTextSize(Utils.convertDpToPixel(13f));
-        mValuePaint.setColor(Color.WHITE);
+        mValuePaint.setColor(ColorX.WHITE);
         mValuePaint.setTextAlign(Align.CENTER);
 
         mEntryLabelsPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mEntryLabelsPaint.setColor(Color.WHITE);
+        mEntryLabelsPaint.setColor(ColorX.WHITE);
         mEntryLabelsPaint.setTextAlign(Align.CENTER);
         mEntryLabelsPaint.setTextSize(Utils.convertDpToPixel(13f));
 
@@ -140,7 +140,7 @@ public class PieChartRenderer extends DataRenderer {
                 return;
         }
 
-        drawBitmap.eraseColor(Color.TRANSPARENT);
+        drawBitmap.eraseColor(ColorX.TRANSPARENT);
 
         PieData pieData = mChart.getData();
 
@@ -692,7 +692,7 @@ public class PieChartRenderer extends DataRenderer {
             float holeRadius = radius * (mChart.getHoleRadius() / 100);
             MPPointF center = mChart.getCenterCircleBox();
 
-            if (Color.alpha(mHolePaint.getColor()) > 0) {
+            if (ColorX.alpha(mHolePaint.getColor()) > 0) {
                 // draw the hole-circle
                 mBitmapCanvas.drawCircle(
                         center.x, center.y,
@@ -700,7 +700,7 @@ public class PieChartRenderer extends DataRenderer {
             }
 
             // only draw the circle if it can be seen (not covered by the hole)
-            if (Color.alpha(mTransparentCirclePaint.getColor()) > 0 &&
+            if (ColorX.alpha(mTransparentCirclePaint.getColor()) > 0 &&
                     mChart.getTransparentCircleRadius() > mChart.getHoleRadius()) {
 
                 int alpha = mTransparentCirclePaint.getAlpha();
@@ -800,7 +800,7 @@ public class PieChartRenderer extends DataRenderer {
 
         /* Skip entirely if using rounded circle slices, because it doesn't make sense to highlight
          * in this way.
-         * TODO: add support for changing slice color with highlighting rather than only shifting the slice
+         * TODO: add support for changing slice ColorX with highlighting rather than only shifting the slice
          */
 
         final boolean drawInnerArc = mChart.isDrawHoleEnabled() && !mChart.isDrawSlicesUnderHoleEnabled();

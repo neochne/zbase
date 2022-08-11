@@ -8,7 +8,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.RectF;
@@ -48,6 +47,7 @@ import com.zbase.charting.renderer.LegendRenderer;
 import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -231,7 +231,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
         mDescPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
         mInfoPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mInfoPaint.setColor(Color.rgb(247, 189, 51)); // orange
+        mInfoPaint.setColor(ColorX.rgb(247, 189, 51)); // orange
         mInfoPaint.setTextAlign(Align.CENTER);
         mInfoPaint.setTextSize(Utils.convertDpToPixel(12f));
 
@@ -1519,7 +1519,7 @@ public abstract class Chart<T extends ChartData<? extends IDataSet<? extends Ent
         else
             // does not have background drawable, then draw white background on
             // the canvas
-            canvas.drawColor(Color.WHITE);
+            canvas.drawColor(ColorX.WHITE);
         // draw the view on the canvas
         draw(canvas);
         // return the bitmap

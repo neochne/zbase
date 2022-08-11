@@ -3,7 +3,6 @@ package com.zbase.activity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Color;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -59,14 +58,14 @@ public class ZBaseActivity extends AppCompatActivity {
          * Circle ProgressBar
          */
         ProgressBar circleProgressBar = new ProgressBar(this);
-        ViewUtils.setProgressBarColor(circleProgressBar, Color.WHITE);
+        ViewUtils.setProgressBarColor(circleProgressBar, ColorX.WHITE);
         loadingLayout.addView(circleProgressBar);
         /*
          * Prompt Text
          */
         TextView promptTextView = new TextView(this);
         promptTextView.setId(loadingTvId);
-        promptTextView.setTextColor(Color.WHITE);
+        promptTextView.setTextColor(ColorX.WHITE);
         promptTextView.setText(text);
         loadingLayout.addView(promptTextView, new FrameLayoutParamsX().margins(0, 20, 0, 0));
         // add to content view

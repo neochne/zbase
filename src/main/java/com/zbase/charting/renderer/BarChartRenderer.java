@@ -2,7 +2,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
@@ -20,6 +19,7 @@ import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ public class BarChartRenderer extends BarLineScatterCandleBubbleRenderer {
 
         mHighlightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mHighlightPaint.setStyle(Paint.Style.FILL);
-        mHighlightPaint.setColor(Color.rgb(0, 0, 0));
+        mHighlightPaint.setColor(ColorX.rgb(0, 0, 0));
         // set alpha after color
         mHighlightPaint.setAlpha(120);
 

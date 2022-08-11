@@ -1,7 +1,6 @@
 package com.zbase.x.view;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +11,7 @@ import androidx.annotation.NonNull;
 
 import com.zbase.interfaces.ScrollListener;
 import com.zbase.util.ViewUtils;
+import com.zbase.x.ColorX;
 
 public final class ListViewX extends ListView implements IViewX<ListViewX> {
 
@@ -36,7 +36,7 @@ public final class ListViewX extends ListView implements IViewX<ListViewX> {
     }
 
     public ListViewX noClickColor() {
-        setCacheColorHint(Color.TRANSPARENT);
+        setCacheColorHint(ColorX.TRANSPARENT);
         setSelector(android.R.color.transparent);
         return this;
     }

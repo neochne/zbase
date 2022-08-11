@@ -3,7 +3,6 @@ package com.zbase.activity;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -53,8 +52,8 @@ public final class PictureSelectActivity extends ZBaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        SystemBarUtils.setStatusBarColor(getWindow(), Color.BLACK);
-        SystemBarUtils.setNavBarColor(getWindow(), Color.BLACK);
+        SystemBarUtils.setStatusBarColor(getWindow(), ColorX.BLACK);
+        SystemBarUtils.setNavBarColor(getWindow(), ColorX.BLACK);
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -64,7 +63,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
         /*
          * Container Layout
          */
-        findViewById(android.R.id.content).setBackgroundColor(Color.BLACK);
+        findViewById(android.R.id.content).setBackgroundColor(ColorX.BLACK);
         int containerPadding = DensityUtils.dp2px2int(this, 10);
         int bucketItemPadding = DensityUtils.dp2px2int(this, 10);
 
@@ -133,7 +132,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                 .padding(DensityUtils.dp2px2int(this, 9), DensityUtils.dp2px2int(this, 3), DensityUtils.dp2px2int(this, 1), DensityUtils.dp2px2int(this, 3))
                                 .gravity(Gravity.CENTER)
                                 .background(ResourceUtils.getDrawable(this, R.drawable.bg_picture_select_bucket))
-                                .addChildView(bucketNameTv.text("相机胶卷").textColor(Color.WHITE))
+                                .addChildView(bucketNameTv.text("相机胶卷").textColor(ColorX.WHITE))
                                 .addChildView(downIv.src(R.drawable.ic_down_white).scaleType(ImageView.ScaleType.FIT_XY))
                                 .clickListener(v -> {
                                     if (bucketLvParentLayout.isVisible()) {
@@ -174,7 +173,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                 .addChildView(new TextViewX(this)
                                 .id(previewTvId)
                                 .text("预览")
-                                .textColor(Color.WHITE),
+                                .textColor(ColorX.WHITE),
                         new ConstraintLayoutParamsX()
                                 .start2start(ConstraintLayoutParamsX.PARENT_ID)
                                 .bottom2bottom(ConstraintLayoutParamsX.PARENT_ID)
@@ -182,7 +181,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                 .top2bottom(pictureRvId))
                 .addChildView(new TextViewX(this)
                                 .text("确定")
-                                .textColor(Color.WHITE),
+                                .textColor(ColorX.WHITE),
                         new ConstraintLayoutParamsX()
                                 .end2end(ConstraintLayoutParamsX.PARENT_ID)
                                 .top2bottom(pictureRvId)
@@ -205,8 +204,8 @@ public final class PictureSelectActivity extends ZBaseActivity {
                             .clickListener(v -> hideBucketLv(bucketLvParentLayout, bucketLv, downIv))
                             .invisible()
                             .addChildView(bucketLv
-                                            .backgroundColor(Color.BLACK)
-                                            .divider(new ColorDrawableX(Color.DKGRAY))
+                                            .backgroundColor(ColorX.BLACK)
+                                            .divider(new ColorDrawableX(ColorX.DKGRAY))
                                             .dividerHeight(1)
                                             .adapter(new BaseAdapter() {
                                                 @Override
@@ -228,8 +227,8 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                                 public View getView(int i, View view, ViewGroup viewGroup) {
                                                     List<LocalMedia> mediaList = getItem(i);
                                                     String bucketName = i == 0 ? "相机胶卷" : mediaList.get(0).getBucketName();
-                                                    TextViewX bucketTv = new TextViewX(PictureSelectActivity.this).textColor(Color.WHITE).textSize(16).text(bucketName);
-                                                    TextViewX countTv = new TextViewX(PictureSelectActivity.this).textColor(Color.GRAY).text(String.format("（%s）", mediaList.size()));
+                                                    TextViewX bucketTv = new TextViewX(PictureSelectActivity.this).textColor(ColorX.WHITE).textSize(16).text(bucketName);
+                                                    TextViewX countTv = new TextViewX(PictureSelectActivity.this).textColor(ColorX.GRAY).text(String.format("（%s）", mediaList.size()));
                                                     ImageViewX checkIv = new ImageViewX(PictureSelectActivity.this);
                                                     return new LinearLayoutX(PictureSelectActivity.this)
                                                             .gravity(Gravity.CENTER_VERTICAL)
@@ -328,7 +327,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                                     .rule(RelativeLayout.CENTER_VERTICAL))
                     .addChildView(indicatorTv
                                     .id(previewIndicatorTvId)
-                                    .textColor(Color.WHITE),
+                                    .textColor(ColorX.WHITE),
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.CENTER_IN_PARENT))
                     .addChildView(new CheckBoxX(this)
@@ -346,7 +345,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
                     .addChildView(new RoundedButton(this)
                                     .solidColor(ColorX.HEX_FF549588)
                                     .text("确定")
-                                    .textColor(Color.WHITE),
+                                    .textColor(ColorX.WHITE),
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                     .rule(RelativeLayout.CENTER_VERTICAL)
@@ -356,7 +355,7 @@ public final class PictureSelectActivity extends ZBaseActivity {
              * Picture Pager
              */
             picPager.setId(previewPagerId);
-            picPager.setBackgroundColor(Color.BLACK);
+            picPager.setBackgroundColor(ColorX.BLACK);
             picPager.setAdapter(new PicturePagerAdapter(selectedMediaList)
                     .setItemClickListener((adapterView, view, i, l) -> {
                         if (topRl.isVisible()) {

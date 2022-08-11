@@ -1,7 +1,6 @@
 package com.zbase.charting.data;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Typeface;
 
@@ -12,6 +11,7 @@ import com.zbase.charting.interfaces.datasets.IDataSet;
 import com.zbase.charting.utils.ColorTemplate;
 import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Utils;
+import com.zbase.x.ColorX;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -96,8 +96,8 @@ public abstract class BaseDataSet<T extends Entry> implements IDataSet<T> {
         mValueColors = new ArrayList<Integer>();
 
         // default color
-        mColors.add(Color.rgb(140, 234, 255));
-        mValueColors.add(Color.BLACK);
+        mColors.add(ColorX.rgb(140, 234, 255));
+        mValueColors.add(ColorX.BLACK);
     }
 
     /**
@@ -223,7 +223,7 @@ public abstract class BaseDataSet<T extends Entry> implements IDataSet<T> {
      * @param alpha from 0-255
      */
     public void setColor(int color, int alpha) {
-        setColor(Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color)));
+        setColor(ColorX.argb(alpha, ColorX.red(color), ColorX.green(color), ColorX.blue(color)));
     }
 
     /**
@@ -235,7 +235,7 @@ public abstract class BaseDataSet<T extends Entry> implements IDataSet<T> {
     public void setColors(int[] colors, int alpha) {
         resetColors();
         for (int color : colors) {
-            addColor(Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color)));
+            addColor(ColorX.argb(alpha, ColorX.red(color), ColorX.green(color), ColorX.blue(color)));
         }
     }
 

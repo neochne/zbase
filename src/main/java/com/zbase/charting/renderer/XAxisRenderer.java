@@ -2,7 +2,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
@@ -17,6 +16,7 @@ import com.zbase.charting.utils.MPPointF;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class XAxisRenderer extends AxisRenderer {
 
         this.mXAxis = xAxis;
 
-        mAxisLabelPaint.setColor(Color.BLACK);
+        mAxisLabelPaint.setColor(ColorX.BLACK);
         mAxisLabelPaint.setTextAlign(Align.CENTER);
         mAxisLabelPaint.setTextSize(Utils.convertDpToPixel(10f));
     }

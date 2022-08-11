@@ -1,7 +1,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
@@ -15,6 +14,7 @@ import com.zbase.charting.utils.MPPointD;
 import com.zbase.charting.utils.Transformer;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 import java.util.List;
 
@@ -31,11 +31,11 @@ public class YAxisRenderer extends AxisRenderer {
 
         if(mViewPortHandler != null) {
 
-            mAxisLabelPaint.setColor(Color.BLACK);
+            mAxisLabelPaint.setColor(ColorX.BLACK);
             mAxisLabelPaint.setTextSize(Utils.convertDpToPixel(10f));
 
             mZeroLinePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-            mZeroLinePaint.setColor(Color.GRAY);
+            mZeroLinePaint.setColor(ColorX.GRAY);
             mZeroLinePaint.setStrokeWidth(1f);
             mZeroLinePaint.setStyle(Paint.Style.STROKE);
         }

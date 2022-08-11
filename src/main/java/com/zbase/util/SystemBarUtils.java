@@ -2,12 +2,13 @@ package com.zbase.util;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.graphics.Color;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.Window;
 
 import androidx.core.view.WindowInsetsControllerCompat;
+
+import com.zbase.x.ColorX;
 
 public final class SystemBarUtils {
 
@@ -25,7 +26,7 @@ public final class SystemBarUtils {
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        window.setStatusBarColor(Color.TRANSPARENT);
+        window.setStatusBarColor(ColorX.TRANSPARENT);
     }
 
     /**
@@ -35,14 +36,14 @@ public final class SystemBarUtils {
         window.getDecorView().setSystemUiVisibility(
                 View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        window.setNavigationBarColor(Color.TRANSPARENT);
+        window.setNavigationBarColor(ColorX.TRANSPARENT);
     }
 
     /**
      * 同时隐藏状态栏、导航栏（配合无白屏主题使用效果更佳）
      *
      * <item name="android:windowDisablePreview">true</item>
-     * <item name="android:windowBackground">@android:color/white</item>
+     * <item name="android:windowBackground">@android:ColorX/white</item>
      */
     public static void hideSysBar(Window window) {
         window.getDecorView().setSystemUiVisibility(
@@ -67,15 +68,15 @@ public final class SystemBarUtils {
     /**
      * 设置状态栏颜色
      */
-    public static void setStatusBarColor(Window window, int color) {
-        window.setStatusBarColor(color);
+    public static void setStatusBarColor(Window window, int ColorX) {
+        window.setStatusBarColor(ColorX);
     }
 
     /**
      * 设置导航栏颜色
      */
-    public static void setNavBarColor(Window window, int color) {
-        window.setNavigationBarColor(color);
+    public static void setNavBarColor(Window window, int ColorX) {
+        window.setNavigationBarColor(ColorX);
     }
 
     /**

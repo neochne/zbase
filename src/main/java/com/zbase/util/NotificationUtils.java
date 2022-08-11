@@ -7,12 +7,13 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.provider.Settings;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
+import com.zbase.x.ColorX;
 
 public final class NotificationUtils {
 
@@ -31,7 +32,7 @@ public final class NotificationUtils {
                 .setContentTitle(title)
                 .setContentText(content)
                 .setSmallIcon(icon)
-                .setLights(Color.YELLOW, mediaDuration, mediaDuration)
+                .setLights(ColorX.YELLOW, mediaDuration, mediaDuration)
                 .setVibrate(new long[]{mediaDuration, mediaDuration})
                 .setSound(Settings.System.DEFAULT_NOTIFICATION_URI)
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)

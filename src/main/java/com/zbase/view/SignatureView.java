@@ -3,7 +3,6 @@ package com.zbase.view;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.PixelFormat;
@@ -15,6 +14,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.zbase.x.ColorX;
 import com.zbase.x.drawable.ColorDrawableX;
 
 public final class SignatureView extends SurfaceView implements SurfaceHolder.Callback,Runnable{
@@ -43,7 +43,7 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
         // SurfaceView 默认背景色是黑色，下面为变成白色
         setZOrderOnTop(true);
         mSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
-        setBackground(new ColorDrawableX(Color.WHITE));
+        setBackground(new ColorDrawableX(ColorX.WHITE));
         mSurfaceHolder.addCallback(this);
 
         /*
@@ -54,7 +54,7 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setStrokeJoin(Paint.Join.ROUND);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(ColorX.BLACK);
         mPaint.setStrokeWidth(20);
 
         /*
@@ -126,7 +126,7 @@ public final class SignatureView extends SurfaceView implements SurfaceHolder.Ca
         mPath.reset();
         for (int i = 0; i < 3; i++) {
             mCanvas = mSurfaceHolder.lockCanvas();
-            mCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+            mCanvas.drawColor(ColorX.TRANSPARENT, PorterDuff.Mode.CLEAR);
             mSurfaceHolder.unlockCanvasAndPost(mCanvas);
         }
     }

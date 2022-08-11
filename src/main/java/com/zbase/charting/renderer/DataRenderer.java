@@ -2,7 +2,6 @@
 package com.zbase.charting.renderer;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
@@ -15,6 +14,7 @@ import com.zbase.charting.interfaces.dataprovider.ChartInterface;
 import com.zbase.charting.interfaces.datasets.IDataSet;
 import com.zbase.charting.utils.Utils;
 import com.zbase.charting.utils.ViewPortHandler;
+import com.zbase.x.ColorX;
 
 
 /**
@@ -57,14 +57,14 @@ public abstract class DataRenderer extends Renderer {
         mDrawPaint = new Paint(Paint.DITHER_FLAG);
 
         mValuePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        mValuePaint.setColor(Color.rgb(63, 63, 63));
+        mValuePaint.setColor(ColorX.rgb(63, 63, 63));
         mValuePaint.setTextAlign(Align.CENTER);
         mValuePaint.setTextSize(Utils.convertDpToPixel(9f));
 
         mHighlightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mHighlightPaint.setStyle(Style.STROKE);
         mHighlightPaint.setStrokeWidth(2f);
-        mHighlightPaint.setColor(Color.rgb(255, 187, 115));
+        mHighlightPaint.setColor(ColorX.rgb(255, 187, 115));
     }
 
     protected boolean isDrawingValuesAllowed(ChartInterface chart) {
