@@ -13,8 +13,8 @@ import com.zbase.interfaces.Event3Listener;
 import com.zbase.util.DensityUtils;
 import com.zbase.x.ColorX;
 import com.zbase.x.drawable.ColorDrawableX;
-import com.zbase.x.json.JSONArrayX;
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONArray;
+import com.zbase.x.json.JSONObject;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.ListViewX;
@@ -31,7 +31,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
         this
                 .addChildView(new ImageViewX(context)
                                 .src(R.drawable.ic_clear_gray)
-                                .clickListener(v -> ((OnClickListener)getTag()).onClick(v))
+                                .clickListener(v -> ((OnClickListener) getTag()).onClick(v))
                         , new ConstraintLayoutParamsX()
                                 .end2endParent()
                                 .top2top(getTitleId())
@@ -62,7 +62,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
      *             because it return java.util.Arrays$ArrayList type,not java.util.Arrays$ArrayList
      * @param key  If data is object json array,need provide this param
      */
-    public SingleSelectDialogView data(Object data, String key, Event3Listener<String, Integer, JSONObjectX> itemSelectListener) {
+    public SingleSelectDialogView data(Object data, String key, Event3Listener<String, Integer, JSONObject> itemSelectListener) {
         /*
          * Data type
          */
@@ -74,11 +74,11 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
         /*
          * Check data type
          */
-        if (data instanceof JSONArrayX) {
-            Object obj = ((JSONArrayX) data).get1object(0);
+        if (data instanceof JSONArray) {
+            Object obj = ((JSONArray) data).opt(0);
             if (obj instanceof String) {
                 type = STRING_JSON_ARRAY;
-            } else if (obj instanceof JSONObjectX) {
+            } else if (obj instanceof JSONObject) {
                 type = OBJECT_JSON_ARRAY;
             }
         } else if (data instanceof java.util.ArrayList<?>) {
@@ -102,7 +102,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
                         switch (finalType) {
                             case STRING_JSON_ARRAY:
                             case OBJECT_JSON_ARRAY:
-                                return ((JSONArrayX) data).length();
+                                return ((JSONArray) data).length();
                             case STRING_ARRAY:
                                 return ((String[]) data).length;
                             case STRING_LIST:
@@ -116,9 +116,9 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
                     public Object getItem(int position) {
                         switch (finalType) {
                             case STRING_JSON_ARRAY:
-                                return ((JSONArrayX) data).get1string(position);
+                                return ((JSONArray) data).optString(position);
                             case OBJECT_JSON_ARRAY:
-                                return ((JSONArrayX) data).get1JsonObject(position).get1string(key);
+                                return ((JSONArray) data).optJSONObject(position).optString(key);
                             case STRING_ARRAY:
                                 return ((String[]) data)[position];
                             case STRING_LIST:
@@ -143,7 +143,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
 
                 })
                 .itemClickListener((adapterView, view, i, l) -> {
-                    ((OnClickListener)getTag()).onClick(view);
+                    ((OnClickListener) getTag()).onClick(view);
                     switch (finalType) {
                         case STRING_JSON_ARRAY:
                         case STRING_ARRAY:
@@ -151,7 +151,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
                             itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, null);
                             break;
                         case OBJECT_JSON_ARRAY:
-                            itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, ((JSONArrayX) data).get1JsonObject(i));
+                            itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, ((JSONArray) data).optJSONObject(i));
                     }
                 });
         return this;

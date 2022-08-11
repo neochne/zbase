@@ -5,14 +5,14 @@ import android.content.Context;
 import com.zbase.activity.ZBaseActivity;
 import com.zbase.interfaces.Event1Listener;
 import com.zbase.util.ToastUtils;
-import com.zbase.x.json.JSONArrayX;
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONArray;
+import com.zbase.x.json.JSONObject;
 
 public class JDataCallback extends ContextCallback {
 
-    private Event1Listener<JSONArrayX> mJArrayRespListener;
+    private Event1Listener<JSONArray> mJArrayRespListener;
 
-    private Event1Listener<JSONObjectX> mJObjectRespListener;
+    private Event1Listener<JSONObject> mJObjectRespListener;
 
     private String mEmptyArrayPrompt = "数据为空";
 
@@ -26,12 +26,12 @@ public class JDataCallback extends ContextCallback {
         super(context);
     }
 
-    public JDataCallback objectListener(Event1Listener<JSONObjectX> listener) {
+    public JDataCallback objectListener(Event1Listener<JSONObject> listener) {
         this.mJObjectRespListener = listener;
         return this;
     }
 
-    public JDataCallback arrayListener(Event1Listener<JSONArrayX> listener) {
+    public JDataCallback arrayListener(Event1Listener<JSONArray> listener) {
         this.mJArrayRespListener = listener;
         return this;
     }
@@ -52,13 +52,13 @@ public class JDataCallback extends ContextCallback {
     }
 
     @Override
-    public void onBizSuccess(JSONObjectX bodyJson) {
+    public void onBizSuccess(JSONObject bodyJson) {
         super.onBizSuccess(bodyJson);
         if (mJObjectRespListener != null) {
-            JSONObjectX dataJsonObject = bodyJson.get1JsonObject("data");
+            JSONObject dataJsonObject = bodyJson.optJSONObject("data");
             mJObjectRespListener.done(dataJsonObject);
         } else {
-            JSONArrayX dataJsonArray = bodyJson.get1JsonArray("data");
+            JSONArray dataJsonArray = bodyJson.optJSONArray("data");
             handleMultiPageArray(dataJsonArray, mNoMoreDataPrompt);
             mJArrayRespListener.done(dataJsonArray);
         }
@@ -67,7 +67,7 @@ public class JDataCallback extends ContextCallback {
     /*
      * Handle multiple page data
      */
-    public void handleMultiPageArray(JSONArrayX dataJsonArray, String noMore) {
+    public void handleMultiPageArray(JSONArray dataJsonArray, String noMore) {
         if (dataJsonArray.length() < 1) {
             if (mPage == 1) {
                 ToastUtils.showOnWorkThread(CONTEXT, mEmptyArrayPrompt);

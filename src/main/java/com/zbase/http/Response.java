@@ -4,15 +4,15 @@
 
 package com.zbase.http;
 
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONObject;
 
 public class Response {
 
     private final int code;
 
-    private final JSONObjectX json;
+    private final JSONObject json;
 
-    public Response(int code, JSONObjectX json) {
+    public Response(int code, JSONObject json) {
         this.code = code;
         this.json = json;
     }
@@ -21,7 +21,7 @@ public class Response {
         return code;
     }
 
-    public JSONObjectX getJson() {
+    public JSONObject getJson() {
         return json;
     }
 

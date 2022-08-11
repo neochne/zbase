@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
 
 import com.zbase.util.FileUtils;
 import com.zbase.util.StringUtils;
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,7 +63,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, new JSONObjectX()));
+                    callback.onSuccess(new Response(httpCode, JSONObject.create()));
                     long fileTotalLength = responseBody.contentLength();
                     FileUtils.saveFileWithProgress(
                             file,
@@ -71,7 +71,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
                             fileTotalLength,
                             (progress) -> callback.onProgress(progress, file.getName(), fileTotalLength));
                 } else {
-                    callback.onFail(new Response(httpCode, new JSONObjectX()));
+                    callback.onFail(new Response(httpCode, JSONObject.create()));
                 }
             }
 
@@ -135,13 +135,13 @@ public final class OkHttpClientImpl extends YesHttpClient {
             int httpCode = response.code();
             ResponseBody responseBody = response.body();
             if (response.isSuccessful() && responseBody != null) {
-                return new Response(httpCode, JSONObjectX.create(responseBody.string()));
+                return new Response(httpCode, JSONObject.create(responseBody.string()));
             } else {
                 throw new IOException("response is not successful，httpCode = " + httpCode);
             }
         } catch (IOException e) {
             e.printStackTrace();
-            return new Response(EXCEPTION_CODE, new JSONObjectX());
+            return new Response(EXCEPTION_CODE, JSONObject.create());
         }
     }
 
@@ -158,9 +158,9 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, JSONObjectX.create(responseBody.string())));
+                    callback.onSuccess(new Response(httpCode, JSONObject.create(responseBody.string())));
                 } else {
-                    callback.onFail(new Response(httpCode, new JSONObjectX()));
+                    callback.onFail(new Response(httpCode, JSONObject.create()));
                 }
             }
 
@@ -199,9 +199,9 @@ public final class OkHttpClientImpl extends YesHttpClient {
          */
         String jsonStringBody = "";
         if (bodyNamesAndValues != null && bodyNamesAndValues.length > 0) {
-            JSONObjectX bodyJson = new JSONObjectX();
+            JSONObject bodyJson = JSONObject.create();
             for (int i = 0; i < bodyNamesAndValues.length; i += 2) {
-                bodyJson.add(String.valueOf(bodyNamesAndValues[i]), bodyNamesAndValues[i + 1]);
+                bodyJson.put(String.valueOf(bodyNamesAndValues[i]), bodyNamesAndValues[i + 1]);
             }
             jsonStringBody = bodyJson.toString();
         }

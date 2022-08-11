@@ -4,14 +4,14 @@
 
 package com.zbase.http;
 
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONObject;
 
 public interface Callback {
 
     default void onSuccess(Response response) {
     }
 
-    default void onBizSuccess(JSONObjectX json) {
+    default void onBizSuccess(JSONObject json) {
     }
 
     /**

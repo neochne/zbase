@@ -8,19 +8,22 @@ import android.text.style.ForegroundColorSpan;
 
 import com.zbase.util.DensityUtils;
 import com.zbase.x.ColorX;
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONObject;
 import com.zbase.x.lp.LinearLayoutParamsX;
 import com.zbase.x.view.TextViewX;
 import com.zbase.x.viewgroup.LinearLayoutX;
 
 public final class DynamicVerTvLayout extends LinearLayoutX {
 
-    public DynamicVerTvLayout(Context context, int count) {
+    public DynamicVerTvLayout(Context context) {
         super(context);
+    }
+
+    public DynamicVerTvLayout count(int count) {
         backgroundColor(Color.WHITE)
                 .orientation(VERTICAL);
-        int horMargin = DensityUtils.dp2px2int(context,10);
-        int verMargin = DensityUtils.dp2px2int(context,10);
+        int horMargin = DensityUtils.dp2px2int(getContext(),10);
+        int verMargin = DensityUtils.dp2px2int(getContext(),10);
         for (int i = 0; i < count; i++) {
             if (i == count - 1) {
                 addChildView(new TextViewX(getContext()), new LinearLayoutParamsX().margins(horMargin, verMargin, 0, verMargin));
@@ -28,6 +31,7 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
             }
             addChildView(new TextViewX(getContext()), new LinearLayoutParamsX().margins(horMargin, verMargin, 0, 0));
         }
+        return this;
     }
 
     @Override
@@ -36,14 +40,14 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
         return this;
     }
 
-    public DynamicVerTvLayout text(JSONObjectX itemObject, String[] keys, String[] names) {
+    public DynamicVerTvLayout text(JSONObject itemObject, String[] keys, String[] names) {
         text(itemObject,Color.BLACK, ColorX.HEX_FF808080,keys,names);
         return this;
     }
 
-    public DynamicVerTvLayout text(JSONObjectX itemObject, int nameColor, int valueColor, String[] keys, String[] names) {
+    public DynamicVerTvLayout text(JSONObject itemObject, int nameColor, int valueColor, String[] keys, String[] names) {
         for (int i = 0, l = keys.length; i < l; i++) {
-            text((TextViewX) getChildAt(i),names[i],itemObject.get2string(keys[i]),nameColor,valueColor);
+            text((TextViewX) getChildAt(i),names[i],itemObject.optString(keys[i]),nameColor,valueColor);
         }
         return this;
     }

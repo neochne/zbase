@@ -21,7 +21,7 @@ import com.zbase.view.dialog.SingleSelectDialogView;
 import com.zbase.x.ColorX;
 import com.zbase.x.drawable.GradientDrawableX;
 import com.zbase.x.drawable.InsetDrawableX;
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONObject;
 
 public final class DialogX extends AlertDialog {
 
@@ -165,7 +165,7 @@ public final class DialogX extends AlertDialog {
                                                    String title,
                                                    Object data,
                                                    String key,
-                                                   Event3Listener<String, Integer, JSONObjectX> itemSelectListener) {
+                                                   Event3Listener<String, Integer, JSONObject> itemSelectListener) {
         DialogX selectDialog = createHorMarginRadiusDialog(context);
         return selectDialog.view(new SingleSelectDialogView(context)
                 .title(title)

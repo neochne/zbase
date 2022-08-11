@@ -4,7 +4,7 @@ import android.graphics.Color;
 
 import androidx.annotation.ColorInt;
 
-public class ColorX extends Color {
+public final class ColorX extends Color {
     /*
      * Raw color
      */

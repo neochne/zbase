@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.zbase.util.StringUtils;
 import com.zbase.util.ToastUtils;
-import com.zbase.x.json.JSONObjectX;
+import com.zbase.x.json.JSONObject;
 
 public class ContextCallback implements Callback {
 
@@ -18,10 +18,10 @@ public class ContextCallback implements Callback {
 
     @Override
     public void onSuccess(Response response) {
-        JSONObjectX bodyJson = response.getJson();
-        if (bodyJson.get1int("code") != 0) {
+        JSONObject bodyJson = response.getJson();
+        if (bodyJson.optInt("code") != 0) {
             if (mFeedback) {
-                ToastUtils.showOnWorkThread(CONTEXT, bodyJson.get1string("message"));
+                ToastUtils.showOnWorkThread(CONTEXT, bodyJson.optString("message"));
             }
             return;
         }
