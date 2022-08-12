@@ -1,8 +1,9 @@
-package com.zbase.activity;
+package com.zbase.x;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -13,20 +14,96 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.zbase.R;
 import com.zbase.http.JDataCallback;
 import com.zbase.http.YesHttp;
 import com.zbase.util.ResourceUtils;
+import com.zbase.util.ThreadUtils;
 import com.zbase.util.ViewUtils;
-import com.zbase.x.ColorX;
+import com.zbase.view.ToolbarLayout;
 import com.zbase.x.lp.FrameLayoutParamsX;
 
-public class ZBaseActivity extends AppCompatActivity {
+public class ActivityX extends AppCompatActivity {
+    /*
+     * Async configure
+     */
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (async()) {
+            ThreadUtils.getSinglePool().execute(() -> {
+                if (withToolbar()) {
+                    onCreateViewWithToolbarAsync(createToolbar());
+                } else {
+                    onCreateViewAsync();
+                }
+            });
+        } else {
+            if (withToolbar()) {
+                onCreateViewWithToolbarSync(createToolbar());
+            } else {
+                onCreateViewSync();
+            }
+        }
+
+        // Activity launcher
+        if (withActivityResultLauncher()) {
+            ActivityResultLauncher<Intent> launcher = register4ActivityResult(registerActivityResultCallback());
+            getWindow().getDecorView().setTag(R.id.activity_result_launcher, launcher);
+        }
+    }
+
+    protected boolean async() {
+        return false;
+    }
+
+    protected void onCreateViewAsync() {
+    }
+
+    protected void onCreateViewSync() {
+    }
 
     /*
-     * Loading ...
+     * Toolbar configure
+     */
+    protected boolean withToolbar() {
+        return false;
+    }
+
+    protected void onCreateViewWithToolbarAsync(ToolbarLayout toolbarLayout) {
+    }
+
+    protected void onCreateViewWithToolbarSync(ToolbarLayout toolbarLayout) {
+    }
+
+    protected void setToolbarLayout(View view) {
+        setContentView(view, new FrameLayoutParamsX(FrameLayoutParamsX.MATCH_PARENT, FrameLayoutParamsX.MATCH_PARENT));
+    }
+
+    protected ToolbarLayout createToolbar() {
+        return null;
+    }
+
+    /*
+     * ActivityResultLauncher
+     */
+    protected boolean withActivityResultLauncher() {
+        return false;
+    }
+
+    protected ActivityResultCallbackX registerActivityResultCallback() {
+        return null;
+    }
+
+    protected ActivityResultLauncher<Intent> getActivityResultLauncher() {
+        return (ActivityResultLauncher<Intent>) getWindow().getDecorView().getTag(R.id.activity_result_launcher);
+    }
+
+    /*
+     * Loading
      */
     public void showLoading() {
         showLoading("加载中...");
@@ -91,28 +168,13 @@ public class ZBaseActivity extends AppCompatActivity {
     }
 
     /*
-     * Change view background color
-     */
-    public void grayViewBackground(View view) {
-        view.setBackgroundColor(ColorX.HEX_FFECECEC);
-    }
-
-    public void grayContentViewBackground() {
-        setContentViewBackgroundColor(ColorX.HEX_FFECECEC);
-    }
-
-    public void setContentViewBackgroundColor(int color) {
-        findViewById(android.R.id.content).setBackgroundColor(color);
-    }
-
-    /*
      * Start activity for result
      */
     public ActivityResultLauncher<Intent> register4ActivityResult(ActivityResultCallback<ActivityResult> callback) {
         return registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
     }
 
-    public void startActivity4Result(ActivityResultLauncher<Intent> launcher,Intent intent) {
+    public void startActivity4Result(ActivityResultLauncher<Intent> launcher, Intent intent) {
         launcher.launch(intent);
     }
 

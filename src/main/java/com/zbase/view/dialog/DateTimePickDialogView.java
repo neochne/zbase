@@ -1,6 +1,7 @@
 package com.zbase.view.dialog;
 
 import android.content.Context;
+import android.view.View;
 
 import androidx.annotation.NonNull;
 
@@ -108,6 +109,7 @@ public final class DateTimePickDialogView extends DialogView<DateTimePickDialogV
                                 .top2top(YEAR_PICKER_ID)
                                 .bottom2bottom(YEAR_PICKER_ID)
                                 .start2end(DAY_PICKER_ID));
+        enablePositiveAndNegativeButton("取消", "确定");
     }
 
     /**
@@ -209,54 +211,57 @@ public final class DateTimePickDialogView extends DialogView<DateTimePickDialogV
         return this;
     }
 
-    public DateTimePickDialogView listener(OnClickListener btnClickListener, DateSelectListener selectListener) {
-        enablePositiveAndNegativeButton("取消"
-                , "确定"
-                , btnClickListener
-                , v -> {
-                    /*
-                     * Find picker
-                     */
-                    NumberPickerX yearPicker = (NumberPickerX) findViewById(getAboveBtnViewId());
-                    NumberPickerX monthPicker = (NumberPickerX) findViewById(getViewId(R.id.dialog_month_picker));
-                    NumberPickerX dayPicker = (NumberPickerX) findViewById(getViewId(R.id.dialog_day_picker));
-                    NumberPickerX hourPicker = (NumberPickerX) findViewById(getViewId(R.id.dialog_hour_picker));
-                    NumberPickerX minutePicker = (NumberPickerX) findViewById(getViewId(R.id.dialog_minute_picker));
-                    NumberPickerX secondPicker = (NumberPickerX) findViewById(getViewId(R.id.dialog_second_picker));
+    public DateTimePickDialogView cancelListener(View.OnClickListener cancelClickListener) {
+        setTag(R.id.dialog_cancel_click_listener, cancelClickListener);
+        negativeClickListener(cancelClickListener);
+        return this;
+    }
 
-                    /*
-                     * Date
-                     */
-                    String year = yearPicker.getDisplayedValues()[yearPicker.getValue()];
-                    String month = monthPicker.getDisplayedValues()[monthPicker.getValue()];
-                    String day = dayPicker.getDisplayedValues()[dayPicker.getValue()];
-                    String date = year + "-" + month + "-" + day;
-                    String hour = "";
-                    String minute = "";
-                    String second = "";
+    public DateTimePickDialogView selectListener(DateSelectListener selectListener) {
+        positiveClickListener(v -> {
+            /*
+             * Find picker
+             */
+            NumberPickerX yearPicker = findViewById(getAboveBtnViewId());
+            NumberPickerX monthPicker = findViewById(getViewId(R.id.dialog_month_picker));
+            NumberPickerX dayPicker = findViewById(getViewId(R.id.dialog_day_picker));
+            NumberPickerX hourPicker = findViewById(getViewId(R.id.dialog_hour_picker));
+            NumberPickerX minutePicker = findViewById(getViewId(R.id.dialog_minute_picker));
+            NumberPickerX secondPicker = findViewById(getViewId(R.id.dialog_second_picker));
 
-                    /*
-                     * Time
-                     */
-                    if (hourPicker != null) {
-                        hour = hourPicker.getDisplayedValues()[hourPicker.getValue()];
-                        date += (" " + hour);
-                    }
-                    if (minutePicker != null) {
-                        minute = minutePicker.getDisplayedValues()[minutePicker.getValue()];
-                        date += (":" + minute);
-                    }
-                    if (secondPicker != null) {
-                        second = secondPicker.getDisplayedValues()[secondPicker.getValue()];
-                        date += (":" + second);
-                    }
+            /*
+             * Date
+             */
+            String year = yearPicker.getDisplayedValues()[yearPicker.getValue()];
+            String month = monthPicker.getDisplayedValues()[monthPicker.getValue()];
+            String day = dayPicker.getDisplayedValues()[dayPicker.getValue()];
+            String date = year + "-" + month + "-" + day;
+            String hour = "";
+            String minute = "";
+            String second = "";
 
-                    /*
-                     * Call back
-                     */
-                    btnClickListener.onClick(v);
-                    selectListener.done(year, month, day, hour, minute, second, date);
-                });
+            /*
+             * Time
+             */
+            if (hourPicker != null) {
+                hour = hourPicker.getDisplayedValues()[hourPicker.getValue()];
+                date += (" " + hour);
+            }
+            if (minutePicker != null) {
+                minute = minutePicker.getDisplayedValues()[minutePicker.getValue()];
+                date += (":" + minute);
+            }
+            if (secondPicker != null) {
+                second = secondPicker.getDisplayedValues()[secondPicker.getValue()];
+                date += (":" + second);
+            }
+
+            /*
+             * Call back
+             */
+            ((View.OnClickListener) getTag(R.id.dialog_cancel_click_listener)).onClick(v);
+            selectListener.done(year, month, day, hour, minute, second, date);
+        });
         return this;
     }
 

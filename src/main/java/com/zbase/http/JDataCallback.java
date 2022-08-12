@@ -2,7 +2,7 @@ package com.zbase.http;
 
 import android.content.Context;
 
-import com.zbase.activity.ZBaseActivity;
+import com.zbase.x.ActivityX;
 import com.zbase.interfaces.Event1Listener;
 import com.zbase.util.ToastUtils;
 import com.zbase.x.json.JSONArray;
@@ -91,11 +91,11 @@ public class JDataCallback extends ContextCallback {
     @Override
     public void onStart() {
         super.onStart();
-        if (CONTEXT instanceof ZBaseActivity) {
-            ZBaseActivity zBaseActivity = (ZBaseActivity) CONTEXT;
-            zBaseActivity.runOnUiThread(() -> {
+        if (CONTEXT instanceof ActivityX) {
+            ActivityX activityX = (ActivityX) CONTEXT;
+            activityX.runOnUiThread(() -> {
                 if (mFeedback) {
-                    zBaseActivity.showLoading(mLoadingPrompt);
+                    activityX.showLoading(mLoadingPrompt);
                 }
             });
         }
@@ -104,9 +104,9 @@ public class JDataCallback extends ContextCallback {
     @Override
     public void onFinish() {
         super.onFinish();
-        if (CONTEXT instanceof ZBaseActivity) {
-            ZBaseActivity zBaseActivity = (ZBaseActivity) CONTEXT;
-            zBaseActivity.runOnUiThread(zBaseActivity::cancelLoading);
+        if (CONTEXT instanceof ActivityX) {
+            ActivityX activityX = (ActivityX) CONTEXT;
+            activityX.runOnUiThread(activityX::cancelLoading);
         }
     }
 

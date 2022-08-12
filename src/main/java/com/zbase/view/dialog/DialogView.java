@@ -25,7 +25,6 @@ public class DialogView<T extends DialogView<?>> extends ConstraintLayoutX {
         setTag(R.id.dialog_title, titleId);
         // Above btn view id
         setTag(R.id.dialog_above_btn, generateViewId());
-
         /*
          * View
          */
@@ -48,25 +47,25 @@ public class DialogView<T extends DialogView<?>> extends ConstraintLayoutX {
         return (T) this;
     }
 
-    public T enablePositiveAndNegativeButton(String negativeText
-            , String positiveText
-            , View.OnClickListener negativeClickListener
-            , View.OnClickListener positiveClickListener) {
-        // Button press state drawable
+    public T enablePositiveAndNegativeButton(String negativeText, String positiveText) {
+        /*
+         * Button pressed state drawable
+         */
         StateListDrawableX negativePressedSateDrawable = new StateListDrawableX()
                 .stateColors(new int[]{android.R.attr.state_pressed}, ColorX.DIVIDER)
                 .stateColors(new int[]{}, ColorX.WHITE);
         StateListDrawableX positivePressedSateDrawable = new StateListDrawableX()
                 .stateColors(new int[]{android.R.attr.state_pressed}, ColorX.DIVIDER)
                 .stateColors(new int[]{}, ColorX.WHITE);
-
         /*
-         * View id
+         * View
          */
+        int negativeBtnId = generateViewId();
+        setTag(R.id.dialog_negative_btn, negativeBtnId);
+        int positiveBtnId = generateViewId();
+        setTag(R.id.dialog_positive_btn, positiveBtnId);
         int horDividerId = generateViewId();
         int verDividerId = generateViewId();
-
-        // View
         int btnTextVerticalPadding = DensityUtils.dp2px2int(getContext(), 13);
         this
                 .addChildView(new ViewX(getContext())
@@ -83,14 +82,14 @@ public class DialogView<T extends DialogView<?>> extends ConstraintLayoutX {
                                 .top2bottom(horDividerId)
                                 .bottom2bottomParent())
                 .addChildView(new TextViewX(getContext())
+                                .id(negativeBtnId)
                                 .padding(0, btnTextVerticalPadding, 0, btnTextVerticalPadding)
                                 .gravity(Gravity.CENTER)
-                                .textSize(17)
+                                .textSize(16)
                                 .typeFace(Typeface.DEFAULT_BOLD)
                                 .textColor(ColorX.BLACK)
                                 .background(negativePressedSateDrawable)
                                 .text(negativeText)
-                                .clickListener(negativeClickListener)
                         , new ConstraintLayoutParamsX()
                                 .width(0)
                                 .chainStyleHorizontal(ConstraintLayoutParamsX.CHAIN_SPREAD)
@@ -100,14 +99,14 @@ public class DialogView<T extends DialogView<?>> extends ConstraintLayoutX {
                                 .top2bottom(horDividerId)
                                 .bottom2bottomParent())
                 .addChildView(new TextViewX(getContext())
+                                .id(positiveBtnId)
                                 .padding(0, btnTextVerticalPadding, 0, btnTextVerticalPadding)
                                 .gravity(Gravity.CENTER)
-                                .textSize(17)
+                                .textSize(16)
                                 .typeFace(Typeface.DEFAULT_BOLD)
                                 .textColor(ColorX.HEX_FF606D96)
                                 .background(positivePressedSateDrawable)
                                 .text(positiveText)
-                                .clickListener(positiveClickListener)
                         , new ConstraintLayoutParamsX()
                                 .width(0)
                                 .weightHorizontal(1)
@@ -118,40 +117,47 @@ public class DialogView<T extends DialogView<?>> extends ConstraintLayoutX {
         return (T) this;
     }
 
-    public T enablePositiveButton(String positiveText, View.OnClickListener positiveClickListener) {
-        // Button configure
-        StateListDrawableX pressedSateDrawable = new StateListDrawableX()
+    public T enablePositiveButton(String positiveText) {
+        // Press state drawable
+        StateListDrawableX positivePressedSateDrawable = new StateListDrawableX()
                 .stateColors(new int[]{android.R.attr.state_pressed}, ColorX.DIVIDER)
                 .stateColors(new int[]{}, ColorX.WHITE);
-
-        /*
-         * View id
-         */
-        int horDividerId = generateViewId();
-
         // View
+        int btnHorDividerId = generateViewId();
+        int positiveBtnId = generateViewId();
+        setTag(R.id.dialog_positive_btn, positiveBtnId);
         int btnTextVerticalPadding = DensityUtils.dp2px2int(getContext(), 13);
         this
                 .addChildView(new ViewX(getContext())
-                                .id(horDividerId)
+                                .id(btnHorDividerId)
                                 .backgroundColor(ColorX.DIVIDER)
                         , new ConstraintLayoutParamsX(ConstraintLayoutParamsX.MATCH_PARENT, 1)
                                 .top2bottom(getAboveBtnViewId()))
                 .addChildView(new TextViewX(getContext())
+                                .id(positiveBtnId)
                                 .padding(0, btnTextVerticalPadding, 0, btnTextVerticalPadding)
                                 .gravity(Gravity.CENTER)
-                                .textSize(17)
+                                .textSize(16)
                                 .typeFace(Typeface.DEFAULT_BOLD)
                                 .textColor(ColorX.HEX_FF606D96)
-                                .background(pressedSateDrawable)
+                                .background(positivePressedSateDrawable)
                                 .text(positiveText)
-                                .clickListener(positiveClickListener)
                         , new ConstraintLayoutParamsX()
                                 .width(0)
-                                .start2startParent()
                                 .end2endParent()
-                                .top2bottom(horDividerId)
+                                .start2startParent()
+                                .top2bottom(btnHorDividerId)
                                 .bottom2bottomParent());
+        return (T) this;
+    }
+
+    public T positiveClickListener(View.OnClickListener positiveClickListener) {
+        findViewById((int) getTag(R.id.dialog_positive_btn)).setOnClickListener(positiveClickListener);
+        return (T) this;
+    }
+
+    public T negativeClickListener(View.OnClickListener negativeClickListener) {
+        findViewById((int) getTag(R.id.dialog_negative_btn)).setOnClickListener(negativeClickListener);
         return (T) this;
     }
 

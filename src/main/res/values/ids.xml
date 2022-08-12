@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="dialog_title" type="id"/>
-    <item name="dialog_above_btn" type="id"/>
-    <item name="dialog_year_picker" type="id"/>
-    <item name="dialog_month_picker" type="id"/>
-    <item name="dialog_day_picker" type="id"/>
-    <item name="dialog_day_tv" type="id"/>
-    <item name="dialog_hour_picker" type="id"/>
-    <item name="dialog_minute_picker" type="id"/>
-    <item name="dialog_second_picker" type="id"/>
+    <!-- Activity -->
+    <item name="activity_result_launcher" type="id"/>
+
+    <!-- DialogView -->
+    <item name="dialog_title" type="id" />
+    <item name="dialog_above_btn" type="id" />
+    <item name="dialog_negative_btn" type="id" />
+    <item name="dialog_positive_btn" type="id" />
+    <item name="dialog_cancel_click_listener" type="id" /><!-- 只要点击的东西使对话框消失都用这个 -->
+
+    <!-- SingleSelectDialogView -->
+    <item name="dialog_data_type_json_object" type="id" />
+    <item name="dialog_data_type_json_string" type="id" />
+    <item name="dialog_data_type_array_string" type="id" />
+    <item name="dialog_data_type_list_string" type="id" />
+
+    <!-- DateTimePickDialogView -->
+    <item name="dialog_year_picker" type="id" />
+    <item name="dialog_month_picker" type="id" />
+    <item name="dialog_day_picker" type="id" />
+    <item name="dialog_day_tv" type="id" />
+    <item name="dialog_hour_picker" type="id" />
+    <item name="dialog_minute_picker" type="id" />
+    <item name="dialog_second_picker" type="id" />
 </resources>

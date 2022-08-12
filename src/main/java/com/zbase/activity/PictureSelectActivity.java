@@ -28,6 +28,7 @@ import com.zbase.view.RoundedButton;
 import com.zbase.view.adapter.PicturePagerAdapter;
 import com.zbase.view.adapter.PictureSelectAdapter;
 import com.zbase.view.decor.GridSpacingItemDecoration;
+import com.zbase.x.ActivityX;
 import com.zbase.x.ColorX;
 import com.zbase.x.drawable.ColorDrawableX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
@@ -47,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class PictureSelectActivity extends ZBaseActivity {
+public final class PictureSelectActivity extends ActivityX {
 
     @Override
     protected void onResume() {

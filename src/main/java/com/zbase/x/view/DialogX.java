@@ -44,7 +44,7 @@ public final class DialogX extends AlertDialog {
     }
 
     /**
-     * Only for dialog view is com.zbase.view.dialog.LoadingDialogView class
+     * Only for dialog view is LoadingDialogView
      */
     public DialogX showLoading(String text) {
         LoadingDialogView loadingDialogView = (LoadingDialogView) getView();
@@ -85,7 +85,7 @@ public final class DialogX extends AlertDialog {
         return this;
     }
 
-    public DialogX cancelListener(OnCancelListener cancelListener) {
+    public DialogX dialogCancelListener(OnCancelListener cancelListener) {
         setOnCancelListener(cancelListener);
         return this;
     }
@@ -123,39 +123,36 @@ public final class DialogX extends AlertDialog {
                 .view(new PromptDialogView(context)
                         .title(title)
                         .text(message)
-                        .enablePositiveAndNegativeButton(negative,
-                                positive,
-                                v -> {
-                                    promptDialog.cancel();
-                                    if (negativeListener == null) {
-                                        return;
-                                    }
-                                    negativeListener.onClick(v);
-                                },
-                                v -> {
-                                    promptDialog.cancel();
-                                    positiveListener.onClick(v);
-                                }));
+                        .enablePositiveAndNegativeButton(negative, positive)
+                        .negativeClickListener(v -> {
+                            promptDialog.cancel();
+                            if (negativeListener == null) {
+                                return;
+                            }
+                            negativeListener.onClick(v);
+                        })
+                        .positiveClickListener(v -> {
+                            promptDialog.cancel();
+                            positiveListener.onClick(v);
+                        }));
     }
 
     /**
-     * 提示对话框（only one positive button）
+     * 提示对话框（Only one positive button）
      */
-    public static DialogX createPromptDialog(Context context,
-                                             String title,
-                                             String message,
-                                             String positive,
-                                             View.OnClickListener positiveListener) {
+    public static DialogX createPositivePromptDialog(Context context,
+                                                     String message,
+                                                     View.OnClickListener positiveListener) {
         DialogX promptDialog = createHorMarginRadiusDialog(context);
         return promptDialog
                 .view((new PromptDialogView(context)
-                        .title(title)
+                        .title("提示")
                         .text(message)
-                        .enablePositiveButton(positive,
-                                v -> {
-                                    promptDialog.cancel();
-                                    positiveListener.onClick(v);
-                                })));
+                        .enablePositiveButton("确定")
+                        .positiveClickListener(v -> {
+                            promptDialog.cancel();
+                            positiveListener.onClick(v);
+                        })));
     }
 
     /**
@@ -169,8 +166,9 @@ public final class DialogX extends AlertDialog {
         DialogX selectDialog = createHorMarginRadiusDialog(context);
         return selectDialog.view(new SingleSelectDialogView(context)
                 .title(title)
-                .data(data, key, itemSelectListener)
-                .cancelIconClickListener(v -> selectDialog.cancel()));
+                .data(data, key)
+                .itemSelectListener(itemSelectListener)
+                .cancelClickListener(v -> selectDialog.cancel()));
     }
 
     /**
@@ -182,7 +180,8 @@ public final class DialogX extends AlertDialog {
                 .view(new DateTimePickDialogView(context)
                         .title(title)
                         .limit(limit)
-                        .listener(v -> datePickerDialog.cancel(), selectListener));
+                        .cancelListener(v -> datePickerDialog.cancel())
+                        .selectListener(selectListener));
     }
 
     /**

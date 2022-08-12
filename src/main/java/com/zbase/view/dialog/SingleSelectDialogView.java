@@ -31,7 +31,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
         this
                 .addChildView(new ImageViewX(context)
                                 .src(R.drawable.ic_clear_gray)
-                                .clickListener(v -> ((OnClickListener) getTag()).onClick(v))
+                                .clickListener(v -> getCancelClickListener().onClick(v))
                         , new ConstraintLayoutParamsX()
                                 .end2endParent()
                                 .top2top(getTitleId())
@@ -51,8 +51,33 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
                                 .top2bottom(titleDividerId));
     }
 
-    public SingleSelectDialogView cancelIconClickListener(View.OnClickListener cancelClickListener) {
-        setTag(cancelClickListener);
+    public SingleSelectDialogView cancelClickListener(View.OnClickListener cancelClickListener) {
+        setTag(R.id.dialog_cancel_click_listener, cancelClickListener);
+        return this;
+    }
+
+    private View.OnClickListener getCancelClickListener() {
+        return ((OnClickListener) getTag(R.id.dialog_cancel_click_listener));
+    }
+
+    public SingleSelectDialogView itemSelectListener(Event3Listener<String, Integer, JSONObject> itemSelectListener) {
+        ((ListViewX) findViewById(getAboveBtnViewId()))
+                .itemClickListener((adapterView, view, i, l) -> {
+                    getCancelClickListener().onClick(view);
+                    Object jsonObjectTag = getTag(R.id.dialog_data_type_json_object);
+                    Object jsonStringTag = getTag(R.id.dialog_data_type_json_string);
+                    Object listStringTag = getTag(R.id.dialog_data_type_list_string);
+                    Object arrayStringTag = getTag(R.id.dialog_data_type_array_string);
+                    boolean isJsonObject = jsonObjectTag != null && (boolean) jsonObjectTag;
+                    boolean isJsonString = jsonStringTag != null && (boolean) jsonStringTag;
+                    boolean isListString = listStringTag != null && (boolean) listStringTag;
+                    boolean isArrayString = arrayStringTag != null && (boolean) arrayStringTag;
+                    if (isJsonString || isListString || isArrayString) {
+                        itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, null);
+                    } else if (isJsonObject) {
+                        itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, (JSONObject) view.getTag());
+                    }
+                });
         return this;
     }
 
@@ -62,29 +87,21 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
      *             because it return java.util.Arrays$ArrayList type,not java.util.Arrays$ArrayList
      * @param key  If data is object json array,need provide this param
      */
-    public SingleSelectDialogView data(Object data, String key, Event3Listener<String, Integer, JSONObject> itemSelectListener) {
+    public SingleSelectDialogView data(Object data, String key) {
         /*
-         * Data type
-         */
-        final int STRING_JSON_ARRAY = 1;
-        final int OBJECT_JSON_ARRAY = 2;
-        final int STRING_ARRAY = 3;
-        final int STRING_LIST = 4;
-        int type = 0;
-        /*
-         * Check data type
+         * Determine data type
          */
         if (data instanceof JSONArray) {
             Object obj = ((JSONArray) data).opt(0);
             if (obj instanceof String) {
-                type = STRING_JSON_ARRAY;
+                setTag(R.id.dialog_data_type_json_string, true);
             } else if (obj instanceof JSONObject) {
-                type = OBJECT_JSON_ARRAY;
+                setTag(R.id.dialog_data_type_json_object, true);
             }
         } else if (data instanceof java.util.ArrayList<?>) {
-            type = STRING_LIST;
+            setTag(R.id.dialog_data_type_list_string, true);
         } else if (data instanceof String[]) {
-            type = STRING_ARRAY;
+            setTag(R.id.dialog_data_type_array_string, true);
         } else {
             throw new RuntimeException("Data invalid");
         }
@@ -92,39 +109,43 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
         /*
          * View
          */
+        Object jsonObjectTag = getTag(R.id.dialog_data_type_json_object);
+        Object jsonStringTag = getTag(R.id.dialog_data_type_json_string);
+        Object listStringTag = getTag(R.id.dialog_data_type_list_string);
+        Object arrayStringTag = getTag(R.id.dialog_data_type_array_string);
+        boolean isJsonObject = jsonObjectTag != null && (boolean) jsonObjectTag;
+        boolean isJsonString = jsonStringTag != null && (boolean) jsonStringTag;
+        boolean isListString = listStringTag != null && (boolean) listStringTag;
+        boolean isArrayString = arrayStringTag != null && (boolean) arrayStringTag;
         int itemPadding = DensityUtils.dp2px2int(getContext(), 10);
-        int finalType = type;
         ((ListViewX) findViewById(getAboveBtnViewId()))
                 .adapter(new BaseAdapter() {
 
                     @Override
                     public int getCount() {
-                        switch (finalType) {
-                            case STRING_JSON_ARRAY:
-                            case OBJECT_JSON_ARRAY:
-                                return ((JSONArray) data).length();
-                            case STRING_ARRAY:
-                                return ((String[]) data).length;
-                            case STRING_LIST:
-                                return ((ArrayList<String>) data).size();
-                            default:
-                                return 0;
+                        if (isJsonString || isJsonObject) {
+                            return ((JSONArray) data).length();
+                        } else if (isArrayString) {
+                            return ((String[]) data).length;
+                        } else if (isListString) {
+                            return ((ArrayList<String>) data).size();
+                        } else {
+                            return 0;
                         }
                     }
 
                     @Override
                     public Object getItem(int position) {
-                        switch (finalType) {
-                            case STRING_JSON_ARRAY:
-                                return ((JSONArray) data).optString(position);
-                            case OBJECT_JSON_ARRAY:
-                                return ((JSONArray) data).optJSONObject(position).optString(key);
-                            case STRING_ARRAY:
-                                return ((String[]) data)[position];
-                            case STRING_LIST:
-                                return ((ArrayList<String>) data).get(position);
-                            default:
-                                return null;
+                        if (isJsonString) {
+                            return ((JSONArray) data).optString(position);
+                        } else if (isJsonObject) {
+                            return ((JSONArray) data).optJSONObject(position).optString(key);
+                        } else if (isArrayString) {
+                            return ((String[]) data)[position];
+                        } else if (isListString) {
+                            return ((ArrayList<String>) data).get(position);
+                        } else {
+                            return JSONObject.create();
                         }
                     }
 
@@ -135,24 +156,16 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
 
                     @Override
                     public View getView(int position, View convertView, ViewGroup parent) {
-                        return new TextViewX(getContext())
+                        TextViewX itemTv = new TextViewX(getContext())
                                 .padding(0, itemPadding, 0, itemPadding)
                                 .gravity(Gravity.CENTER)
                                 .text(String.valueOf(getItem(position)));
+                        if (isJsonObject) {
+                            itemTv.setTag(((JSONArray) data).optJSONObject(position));
+                        }
+                        return itemTv;
                     }
 
-                })
-                .itemClickListener((adapterView, view, i, l) -> {
-                    ((OnClickListener) getTag()).onClick(view);
-                    switch (finalType) {
-                        case STRING_JSON_ARRAY:
-                        case STRING_ARRAY:
-                        case STRING_LIST:
-                            itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, null);
-                            break;
-                        case OBJECT_JSON_ARRAY:
-                            itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, ((JSONArray) data).optJSONObject(i));
-                    }
                 });
         return this;
     }

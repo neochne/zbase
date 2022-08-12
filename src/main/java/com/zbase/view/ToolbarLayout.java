@@ -7,36 +7,35 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.zbase.util.DensityUtils;
 import com.zbase.x.ColorX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
 import com.zbase.x.view.ImageViewX;
 import com.zbase.x.view.TextViewX;
-import com.zbase.x.viewgroup.ConstraintLayoutX;
+import com.zbase.x.viewgroup.IViewGroupX;
 
-public final class ToolbarLayout extends ConstraintLayoutX {
-
-    private final int TOOLBAR_ID;
+public final class ToolbarLayout extends ConstraintLayout implements IViewGroupX<ToolbarLayout> {
 
     public ToolbarLayout(@NonNull Context context) {
         super(context);
-        setBackgroundColor(ColorX.WHITE);
-        setLayoutParams(new ConstraintLayoutParamsX(MATCH_PARENT, WRAP_CONTENT));
-        TOOLBAR_ID = generateViewId();
+        this
+                .backgroundColor(ColorX.WHITE)
+                .lp(new ConstraintLayoutParamsX(MATCH_PARENT, WRAP_CONTENT))
+                .tag(generateViewId());
     }
 
     public int getToolbarId() {
-        return TOOLBAR_ID;
+        return (int) getTag();
     }
 
     public ToolbarLayout addTitle(String title, int ColorX, int bgColor, int sp, Typeface typeface) {
         Context context = getContext();
         return addChildView(new TextViewX(context)
-                        .id(TOOLBAR_ID)
+                        .id(getToolbarId())
                         .text(title)
                         .textColor(ColorX)
                         .textSize(sp)
@@ -45,14 +44,14 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .typeFace(typeface),
                 new ConstraintLayoutParamsX()
                         .width(0)
-                        .height(DensityUtils.dp2px2int(context,56))
+                        .height(DensityUtils.dp2px2int(context, 56))
                         .start2start(ConstraintLayoutParamsX.PARENT_ID)
                         .top2top(ConstraintLayoutParamsX.PARENT_ID)
                         .end2end(ConstraintLayoutParamsX.PARENT_ID));
     }
 
     public ToolbarLayout title(String title) {
-        ((TextViewX)findViewById(TOOLBAR_ID)).setText(title);
+        ((TextViewX) findViewById(getToolbarId())).setText(title);
         return this;
     }
 
@@ -62,9 +61,9 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .clickListener(listener),
                 new ConstraintLayoutParamsX()
                         .start2start(ConstraintLayoutParamsX.PARENT_ID)
-                        .top2top(TOOLBAR_ID)
-                        .bottom2bottom(TOOLBAR_ID)
-                        .margins(leftMargin,0,0,0));
+                        .top2top(getToolbarId())
+                        .bottom2bottom(getToolbarId())
+                        .margins(leftMargin, 0, 0, 0));
     }
 
     public ToolbarLayout addRightIcon(int res, int rightMargin, View.OnClickListener listener) {
@@ -73,9 +72,9 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .clickListener(listener),
                 new ConstraintLayoutParamsX()
                         .end2end(ConstraintLayoutParamsX.PARENT_ID)
-                        .top2top(TOOLBAR_ID)
-                        .bottom2bottom(TOOLBAR_ID)
-                        .margins(0,0,rightMargin,0));
+                        .top2top(getToolbarId())
+                        .bottom2bottom(getToolbarId())
+                        .margins(0, 0, rightMargin, 0));
     }
 
     public ToolbarLayout addRightText(String text,
@@ -91,9 +90,9 @@ public final class ToolbarLayout extends ConstraintLayoutX {
                         .clickListener(listener),
                 new ConstraintLayoutParamsX()
                         .end2end(ConstraintLayoutParamsX.PARENT_ID)
-                        .top2top(TOOLBAR_ID)
-                        .bottom2bottom(TOOLBAR_ID)
-                        .margins(0,0,rightMargin,0));
+                        .top2top(getToolbarId())
+                        .bottom2bottom(getToolbarId())
+                        .margins(0, 0, rightMargin, 0));
     }
 
     public void setContentView(View view, ConstraintLayoutParamsX lp) {
@@ -103,19 +102,7 @@ public final class ToolbarLayout extends ConstraintLayoutX {
     }
 
     public ToolbarLayout addChildViewBelowToolbar(View view, ConstraintLayoutParamsX lp) {
-        return addChildView(view, lp.top2bottom(TOOLBAR_ID));
-    }
-
-    @Override
-    public ToolbarLayout addChildView(View view) {
-        super.addChildView(view);
-        return this;
-    }
-
-    @Override
-    public ToolbarLayout addChildView(View view, ViewGroup.LayoutParams lp) {
-        super.addChildView(view,lp);
-        return this;
+        return addChildView(view, lp.top2bottom(getToolbarId()));
     }
 
 }
