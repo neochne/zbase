@@ -179,6 +179,13 @@ public class ActivityX extends AppCompatActivity {
     }
 
     /*
+     * Resources
+     */
+    public String string(int string) {
+        return ResourceUtils.getString(this, string);
+    }
+
+    /*
      * Http request
      */
     public void get(String url,

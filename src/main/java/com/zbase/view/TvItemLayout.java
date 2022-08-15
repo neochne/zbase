@@ -76,7 +76,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
     public TvItemLayout enableDivider() {
         return enableDivider(0, 0, 0, 0,
                 1,
-                ColorX.HEX_FFECECEC);
+                ColorX.DIVIDER);
     }
 
     public TvItemLayout enableLeftMarginDivider() {
@@ -85,7 +85,7 @@ public final class TvItemLayout extends ConstraintLayoutX {
                 0,
                 0,
                 1,
-                ColorX.HEX_FFECECEC);
+                ColorX.DIVIDER);
     }
 
     public TvItemLayout enableDivider(int l, int t, int r, int b, int height, int color) {

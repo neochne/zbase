@@ -40,7 +40,7 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
     }
 
     public DynamicVerTvLayout text(JSONObject itemObject, String[] keys, String[] names) {
-        text(itemObject,ColorX.BLACK, ColorX.HEX_FF808080,keys,names);
+        text(itemObject,ColorX.BLACK, ColorX.TV_DEFAULT_COLOR,keys,names);
         return this;
     }
 

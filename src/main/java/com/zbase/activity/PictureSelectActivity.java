@@ -161,7 +161,7 @@ public final class PictureSelectActivity extends ActivityX {
                                 .id(pictureRvId)
                                 .layoutManager(new GridLayoutManager(this, 4))
                                 .itemDecoration(new GridSpacingItemDecoration(4, 20, true))
-                                .backgroundColor(ColorX.HEX_FF353535)
+                                .backgroundColor(ColorX.GRAY_353535)
                                 .adapter(pictureAdapter),
                         new ConstraintLayoutParamsX().width(0)
                                 .height(0)
@@ -201,7 +201,7 @@ public final class PictureSelectActivity extends ActivityX {
             selectedBucketMediaList.addAll(mediaList.get(0));
             pictureAdapter.notifyDataSetChanged();
             containerLayout.addChildView(bucketLvParentLayout
-                            .backgroundColor(ColorX.HEX_A0000000)
+                            .backgroundColor(ColorX.BLACK_A0000000)
                             .clickListener(v -> hideBucketLv(bucketLvParentLayout, bucketLv, downIv))
                             .invisible()
                             .addChildView(bucketLv
@@ -311,12 +311,13 @@ public final class PictureSelectActivity extends ActivityX {
             /*
              * Bar
              */
-            int barColor = ColorX.HEX_EF000000;
+            int barColor = ColorX.BLACK_EF000000;
             int barPadding = DensityUtils.dp2px2int(this, 8);
 
             /*
              * Top Bar
              */
+            int operateBgColor = ColorX.GREEN_549588;
             RelativeLayoutX topRl = new RelativeLayoutX(this)
                     .backgroundColor(barColor)
                     .padding(barPadding, barPadding, barPadding, barPadding)
@@ -332,7 +333,7 @@ public final class PictureSelectActivity extends ActivityX {
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.CENTER_IN_PARENT))
                     .addChildView(new CheckBoxX(this)
-                                    .color(ColorX.HEX_FF549588),
+                                    .color(operateBgColor),
                             new RelativeLayoutParamsX()
                                     .rule(RelativeLayout.ALIGN_PARENT_RIGHT)
                                     .rule(RelativeLayout.CENTER_VERTICAL));
@@ -344,7 +345,7 @@ public final class PictureSelectActivity extends ActivityX {
                     .backgroundColor(barColor)
                     .padding(barPadding, barPadding, barPadding, barPadding)
                     .addChildView(new RoundedButton(this)
-                                    .solidColor(ColorX.HEX_FF549588)
+                                    .solidColor(operateBgColor)
                                     .text("确定")
                                     .textColor(ColorX.WHITE),
                             new RelativeLayoutParamsX()

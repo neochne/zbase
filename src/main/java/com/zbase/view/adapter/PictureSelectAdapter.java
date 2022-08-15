@@ -31,7 +31,7 @@ public final class PictureSelectAdapter extends ZBaseRvAdapter<PictureSelectAdap
     public PictureSelectAdapter(Context context, List<LocalMedia> pictureList) {
         this.CONTEXT = context;
         this.PICTURE_LIST = pictureList;
-        this.WH = DensityUtils.dp2px2int(context,80);
+        this.WH = DensityUtils.dp2px2int(context, 80);
     }
 
     @NonNull
@@ -44,7 +44,7 @@ public final class PictureSelectAdapter extends ZBaseRvAdapter<PictureSelectAdap
                         new FrameLayoutParamsX(FrameLayoutParamsX.MATCH_PARENT, FrameLayoutParamsX.MATCH_PARENT))
                 .addChildView(new CheckBoxX(CONTEXT)
                                 .id(67)
-                                .color(ColorX.HEX_FF549588),
+                                .color(ColorX.GREEN_549588),
                         new FrameLayoutParamsX().gravity(Gravity.TOP | Gravity.END)), 66, 67);
     }
 
