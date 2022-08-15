@@ -18,21 +18,11 @@ public class ColorX extends Color {
      * Gray
      */
     @ColorInt
-    public static final int GRAY_808080 = 0xFF808080;
-
-    @ColorInt
     public static final int GRAY_353535 = 0xFF353535;
-
-    @ColorInt
-    public static final int GRAY_ECECEC = 0xFFECECEC;
-
-    @ColorInt
-    public static final int GRAY_EEEEEE = 0xFFEEEEEE;
 
     /*
      * Blue
      */
-
     @ColorInt
     public static final int BLUE_606D96 = 0xFF606D96;
 
@@ -46,18 +36,18 @@ public class ColorX extends Color {
      * Divider color
      */
     @ColorInt
-    public static final int DIVIDER = GRAY_EEEEEE;
+    public static final int DIVIDER = 0xFFEEEEEE;
 
     /**
      * View gray background
      */
     @ColorInt
-    public static final int GRAY_BG = GRAY_ECECEC;
+    public static final int GRAY_BG = 0xFFECECEC;
 
     /**
      * TextView default text color
      */
     @ColorInt
-    public static final int TV_DEFAULT_COLOR = GRAY_808080;
+    public static final int TV_DEFAULT_COLOR = 0xFF808080;
 
 }
