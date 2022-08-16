@@ -4,19 +4,12 @@
 
 package com.zbase.util;
 
-import android.content.Context;
-import android.content.res.ColorStateList;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.TextView;
 
-import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -101,10 +94,6 @@ public final class ViewUtils {
         return false;
     }
 
-    public static void setProgressBarColor(ProgressBar progressBar, int color) {
-        DrawableCompat.setTint(progressBar.getIndeterminateDrawable(), color);
-    }
-
     /**
      * 先调此方法，然后通过 view.getMeasuredWidth() 和 view.getMeasuredHeight 方法
      * 可以在任何时候获取到一个 view 的长宽
@@ -113,9 +102,6 @@ public final class ViewUtils {
         view.measure(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
-    public static void setCheckBoxColor(CheckBox checkBox, int color) {
-        checkBox.setButtonTintList(ColorStateList.valueOf(color));
-    }
 
     public static void addVp2SelectListener(ViewPager2 vp2, ViewPager2.OnPageChangeCallback listener) {
         vp2.registerOnPageChangeCallback(listener);
@@ -123,10 +109,6 @@ public final class ViewUtils {
 
     public static void removeVp2SelectListener(ViewPager2 vp2, ViewPager2.OnPageChangeCallback listener) {
         vp2.unregisterOnPageChangeCallback(listener);
-    }
-
-    public static void setTextSizeInPixel(Context context, TextView textView, int id) {
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_PX,ResourceUtils.getPixel(context,id));
     }
 
 }

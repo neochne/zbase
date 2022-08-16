@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Activity -->
-    <item name="activity_result_launcher" type="id"/>
+    <!-- ActivityX -->
+    <item name="activityx_result_launcher" type="id"/>
+    <item name="activityx_loading_layout" type="id"/>
+    <item name="activityx_loading_tv" type="id"/>
 
     <!-- DialogView -->
     <item name="dialog_title" type="id" />

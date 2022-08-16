@@ -7,6 +7,7 @@ import android.os.Build;
 import android.widget.ProgressBar;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.graphics.drawable.DrawableCompat;
 
 public final class ProgressBarX extends ProgressBar implements IViewX<ProgressBarX> {
 
@@ -27,6 +28,11 @@ public final class ProgressBarX extends ProgressBar implements IViewX<ProgressBa
 
     public ProgressBarX max(int max) {
         setMax(max);
+        return this;
+    }
+
+    public ProgressBarX color(int color) {
+        DrawableCompat.setTint(getIndeterminateDrawable(), color);
         return this;
     }
 

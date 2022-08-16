@@ -1,11 +1,10 @@
 package com.zbase.x.view;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
 import android.widget.CompoundButton;
 
 import androidx.appcompat.widget.AppCompatCheckBox;
-
-import com.zbase.util.ViewUtils;
 
 public final class CheckBoxX extends AppCompatCheckBox implements ICompoundButtonX<CheckBoxX> {
 
@@ -19,7 +18,7 @@ public final class CheckBoxX extends AppCompatCheckBox implements ICompoundButto
     }
 
     public CheckBoxX color(int color) {
-        ViewUtils.setCheckBoxColor(this, color);
+        setButtonTintList(ColorStateList.valueOf(color));
         return this;
     }
 
