@@ -7,7 +7,6 @@ import androidx.annotation.NonNull;
 
 import com.zbase.R;
 import com.zbase.entity.NumberPickerValue;
-import com.zbase.interfaces.DateSelectListener;
 import com.zbase.util.DateTimeUtils;
 import com.zbase.x.ColorX;
 import com.zbase.x.lp.ConstraintLayoutParamsX;
@@ -217,7 +216,7 @@ public final class DateTimePickDialogView extends DialogView<DateTimePickDialogV
         return this;
     }
 
-    public DateTimePickDialogView selectListener(DateSelectListener selectListener) {
+    public DateTimePickDialogView selectListener(SelectListener selectListener) {
         positiveClickListener(v -> {
             /*
              * Find picker
@@ -276,6 +275,18 @@ public final class DateTimePickDialogView extends DialogView<DateTimePickDialogV
                 .minValue(0)
                 .maxValue(maxIndex)
                 .value(curIndex);
+    }
+
+    public interface SelectListener {
+
+        void done(String year
+                , String month
+                , String day
+                , String hour
+                , String minute
+                , String second
+                , String date);
+
     }
 
 }

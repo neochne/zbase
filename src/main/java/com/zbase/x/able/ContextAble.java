@@ -14,7 +14,12 @@ public interface ContextAble {
     }
 
     default ActivityX getActivityX() {
-        return (ActivityX) this;
+        if (isActivityX()) {
+            return (ActivityX) this;
+        } else if (isFragmentX()) {
+            return (ActivityX) getFragmentX().requireActivity();
+        }
+        throw unsupportedException();
     }
 
     default FragmentX getFragmentX() {
@@ -22,20 +27,11 @@ public interface ContextAble {
     }
 
     default Object getTag(int key) {
-        if (isActivityX()) {
-            return getActivityX().getWindow().getDecorView().getTag(key);
-        } else if (isFragmentX()) {
-            return getFragmentX().requireActivity().getWindow().getDecorView().getTag(key);
-        }
-        throw unsupportedException();
+        return getActivityX().getWindow().getDecorView().getTag(key);
     }
 
     default void setTag(int key, Object tag) {
-        if (isActivityX()) {
-            getActivityX().getWindow().getDecorView().setTag(key, tag);
-        } else if (isFragmentX()) {
-            getFragmentX().requireActivity().getWindow().getDecorView().setTag(key, tag);
-        }
+        getActivityX().getWindow().getDecorView().setTag(key, tag);
     }
 
     default RuntimeException unsupportedException() {

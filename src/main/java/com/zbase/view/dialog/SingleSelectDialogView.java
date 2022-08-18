@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import androidx.annotation.NonNull;
 
 import com.zbase.R;
-import com.zbase.interfaces.Event3Listener;
+import com.zbase.consumer.Consumer3;
 import com.zbase.util.DensityUtils;
 import com.zbase.x.ColorX;
 import com.zbase.x.drawable.ColorDrawableX;
@@ -60,7 +60,7 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
         return ((OnClickListener) getTag(R.id.dialog_cancel_click_listener));
     }
 
-    public SingleSelectDialogView itemSelectListener(Event3Listener<String, Integer, JSONObject> itemSelectListener) {
+    public SingleSelectDialogView itemSelectListener(Consumer3<String, Integer, JSONObject> itemSelectListener) {
         ((ListViewX) findViewById(getAboveBtnViewId()))
                 .itemClickListener((adapterView, view, i, l) -> {
                     getCancelClickListener().onClick(view);
@@ -73,9 +73,9 @@ public final class SingleSelectDialogView extends DialogView<SingleSelectDialogV
                     boolean isListString = listStringTag != null && (boolean) listStringTag;
                     boolean isArrayString = arrayStringTag != null && (boolean) arrayStringTag;
                     if (isJsonString || isListString || isArrayString) {
-                        itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, null);
+                        itemSelectListener.accept(String.valueOf(adapterView.getItemAtPosition(i)), i, null);
                     } else if (isJsonObject) {
-                        itemSelectListener.done(String.valueOf(adapterView.getItemAtPosition(i)), i, (JSONObject) view.getTag());
+                        itemSelectListener.accept(String.valueOf(adapterView.getItemAtPosition(i)), i, (JSONObject) view.getTag());
                     }
                 });
         return this;

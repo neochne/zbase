@@ -9,7 +9,7 @@ import android.widget.ListView;
 
 import androidx.annotation.NonNull;
 
-import com.zbase.interfaces.ScrollListener;
+import com.zbase.view.ScrollListener;
 import com.zbase.util.ViewUtils;
 import com.zbase.x.ColorX;
 

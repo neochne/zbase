@@ -131,26 +131,26 @@ public abstract class YesHttpClient {
      */
     public abstract Response get();
 
-    public abstract void getAsync(Callback callback);
+    public abstract void getAsync(HttpCallback httpCallback);
 
-    public abstract void downloadFileAsync(Callback callback);
+    public abstract void downloadFileAsync(HttpCallback httpCallback);
 
     public abstract Response post();
 
-    public abstract void postAsync(Callback callback);
+    public abstract void postAsync(HttpCallback httpCallback);
 
-    public abstract void uploadFileAsync(Callback callback);
+    public abstract void uploadFileAsync(HttpCallback httpCallback);
 
     public abstract Response put();
 
-    public abstract void putAsync(Callback callback);
+    public abstract void putAsync(HttpCallback httpCallback);
 
     public abstract Response patch();
 
-    public abstract void patchAsync(Callback callback);
+    public abstract void patchAsync(HttpCallback httpCallback);
 
     public abstract Response delete();
 
-    public abstract void deleteAsync(Callback callback);
+    public abstract void deleteAsync(HttpCallback httpCallback);
 
 }

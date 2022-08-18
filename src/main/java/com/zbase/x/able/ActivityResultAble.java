@@ -25,7 +25,7 @@ public interface ActivityResultAble extends ContextAble {
 
     default void registerActivityResultLauncher(ActivityResultCallbackX callback) {
         if (isActivityX()) {
-            ActivityX activityX = getActivityX();
+            ActivityX activityX = (ActivityX) this;
             ActivityResultLauncher<Intent> launcher = activityX.registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), callback);
             setTag(R.id.activityx_result_launcher, launcher);
         } else if (isFragmentX()) {

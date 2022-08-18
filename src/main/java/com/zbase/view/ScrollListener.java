@@ -1,4 +1,4 @@
-package com.zbase.interfaces;
+package com.zbase.view;
 
 public interface ScrollListener {
 

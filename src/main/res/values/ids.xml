@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- ActivityX -->
-    <item name="activityx_result_launcher" type="id"/>
-    <item name="activityx_loading_layout" type="id"/>
-    <item name="activityx_loading_tv" type="id"/>
+    <item name="activityx_result_launcher" type="id" />
+    <item name="activityx_loading_layout" type="id" />
+    <item name="activityx_loading_tv" type="id" />
+
+    <!-- HttpCallbackX & JDataCallback -->
+    <item name="http_chatter" type="id" />
+    <item name="http_consumer" type="id" />
+    <item name="http_object_consumer" type="id" />
+    <item name="http_array_consumer" type="id" />
+    <item name="http_empty_array_prompt" type="id" />
+    <item name="http_no_more_data_prompt" type="id" />
+    <item name="http_loading_prompt" type="id" />
+    <item name="http_page" type="id" />
 
     <!-- DialogView -->
     <item name="dialog_title" type="id" />

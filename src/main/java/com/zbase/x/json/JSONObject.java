@@ -21,6 +21,7 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.zbase.consumer.Consumer3;
 import com.zbase.util.FileUtils;
 
 import org.jetbrains.annotations.NotNull;
@@ -611,6 +612,16 @@ public class JSONObject {
     }
 
     /**
+     * Returns the value mapped by {@code name} if it exists and is a {@code
+     * JSONObject}, or null otherwise.
+     */
+    @Nullable
+    public JSONObject optJSONObject(@Nullable String name,@Nullable JSONObject fallback) {
+        Object object = opt(name);
+        return object instanceof JSONObject ? (JSONObject) object : fallback;
+    }
+
+    /**
      * Returns an array with the values corresponding to {@code names}. The
      * array contains null for names that aren't mapped. This method returns
      * null if {@code names} is either null or empty.
@@ -818,4 +829,16 @@ public class JSONObject {
         }
         return null;
     }
+
+    public void iterate(Consumer3<String,Object,Integer> consumer) {
+        int i = 0;
+        Iterator<String> iterator = this.keys();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            Object value = opt(key);
+            consumer.accept(key,value,i);
+            i++;
+        }
+    }
+
 }

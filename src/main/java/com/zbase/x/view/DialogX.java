@@ -10,8 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 
 import com.zbase.R;
-import com.zbase.interfaces.DateSelectListener;
-import com.zbase.interfaces.Event3Listener;
+import com.zbase.consumer.Consumer3;
 import com.zbase.util.DensityUtils;
 import com.zbase.util.SystemBarUtils;
 import com.zbase.view.dialog.DateTimePickDialogView;
@@ -58,7 +57,13 @@ public final class DialogX extends AlertDialog {
         return this;
     }
 
-    public DialogX attr(int x, int y, int width, int height, int gravity) {
+    public DialogX attr(
+            int x
+            , int y
+            , int width
+            , int height
+            , int gravity
+    ) {
         Window window = getWindow();
         WindowManager.LayoutParams wlp = window.getAttributes();
         wlp.x = x;
@@ -102,22 +107,26 @@ public final class DialogX extends AlertDialog {
     /**
      * 提示对话框
      */
-    public static DialogX createPromptDialog(Context context,
-                                             String message,
-                                             View.OnClickListener positiveListener) {
+    public static DialogX createPromptDialog(
+            Context context
+            , String message
+            , View.OnClickListener positiveListener
+    ) {
         return createPromptDialog(context, "提示", message, "取消", "确定", null, positiveListener);
     }
 
     /**
      * 提示对话框
      */
-    public static DialogX createPromptDialog(Context context,
-                                             String title,
-                                             String message,
-                                             String negative,
-                                             String positive,
-                                             View.OnClickListener negativeListener,
-                                             View.OnClickListener positiveListener) {
+    public static DialogX createPromptDialog(
+            Context context
+            , String title
+            , String message
+            , String negative
+            , String positive
+            , View.OnClickListener negativeListener
+            , View.OnClickListener positiveListener
+    ) {
         DialogX promptDialog = createHorMarginRadiusDialog(context);
         return promptDialog
                 .view(new PromptDialogView(context)
@@ -140,9 +149,11 @@ public final class DialogX extends AlertDialog {
     /**
      * 提示对话框（Only one positive button）
      */
-    public static DialogX createPositivePromptDialog(Context context,
-                                                     String message,
-                                                     View.OnClickListener positiveListener) {
+    public static DialogX createPositivePromptDialog(
+            Context context
+            , String message
+            , View.OnClickListener positiveListener
+    ) {
         DialogX promptDialog = createHorMarginRadiusDialog(context);
         return promptDialog
                 .view((new PromptDialogView(context)
@@ -158,11 +169,13 @@ public final class DialogX extends AlertDialog {
     /**
      * 单项选择对话框
      */
-    public static DialogX createSingleSelectDialog(Context context,
-                                                   String title,
-                                                   Object data,
-                                                   String key,
-                                                   Event3Listener<String, Integer, JSONObject> itemSelectListener) {
+    public static DialogX createSingleSelectDialog(
+            Context context
+            , String title
+            , Object data
+            , String key
+            , Consumer3<String, Integer, JSONObject> itemSelectListener
+    ) {
         DialogX selectDialog = createHorMarginRadiusDialog(context);
         return selectDialog.view(new SingleSelectDialogView(context)
                 .title(title)
@@ -174,7 +187,12 @@ public final class DialogX extends AlertDialog {
     /**
      * 日期选择对话框
      */
-    public static DialogX createDateTimePickDialog(Context context, String title, int limit, DateSelectListener selectListener) {
+    public static DialogX createDateTimePickDialog(
+            Context context
+            , String title
+            , int limit
+            , DateTimePickDialogView.SelectListener selectListener
+    ) {
         DialogX datePickerDialog = createRadiusDialog(context);
         return datePickerDialog
                 .view(new DateTimePickDialogView(context)
@@ -205,7 +223,11 @@ public final class DialogX extends AlertDialog {
     /**
      * 对话框
      */
-    public static DialogX createDialog(Context context, int theme, Drawable backgroundDrawable) {
+    public static DialogX createDialog(
+            Context context
+            , int theme
+            , Drawable backgroundDrawable
+    ) {
         return new DialogX(context, theme).backgroundDrawable(backgroundDrawable);
     }
 

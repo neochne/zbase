@@ -6,7 +6,7 @@ package com.zbase.http;
 
 import com.zbase.x.json.JSONObject;
 
-public interface Callback {
+public interface HttpCallback {
 
     default void onSuccess(Response response) {
     }

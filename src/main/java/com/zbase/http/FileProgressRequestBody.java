@@ -19,12 +19,12 @@ public final class FileProgressRequestBody extends RequestBody {
 
     private final String fileName;
 
-    private final Callback callback;
+    private final HttpCallback httpCallback;
 
-    public FileProgressRequestBody(RequestBody oriRequestBody, String fileName, Callback callback) {
+    public FileProgressRequestBody(RequestBody oriRequestBody, String fileName, HttpCallback httpCallback) {
         this.oriRequestBody = oriRequestBody;
         this.fileName = fileName;
-        this.callback = callback;
+        this.httpCallback = httpCallback;
     }
 
     @Nullable
@@ -62,7 +62,7 @@ public final class FileProgressRequestBody extends RequestBody {
         public void write(@NonNull Buffer source, long byteCount) throws IOException {
             super.write(source, byteCount);
             bytesWritten += byteCount;
-            callback.onProgress((int) (100F * bytesWritten / contentLength()),fileName,contentLength());
+            httpCallback.onProgress((int) (100F * bytesWritten / contentLength()),fileName,contentLength());
         }
 
     }

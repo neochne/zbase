@@ -22,14 +22,7 @@ public interface LoadingAble extends ContextAble {
     }
 
     default void showLoading(String text) {
-        ActivityX activityX;
-        if (isActivityX()) {
-            activityX = getActivityX();
-        } else if (isFragmentX()) {
-            activityX = (ActivityX) getFragmentX().requireContext();
-        } else {
-            throw unsupportedException();
-        }
+        ActivityX activityX = getActivityX();
         /*
          * Is last show ?
          */
@@ -69,14 +62,7 @@ public interface LoadingAble extends ContextAble {
     }
 
     default void cancelLoading() {
-        ActivityX activityX;
-        if (isActivityX()) {
-            activityX = getActivityX();
-        } else if (isFragmentX()) {
-            activityX = (ActivityX) getFragmentX().requireContext();
-        } else {
-            throw unsupportedException();
-        }
+        ActivityX activityX = getActivityX();
         Object loadingLayoutTag = getTag(R.id.activityx_loading_layout);
         if (loadingLayoutTag == null) {
             return;

@@ -45,4 +45,8 @@ public abstract class FragmentX<V extends View> extends Fragment implements Http
         return view;
     }
 
+    protected ActivityX requireActivityX() {
+        return (ActivityX) requireContext();
+    }
+
 }

@@ -48,37 +48,37 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public void getAsync(Callback callback) {
-        enqueue(makeJsonRequest(HttpMethod.GET), callback);
+    public void getAsync(HttpCallback httpCallback) {
+        enqueue(makeJsonRequest(HttpMethod.GET), httpCallback);
     }
 
     @Override
-    public void downloadFileAsync(Callback callback) {
-        callback.onStart();
+    public void downloadFileAsync(HttpCallback httpCallback) {
+        httpCallback.onStart();
         okHttpClient.newCall(makeJsonRequest(HttpMethod.GET)).enqueue(new okhttp3.Callback() {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) {
-                callback.onFinish();
+                httpCallback.onFinish();
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, JSONObject.create()));
+                    httpCallback.onSuccess(new Response(httpCode, JSONObject.create()));
                     long fileTotalLength = responseBody.contentLength();
                     FileUtils.saveFileWithProgress(
                             file,
                             responseBody.byteStream(),
                             fileTotalLength,
-                            (progress) -> callback.onProgress(progress, file.getName(), fileTotalLength));
+                            (progress) -> httpCallback.onProgress(progress, file.getName(), fileTotalLength));
                 } else {
-                    callback.onFail(new Response(httpCode, JSONObject.create()));
+                    httpCallback.onFail(new Response(httpCode, JSONObject.create()));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.onFinish();
-                callback.onException(e);
+                httpCallback.onFinish();
+                httpCallback.onException(e);
             }
 
         });
@@ -90,13 +90,13 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public void postAsync(Callback callback) {
-        enqueue(makeJsonRequest(HttpMethod.POST), callback);
+    public void postAsync(HttpCallback httpCallback) {
+        enqueue(makeJsonRequest(HttpMethod.POST), httpCallback);
     }
 
     @Override
-    public void uploadFileAsync(Callback callback) {
-        enqueue(makeFileFormRequest(callback), callback);
+    public void uploadFileAsync(HttpCallback httpCallback) {
+        enqueue(makeFileFormRequest(httpCallback), httpCallback);
     }
 
     @Override
@@ -105,8 +105,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public void putAsync(Callback callback) {
-        enqueue(makeJsonRequest(HttpMethod.PUT), callback);
+    public void putAsync(HttpCallback httpCallback) {
+        enqueue(makeJsonRequest(HttpMethod.PUT), httpCallback);
     }
 
     @Override
@@ -115,8 +115,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public void patchAsync(Callback callback) {
-        enqueue(makeJsonRequest(HttpMethod.PATCH), callback);
+    public void patchAsync(HttpCallback httpCallback) {
+        enqueue(makeJsonRequest(HttpMethod.PATCH), httpCallback);
     }
 
     @Override
@@ -125,8 +125,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
     }
 
     @Override
-    public void deleteAsync(Callback callback) {
-        enqueue(makeJsonRequest(HttpMethod.DELETE), callback);
+    public void deleteAsync(HttpCallback httpCallback) {
+        enqueue(makeJsonRequest(HttpMethod.DELETE), httpCallback);
     }
 
     private Response execute(Request request) {
@@ -145,8 +145,8 @@ public final class OkHttpClientImpl extends YesHttpClient {
         }
     }
 
-    private void enqueue(Request request, Callback callback) {
-        callback.onStart();
+    private void enqueue(Request request, HttpCallback httpCallback) {
+        httpCallback.onStart();
         okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
 
             /**
@@ -154,20 +154,20 @@ public final class OkHttpClientImpl extends YesHttpClient {
              */
             @Override
             public void onResponse(@NonNull Call call, @NonNull okhttp3.Response response) throws IOException {
-                callback.onFinish();
+                httpCallback.onFinish();
                 int httpCode = response.code();
                 ResponseBody responseBody = response.body();
                 if (response.isSuccessful() && responseBody != null) {
-                    callback.onSuccess(new Response(httpCode, JSONObject.create(responseBody.string())));
+                    httpCallback.onSuccess(new Response(httpCode, JSONObject.create(responseBody.string())));
                 } else {
-                    callback.onFail(new Response(httpCode, JSONObject.create()));
+                    httpCallback.onFail(new Response(httpCode, JSONObject.create()));
                 }
             }
 
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                callback.onFinish();
-                callback.onException(e);
+                httpCallback.onFinish();
+                httpCallback.onException(e);
             }
 
         });
@@ -243,7 +243,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
         return builder.build();
     }
 
-    private Request makeFileFormRequest(Callback callback) {
+    private Request makeFileFormRequest(HttpCallback httpCallback) {
         Request.Builder requestBuilder = new Request.Builder();
         requestBuilder.url(getUrl());
 
@@ -264,7 +264,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
         if (file != null) {
             RequestBody oriRequestBody = RequestBody.create(file, MediaType.get(HttpContentType.FORM_MULTI_PART.getContentType()));
             String fileName = file.getName();
-            multipartBuilder.addFormDataPart(fileKey, fileName, new FileProgressRequestBody(oriRequestBody, fileName, callback));
+            multipartBuilder.addFormDataPart(fileKey, fileName, new FileProgressRequestBody(oriRequestBody, fileName, httpCallback));
         }
         if (files != null && files.length > 0) {
             for (File uploadedFile : files) {
@@ -273,7 +273,7 @@ public final class OkHttpClientImpl extends YesHttpClient {
                 }
                 String fileName = uploadedFile.getName();
                 RequestBody oriRequestBody = RequestBody.create(uploadedFile, MediaType.get(HttpContentType.FORM_MULTI_PART.getContentType()));
-                multipartBuilder.addFormDataPart(fileKey, fileName, new FileProgressRequestBody(oriRequestBody, fileName, callback));
+                multipartBuilder.addFormDataPart(fileKey, fileName, new FileProgressRequestBody(oriRequestBody, fileName, httpCallback));
             }
         }
         return requestBuilder.post(multipartBuilder.build()).build();
