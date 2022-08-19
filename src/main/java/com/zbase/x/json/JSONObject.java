@@ -830,6 +830,9 @@ public class JSONObject {
         return null;
     }
 
+    /*
+     * Custom added tool method
+     */
     public void iterate(Consumer3<String,Object,Integer> consumer) {
         int i = 0;
         Iterator<String> iterator = this.keys();

@@ -14,6 +14,7 @@ import com.zbase.util.ThreadUtils;
 import com.zbase.x.able.ActivityResultAble;
 import com.zbase.x.able.ArgumentAble;
 import com.zbase.x.able.AsyncCreateFragmentViewAble;
+import com.zbase.x.able.CacheAble;
 import com.zbase.x.able.HttpAble;
 import com.zbase.x.able.LoadingAble;
 import com.zbase.x.able.LogAble;
@@ -27,7 +28,8 @@ public abstract class FragmentX<V extends View> extends Fragment implements Http
         , WindowAble
         , ToastAble
         , ArgumentAble
-        , LogAble {
+        , LogAble
+        , CacheAble {
 
     @Nullable
     @Override

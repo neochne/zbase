@@ -18,6 +18,7 @@ package com.zbase.x.json;
 
 import android.content.Context;
 
+import com.zbase.consumer.Consumer2;
 import com.zbase.util.FileUtils;
 
 import java.io.File;
@@ -579,6 +580,12 @@ public class JSONArray {
             strings[i] = optJSONObject(i).optString(key);
         }
         return strings;
+    }
+
+    public void iterate(Consumer2<Object, Integer> consumer) {
+        for (int i = 0, l = this.length(); i < l; i++) {
+            consumer.accept(opt(i), i);
+        }
     }
 
 }

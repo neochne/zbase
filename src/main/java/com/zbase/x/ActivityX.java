@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.zbase.util.ThreadUtils;
 import com.zbase.x.able.ActivityResultAble;
 import com.zbase.x.able.AsyncCreateActivityViewAble;
+import com.zbase.x.able.CacheAble;
 import com.zbase.x.able.HttpAble;
 import com.zbase.x.able.LoadingAble;
 import com.zbase.x.able.LogAble;
@@ -22,7 +23,8 @@ public class ActivityX extends AppCompatActivity implements HttpAble
         , LoadingAble
         , WindowAble
         , ToastAble
-        , LogAble {
+        , LogAble
+        , CacheAble {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
