@@ -162,6 +162,13 @@ public class LogUtils {
         Log.e(tag, e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
     }
 
+    public static void e(String tag, Exception e, String prefix) {
+        if (!sIsDebug || sLevel > LEVEL_ERROR) {
+            return;
+        }
+        Log.e(tag, e.getCause() != null ? prefix + e.getCause().getMessage() : prefix + e.getMessage());
+    }
+
     public static void e(String tag, String msg, Object... args) {
         if (!sIsDebug || sLevel > LEVEL_ERROR) {
             return;
