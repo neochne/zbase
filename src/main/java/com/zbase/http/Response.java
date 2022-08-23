@@ -8,21 +8,21 @@ import com.zbase.x.json.JSONObject;
 
 public class Response {
 
-    private final int code;
+    private final int httpCode;
 
-    private final JSONObject json;
+    private final JSONObject bodyJSONObject;
 
-    public Response(int code, JSONObject json) {
-        this.code = code;
-        this.json = json;
+    public Response(int httpCode, JSONObject bodyJSONObject) {
+        this.httpCode = httpCode;
+        this.bodyJSONObject = bodyJSONObject;
     }
 
-    public int getCode() {
-        return code;
+    public int getHttpCode() {
+        return httpCode;
     }
 
-    public JSONObject getJson() {
-        return json;
+    public JSONObject getBodyJSONObject() {
+        return bodyJSONObject;
     }
 
 }

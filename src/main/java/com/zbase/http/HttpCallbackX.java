@@ -17,7 +17,7 @@ public class HttpCallbackX implements HttpCallback {
 
     @Override
     public void onSuccess(Response response) {
-        JSONObject bodyJson = response.getJson();
+        JSONObject bodyJson = response.getBodyJSONObject();
         if (bodyJson.optInt("code") != 0) {
             if (isChatter()) {
                 ToastUtils.showOnWorkThread(ACTIVITYX, bodyJson.optString("message"));
@@ -30,7 +30,7 @@ public class HttpCallbackX implements HttpCallback {
     @Override
     public void onFail(Response response) {
         if (isChatter()) {
-            ToastUtils.showOnWorkThread(ACTIVITYX, "请求失败：" + response.getCode());
+            ToastUtils.showOnWorkThread(ACTIVITYX, "请求失败：" + response.getHttpCode());
         }
     }
 

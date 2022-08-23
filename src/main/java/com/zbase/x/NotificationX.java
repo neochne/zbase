@@ -49,6 +49,11 @@ public final class NotificationX extends NotificationCompat.Builder {
         return this;
     }
 
+    public NotificationX color(int color) {
+        setColor(color);
+        return this;
+    }
+
     public NotificationX smallIcon(int id) {
         setSmallIcon(id);
         return this;
@@ -99,6 +104,9 @@ public final class NotificationX extends NotificationCompat.Builder {
         return this;
     }
 
+    /**
+     * @param importance NotificationManager.IMPORTANCE_HIGH ...
+     */
     public NotificationX importance(int importance) {
         this.mImportance = importance;
         return this;
