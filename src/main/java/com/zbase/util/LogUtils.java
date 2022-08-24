@@ -18,196 +18,92 @@ import android.util.Log;
  * e.printStackTrace();
  * }
  */
-public class LogUtils {
+public final class LogUtils {
+    /*
+     * Log level
+     */
+    public static final int ALL = 0;
 
-    private static final int LEVEL_VERBOSE = 0;
+    public static final int DEBUG = 1;
 
-    private static final int LEVEL_DEBUG = 1;
+    public static final int INFO = 2;
 
-    private static final int LEVEL_INFO = 2;
+    public static final int WARN = 3;
 
-    private static final int LEVEL_WARNING = 3;
+    public static final int ERR = 4;
 
-    private static final int LEVEL_ERROR = 4;
+    public static final int OFF = 5;
 
-    private static final int LEVEL_FATAL = 5;
+    private static int sCurLogLevel = ALL;
 
-    // ---------- //
-
-    private static boolean sIsDebug = true;
-
-    private static int sLevel = LEVEL_VERBOSE;
+    public static void setLogLevel(int level) {
+        sCurLogLevel = level;
+    }
 
     private LogUtils() {
     }
 
-    public static void setIsDebug(boolean isDebug) {
-        sIsDebug = isDebug;
-    }
-
-    /**
-     * 只打印大于等于设置的这个 level 的日志
-     */
-    public static void setLogLevel(int level) {
-        sLevel = level;
-    }
-
-    public static void v(String tag, String msg) {
-        if (!sIsDebug || sLevel > LEVEL_VERBOSE) {
+    public static void d(String tag, String method, Object... data) {
+        if (sCurLogLevel > DEBUG) {
             return;
         }
-        Log.v(tag, msg);
+        Log.d(tag, toMethodMsg(method, data));
     }
 
-    public static void v(String tag, String msg, Throwable throwable) {
-        if (!sIsDebug || sLevel > LEVEL_VERBOSE) {
+    public static void i(String tag, String method, Object... data) {
+        if (sCurLogLevel > INFO) {
             return;
         }
-        Log.v(tag, msg, throwable);
+        Log.i(tag, toMethodMsg(method, data));
     }
 
-    public static void v(String tag, String msg, Object... args) {
-        if (!sIsDebug || sLevel > LEVEL_VERBOSE) {
+    public static void w(String tag, String method, Object... data) {
+        if (sCurLogLevel > WARN) {
             return;
         }
-        if (args.length > 0) {
-            msg = String.format(msg, args);
-        }
-        Log.v(tag, msg);
+        Log.w(tag, toMethodMsg(method, data));
     }
 
-    public static void d(String tag, String msg) {
-        if (!sIsDebug || sLevel > LEVEL_DEBUG) {
+    public static void e(String tag, String method, Throwable tr) {
+        if (sCurLogLevel > ERR) {
             return;
         }
-        Log.d(tag, msg);
+        Log.e(tag, toMethodMsg(method, tr.getCause() == null ? tr.getMessage() : tr.getCause().getMessage()));
     }
 
-    public static void d(String tag, String msg, Object... args) {
-        if (!sIsDebug || sLevel > LEVEL_DEBUG) {
+    public static void e(String tag, String method, String prefix,Throwable tr) {
+        if (sCurLogLevel > ERR) {
             return;
         }
-        if (args.length > 0) {
-            msg = String.format(msg, args);
-        }
-        Log.d(tag, msg);
+        Log.e(tag, toMethodMsg(method, prefix + (tr.getCause() == null ? tr.getMessage() : tr.getCause().getMessage())));
     }
 
-    public static void d(String tag, String msg, Throwable throwable) {
-        if (!sIsDebug || sLevel > LEVEL_DEBUG) {
-            return;
+    private static String toMethodMsg(String method, Object... data) {
+        method = String.format("|%-28s|  ", method);
+        if (data == null || data.length < 1) {
+            return method;
         }
-        Log.d(tag, msg, throwable);
-    }
-
-    public static void i(String tag, String msg) {
-        if (!sIsDebug || sLevel > LEVEL_INFO) {
-            return;
+        if (data.length == 1) {
+            return method + data[0];
         }
-        Log.i(tag, msg);
-    }
-
-    public static void i(String tag, String msg, Object... args) {
-        if (!sIsDebug || sLevel > LEVEL_INFO) {
-            return;
+        StringBuilder dataBuilder = new StringBuilder();
+        // Add first data
+        dataBuilder
+                .append(data[0])
+                .append("=")
+                .append(data[1]);
+        // Traverse the next data from the index 2
+        for (int i = 2, len = data.length; i < len; i++) {
+            if ((i & 1) == 0) {// even: echo $((0&1))
+                dataBuilder
+                        .append("&")
+                        .append(data[i])
+                        .append("=");
+            } else {// odd
+                dataBuilder.append(data[i]);
+            }
         }
-        if (args.length > 0) {
-            msg = String.format(msg, args);
-        }
-        Log.i(tag, msg);
-    }
-
-    public static void i(String tag, String msg, Throwable throwable) {
-        if (!sIsDebug || sLevel > LEVEL_INFO) {
-            return;
-        }
-        Log.i(tag, msg, throwable);
-    }
-
-    public static void w(String tag, String msg) {
-        if (!sIsDebug || sLevel > LEVEL_WARNING) {
-            return;
-        }
-        Log.w(tag, msg);
-    }
-
-    public static void w(String tag, String msg, Object... args) {
-        if (!sIsDebug || sLevel > LEVEL_WARNING) {
-            return;
-        }
-        if (args.length > 0) {
-            msg = String.format(msg, args);
-        }
-        Log.w(tag, msg);
-    }
-
-    public static void w(String tag, String msg, Throwable throwable) {
-        if (!sIsDebug || sLevel > LEVEL_WARNING) {
-            return;
-        }
-        Log.w(tag, msg, throwable);
-    }
-
-    public static void e(String tag, String msg) {
-        if (!sIsDebug || sLevel > LEVEL_ERROR) {
-            return;
-        }
-        Log.e(tag, msg);
-    }
-
-    public static void e(String tag, Exception e) {
-        if (!sIsDebug || sLevel > LEVEL_ERROR) {
-            return;
-        }
-        Log.e(tag, e.getCause() != null ? e.getCause().getMessage() : e.getMessage());
-    }
-
-    public static void e(String tag, Exception e, String prefix) {
-        if (!sIsDebug || sLevel > LEVEL_ERROR) {
-            return;
-        }
-        Log.e(tag, e.getCause() != null ? prefix + e.getCause().getMessage() : prefix + e.getMessage());
-    }
-
-    public static void e(String tag, String msg, Object... args) {
-        if (!sIsDebug || sLevel > LEVEL_ERROR) {
-            return;
-        }
-        if (args.length > 0) {
-            msg = String.format(msg, args);
-        }
-        Log.e(tag, msg);
-    }
-
-    public static void e(String tag, String msg, Throwable throwable) {
-        if (!sIsDebug || sLevel > LEVEL_ERROR) {
-            return;
-        }
-        Log.e(tag, msg, throwable);
-    }
-
-    public static void f(String tag, String msg) {
-        if (!sIsDebug || sLevel > LEVEL_FATAL) {
-            return;
-        }
-        Log.wtf(tag, msg);
-    }
-
-    public static void f(String tag, String msg, Object... args) {
-        if (!sIsDebug || sLevel > LEVEL_FATAL) {
-            return;
-        }
-        if (args.length > 0) {
-            msg = String.format(msg, args);
-        }
-        Log.wtf(tag, msg);
-    }
-
-    public static void f(String tag, String msg, Throwable throwable) {
-        if (!sIsDebug || sLevel > LEVEL_FATAL) {
-            return;
-        }
-        Log.wtf(tag, msg, throwable);
+        return method + dataBuilder;
     }
 
 }

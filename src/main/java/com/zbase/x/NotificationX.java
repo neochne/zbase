@@ -105,7 +105,7 @@ public final class NotificationX extends NotificationCompat.Builder {
     }
 
     /**
-     * @param importance NotificationManager.IMPORTANCE_HIGH ...
+     * @param importance NotificationManagerCompat.IMPORTANCE_HIGH ...
      */
     public NotificationX importance(int importance) {
         this.mImportance = importance;

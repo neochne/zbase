@@ -48,30 +48,33 @@ public abstract class YesHttpClient {
     String getUrl() {
         StringBuilder urlBuilder = new StringBuilder(url);
 
-        // path parameters
+        // Path parameters
         if (pathValues != null && pathValues.length > 0) {
             for (String pathValue : pathValues) {
-                urlBuilder.append("/")
+                urlBuilder
+                        .append("/")
                         .append(pathValue);
             }
         }
 
-        // query parameters
+        // Query parameters
         if (queryNamesAndValues != null && queryNamesAndValues.length > 0) {
-            for (int i = 0, len = queryNamesAndValues.length; i < len; i++) {
-                if (i == 0) {
-                    urlBuilder.append("?")
+            // Add first parameters
+            urlBuilder
+                    .append("?")
+                    .append(queryNamesAndValues[0])
+                    .append("=")
+                    .append(queryNamesAndValues[1]);
+            // Traverse the next parameters from the index 2
+            for (int i = 2, len = queryNamesAndValues.length; i < len; i++) {
+                if ((i & 1) == 0) {// even: echo $((0&1))
+                    urlBuilder
+                            .append("&")
                             .append(queryNamesAndValues[i])
                             .append("=");
-                    continue;
-                }
-                if (i % 2 == 1) {
+                } else {// odd
                     urlBuilder.append(queryNamesAndValues[i]);
-                    continue;
                 }
-                urlBuilder.append("&")
-                        .append(queryNamesAndValues[i])
-                        .append("=");
             }
         }
         return urlBuilder.toString();
