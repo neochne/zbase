@@ -64,6 +64,13 @@ public final class LogUtils {
         Log.w(tag, toMethodMsg(method, data));
     }
 
+    public static void e(String tag, String method, String err) {
+        if (sCurLogLevel > ERR) {
+            return;
+        }
+        Log.e(tag, toMethodMsg(method, err));
+    }
+
     public static void e(String tag, String method, Throwable tr) {
         if (sCurLogLevel > ERR) {
             return;
@@ -71,7 +78,7 @@ public final class LogUtils {
         Log.e(tag, toMethodMsg(method, tr.getCause() == null ? tr.getMessage() : tr.getCause().getMessage()));
     }
 
-    public static void e(String tag, String method, String prefix,Throwable tr) {
+    public static void e(String tag, String method, String prefix, Throwable tr) {
         if (sCurLogLevel > ERR) {
             return;
         }
