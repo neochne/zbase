@@ -57,7 +57,7 @@ public class HttpJsonCallback extends HttpCallbackX {
         } else if (data instanceof JSONArray) {
             Consumer2<JSONArray, Boolean> consumer = (Consumer2<JSONArray, Boolean>) getTag(R.id.http_consumer);
             JSONArray dataJsonArray = bodyJson.optJSONArray("data");
-            consumer.accept(dataJsonArray, ACTIVITYX.handleArray(dataJsonArray));
+            consumer.accept(dataJsonArray, ACTIVITYX.handleArray(dataJsonArray, isChatter()));
         }
     }
 

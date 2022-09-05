@@ -51,12 +51,16 @@ public interface HttpAble extends ContextAble {
         setPage(++page);
     }
 
-    default boolean handleArray(JSONArray array) {
+    default boolean handleArray(JSONArray array,boolean chatter) {
         if (array.length() < 1) {
             if (getPage() == 1) {
-                ToastUtils.showOnWorkThread(getActivityX(), (String) getTag(R.id.http_empty_array_prompt));
+                if (chatter) {
+                    ToastUtils.showOnWorkThread(getActivityX(), (String) getTag(R.id.http_empty_array_prompt));
+                }
             } else {
-                ToastUtils.showOnWorkThread(getActivityX(), (String) getTag(R.id.http_no_more_data_prompt));
+                if (chatter) {
+                    ToastUtils.showOnWorkThread(getActivityX(), (String) getTag(R.id.http_no_more_data_prompt));
+                }
             }
             return true;
         } else {

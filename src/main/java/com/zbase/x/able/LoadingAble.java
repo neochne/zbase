@@ -74,4 +74,9 @@ public interface LoadingAble extends ContextAble {
         loadingLayout.setVisibility(View.GONE);
     }
 
+    default void resetLoading() {
+        setTag(R.id.activityx_loading_layout, null);
+        setTag(R.id.activityx_loading_tv, null);
+    }
+
 }

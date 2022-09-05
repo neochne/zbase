@@ -72,10 +72,7 @@ public final class LogUtils {
     }
 
     public static void e(String tag, String method, Throwable tr) {
-        if (sCurLogLevel > ERR) {
-            return;
-        }
-        Log.e(tag, toMethodMsg(method, tr.getCause() == null ? tr.getMessage() : tr.getCause().getMessage()));
+        e(tag, method, "", tr);
     }
 
     public static void e(String tag, String method, String prefix, Throwable tr) {

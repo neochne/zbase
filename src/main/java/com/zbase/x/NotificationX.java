@@ -122,7 +122,7 @@ public final class NotificationX extends NotificationCompat.Builder {
         service.startForeground(id, build());
     }
 
-    private void createChannel() {
+    public void createChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, mChannelName, mImportance);
             NotificationManagerCompat.from(CTX).createNotificationChannel(channel);

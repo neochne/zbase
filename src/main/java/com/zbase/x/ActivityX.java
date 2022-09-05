@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.zbase.util.ThreadUtils;
 import com.zbase.x.able.ActivityResultAble;
+import com.zbase.x.able.ActivityStateAble;
 import com.zbase.x.able.AsyncCreateActivityViewAble;
 import com.zbase.x.able.CacheAble;
 import com.zbase.x.able.HttpAble;
@@ -20,6 +21,7 @@ public class ActivityX extends AppCompatActivity implements HttpAble
         , AsyncCreateActivityViewAble
         , ToolbarAble
         , ActivityResultAble
+        , ActivityStateAble
         , LoadingAble
         , WindowAble
         , ToastAble

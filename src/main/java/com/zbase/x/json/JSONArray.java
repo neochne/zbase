@@ -20,6 +20,7 @@ import android.content.Context;
 
 import com.zbase.consumer.Consumer2;
 import com.zbase.util.FileUtils;
+import com.zbase.util.SpUtils;
 
 import java.io.File;
 import java.lang.reflect.Array;
@@ -149,6 +150,10 @@ public class JSONArray {
 
     public static JSONArray createFromLocalFile(File file) {
         return create(FileUtils.readTextFromFile(file));
+    }
+
+    public static JSONArray createFromLocalSpFile(Context context, String file, String key) {
+        return create(SpUtils.getSharedPreferences(context, file).getString(key, "[]"));
     }
 
     /**
