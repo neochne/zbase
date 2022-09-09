@@ -92,4 +92,14 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
         return this;
     }
 
+    public ConstraintLayoutParamsX percentHeight(float percent) {
+        matchConstraintPercentHeight = percent;
+        return this;
+    }
+
+    public ConstraintLayoutParamsX percentWidth(float percent) {
+        matchConstraintPercentWidth = percent;
+        return this;
+    }
+
 }
