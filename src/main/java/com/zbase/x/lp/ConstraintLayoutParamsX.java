@@ -92,6 +92,11 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
         return this;
     }
 
+    /**
+     * @param percent 0 ~ 1,to make it work,
+     *                you should set height with 0
+     *                and parent height match_parent
+     */
     public ConstraintLayoutParamsX percentHeight(float percent) {
         matchConstraintPercentHeight = percent;
         return this;
@@ -99,6 +104,23 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
 
     public ConstraintLayoutParamsX percentWidth(float percent) {
         matchConstraintPercentWidth = percent;
+        return this;
+    }
+
+    /**
+     * @param orientation one of the types:
+     *                    {@link ConstraintLayout.LayoutParams#VERTICAL} or
+     *                    {@link ConstraintLayout.LayoutParams#HORIZONTAL},
+     *                    this param must be set if you use
+     *                    {@link androidx.constraintlayout.widget.Guideline}
+     */
+    public ConstraintLayoutParamsX guideOrientation(int orientation) {
+        this.orientation = orientation;
+        return this;
+    }
+
+    public ConstraintLayoutParamsX guidePercent(float percent) {
+        this.guidePercent = percent;
         return this;
     }
 
