@@ -21,9 +21,9 @@ import com.zbase.x.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class FormUtils {
+public final class ChartUtils {
 
-    private FormUtils() {
+    private ChartUtils() {
     }
 
     public static HorizontalBarChart createSingleDatasetHorizontalBarChart(Context context, String[] xLabels) {
@@ -126,15 +126,21 @@ public final class FormUtils {
                                                     JSONArray newDataArray,
                                                     String newDataLabelKey,
                                                     String newDataKey) {
-        for (int i = 0, xLabelsLength = xLabels.length; i < xLabelsLength; i++) {
-            String localArea = xLabels[i];
-            for (int j = 0, l = newDataArray.length(); j < l; j++) {
-                JSONObject faultAreaJsonObject = newDataArray.optJSONObject(j);
-                if (localArea.equals(faultAreaJsonObject.optString(newDataLabelKey))) {
-                    float num = faultAreaJsonObject.optFloat(newDataKey);
-                    chart.getData().getDataSets().get(datasetIndex).getEntryForIndex(i).setY(num);
-                    break;
+        if (newDataArray != null && newDataArray.length() > 0) {
+            for (int i = 0, xLabelsLength = xLabels.length; i < xLabelsLength; i++) {
+                String localArea = xLabels[i];
+                for (int j = 0, l = newDataArray.length(); j < l; j++) {
+                    JSONObject faultAreaJsonObject = newDataArray.optJSONObject(j);
+                    if (localArea.equals(faultAreaJsonObject.optString(newDataLabelKey))) {
+                        float num = faultAreaJsonObject.optFloat(newDataKey);
+                        chart.getData().getDataSets().get(datasetIndex).getEntryForIndex(i).setY(num);
+                        break;
+                    }
                 }
+            }
+        } else {
+            for (int i = 0, xLabelsLength = xLabels.length; i < xLabelsLength; i++) {
+                chart.getData().getDataSets().get(datasetIndex).getEntryForIndex(i).setY(0);
             }
         }
     }

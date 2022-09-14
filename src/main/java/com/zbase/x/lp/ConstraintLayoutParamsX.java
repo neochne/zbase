@@ -22,6 +22,11 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
         return this;
     }
 
+    public ConstraintLayoutParamsX start2startUnset() {
+        this.startToStart = ConstraintLayoutParamsX.UNSET;
+        return this;
+    }
+
     public ConstraintLayoutParamsX start2end(int id) {
         this.startToEnd = id;
         return this;
@@ -34,6 +39,11 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
 
     public ConstraintLayoutParamsX top2topParent() {
         this.topToTop = ConstraintLayoutParamsX.PARENT_ID;
+        return this;
+    }
+
+    public ConstraintLayoutParamsX top2topUnset() {
+        this.topToTop = ConstraintLayoutParamsX.UNSET;
         return this;
     }
 
@@ -52,6 +62,11 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
         return this;
     }
 
+    public ConstraintLayoutParamsX end2endUnset() {
+        this.endToEnd = ConstraintLayoutParamsX.UNSET;
+        return this;
+    }
+
     public ConstraintLayoutParamsX end2start(int id) {
         this.endToStart = id;
         return this;
@@ -64,6 +79,11 @@ public class ConstraintLayoutParamsX extends ConstraintLayout.LayoutParams imple
 
     public ConstraintLayoutParamsX bottom2bottomParent() {
         this.bottomToBottom = ConstraintLayoutParamsX.PARENT_ID;
+        return this;
+    }
+
+    public ConstraintLayoutParamsX bottom2bottomUnset() {
+        this.bottomToBottom = ConstraintLayoutParamsX.UNSET;
         return this;
     }
 
