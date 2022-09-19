@@ -60,4 +60,10 @@ public final class DynamicVerTvLayout extends LinearLayoutX {
         return this;
     }
 
+    @Override
+    public DynamicVerTvLayout backgroundColor(int color) {
+        super.backgroundColor(color);
+        return this;
+    }
+
 }

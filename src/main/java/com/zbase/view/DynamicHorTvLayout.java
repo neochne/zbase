@@ -69,4 +69,10 @@ public final class DynamicHorTvLayout extends LinearLayoutX {
         return this;
     }
 
+    @Override
+    public DynamicHorTvLayout backgroundColor(int color) {
+        super.backgroundColor(color);
+        return this;
+    }
+
 }
