@@ -15,9 +15,9 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
-public final class CipherUtils {
+public final class CryptoUtils {
 
-    private CipherUtils(){}
+    private CryptoUtils(){}
 
     public static String md5(String plaintext){
         try {
